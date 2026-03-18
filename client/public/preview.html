@@ -4044,20 +4044,20 @@ body {
       const n = names[i % names.length];
       const b = bios[i % bios.length];
       const av = n[0];
-      avatarsHTML += '<div class="participant-avatar" onclick="openOtherProfile('' + n + '','' + av + '','' + (10+i*3) + '','' + b + '','normal')">' + av + '</div>';
+      avatarsHTML += `<div class="participant-avatar" onclick="openOtherProfile('${n}','${av}','${10+i*3}','${b}','normal')">${av}</div>`;
     }
     const page = document.getElementById('page-activity-detail');
     page.innerHTML = '<div class="page-header"><span class="section-label">' + type + '</span><span class="section-title">' + name + '</span></div>'
       + '<div class="act-detail-meta">'
       + '<div class="adm-row"><span class="adm-icon">⏰</span><span class="adm-val">' + time + '</span></div>'
       + '<div class="adm-row"><span class="adm-icon">📍</span><span class="adm-val">' + location + '</span></div>'
-      + '<div class="adm-row"><span class="adm-icon">👤</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('' + host + '','' + host[0] + '','20','本次活动主理人。','normal')">' + host + '</span> 主理</span></div>'
+      + `<div class="adm-row"><span class="adm-icon">👤</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('${host}','${host[0]}','20','本次活动主理人。','normal')">${host}</span> 主理</span></div>`
       + '<div class="adm-row"><span class="adm-icon">🎫</span><span class="adm-val" style="color:' + urgencyColor + ';font-weight:600">' + urgencyText + '</span></div>'
       + '</div>'
       + '<div class="act-detail-desc">' + desc + '</div>'
       + '<div class="act-detail-cap"><div class="adc-header"><span class="adc-title">参与进度</span><span class="adc-num">' + cur + '/' + total + '</span></div><div class="cap-bar" style="height:6px"><div class="cap-fill" style="width:' + pct + '%"></div></div></div>'
       + '<div class="participants-section"><span class="participants-title">已报名的人 <span style="color:var(--ink-faint);font-weight:400">(点击头像查看名片)</span></span><div class="participants-row">' + avatarsHTML + '</div></div>'
-      + '<div style="padding:20px"><div class="btn-primary" onclick="showApplyModal('' + name + '')">申请参加 →</div></div>'
+      + `<div style="padding:20px"><div class="btn-primary" onclick="showApplyModal('${name}')">申请参加 →</div></div>`
       + '<div class="footer-area"><span class="footer-copy">真实发生，才算活过。</span></div>';
     switchTab('activity-detail');
   }
@@ -4072,7 +4072,7 @@ body {
       const n = names2[i % names2.length];
       const b = bios2[i % bios2.length];
       const av = n[0];
-      avatarsHTML += '<div class="participant-avatar" onclick="openOtherProfile('' + n + '','' + av + '','' + (5+i*4) + '','' + b + '','normal')">' + av + '</div>';
+      avatarsHTML += `<div class="participant-avatar" onclick="openOtherProfile('${n}','${av}','${5+i*4}','${b}','normal')">${av}</div>`;
     }
     const tagsHTML = tags.map(t => '<span class="d-tag">' + t + '</span>').join('');
     const page = document.getElementById('page-dialogue-detail');
@@ -4080,13 +4080,13 @@ body {
       + '<div class="act-detail-meta">'
       + '<div class="adm-row"><span class="adm-icon">⏰</span><span class="adm-val">' + time + '</span></div>'
       + '<div class="adm-row"><span class="adm-icon">📍</span><span class="adm-val">' + location + '</span></div>'
-      + '<div class="adm-row"><span class="adm-icon">💬</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('' + initiator + '','' + initiator[0] + '','15','' + initiatorBio + '','normal')">' + initiator + '</span> 发起</span></div>'
+      + `<div class="adm-row"><span class="adm-icon">💬</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('${initiator}','${initiator[0]}','15','${initiatorBio}','normal')">${initiator}</span> 发起</span></div>`
       + '<div class="adm-row"><span class="adm-icon">👥</span><span class="adm-val">' + (remaining > 0 ? '还有 ' + remaining + ' 个位置' : '已满员') + '</span></div>'
       + '</div>'
       + '<div class="act-detail-desc">这是一场真实发生的对话。≤ 6 人，> 2 小时，没有主题限制，只有真实的交流。</div>'
       + '<div class="d-tags" style="padding:0 16px 16px">' + tagsHTML + '</div>'
       + '<div class="participants-section"><span class="participants-title">参与者 <span style="color:var(--ink-faint);font-weight:400">(点击头像查看名片)</span></span><div class="participants-row">' + avatarsHTML + '</div></div>'
-      + '<div style="padding:20px">' + (remaining > 0 ? '<div class="btn-primary" onclick="showJoinModal('' + title + '')">申请加入 →</div>' : '<div class="btn-primary" style="opacity:0.5;cursor:not-allowed">已满员</div>') + '</div>'
+      + `<div style="padding:20px">${remaining > 0 ? '<div class="btn-primary" onclick="showJoinModal(\'' + title + '\')">申请加入 →</div>' : '<div class="btn-primary" style="opacity:0.5;cursor:not-allowed">已满员</div>'}</div>`
       + '<div class="footer-area"><span class="footer-copy">真实发生，才算活过。</span></div>';
     switchTab('dialogue-detail');
   }
