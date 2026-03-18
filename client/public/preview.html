@@ -2551,6 +2551,24 @@ body {
 }
 .gd-subscribe-gold:active { background: #a8861e; }
 
+/* ===== 活动详情页 / 对话详情页 ===== */
+.act-detail-meta { padding: 16px; background: #f9f8f5; border-bottom: 1px solid #e8e4dc; }
+.adm-row { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
+.adm-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.adm-val { font-size: 13px; color: #1a1a1a; line-height: 1.5; }
+.act-detail-desc { padding: 16px; font-size: 14px; color: #555; line-height: 1.8; border-bottom: 1px solid #e8e4dc; }
+.act-detail-cap { padding: 12px 16px; }
+.adc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.adc-title { font-size: 12px; color: #999; font-family: 'IBM Plex Mono', monospace; }
+.adc-num { font-size: 12px; color: #555; font-family: 'IBM Plex Mono', monospace; }
+.participants-section { padding: 16px; border-top: 1px solid #e8e4dc; }
+.participants-title { font-size: 12px; color: #999; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; display: block; margin-bottom: 12px; }
+.participants-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.participant-avatar { width: 40px; height: 40px; border-radius: 50%; background: #1e3a5f; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; cursor: pointer; transition: transform 0.15s; border: 2px solid transparent; }
+.participant-avatar:hover { transform: scale(1.1); border-color: #1e3a5f; }
+.btn-primary { background: #1e3a5f; color: #fff; text-align: center; padding: 14px; font-size: 14px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.05em; cursor: pointer; }
+.btn-primary:hover { background: #162d4a; }
+
 .footer-area {
   padding: 20px 24px 32px;
   text-align: center;
@@ -3079,7 +3097,7 @@ body {
             <span class="act-desc">不是景区打卡，是真实的山野行走。从山脚出发，穿过树林，到达山顶。不带手电，只靠月光和彼此。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('一番','一','38','Let\'s Roll 社群发起人，自然爬山主理人。天目山爬了 200 次以上。','normal')">一番</span><span class="act-host-bio">Let's Roll 社群发起人</span></div></div>
             <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">爬山</span><span class="act-tag">周三/周六</span></div>
-            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('一番的自然爬山')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('一番的自然爬山','一番','周三/周六 21:00','天目山山脚集合点','自然·爬山','不是景区打卡，是真实的山野行走。从山脚出发，穿过树林，到达山顶。不带手电，只靠月光和彼此。',8,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('一番的自然爬山')">申请参加 →</div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3090,7 +3108,7 @@ body {
             <span class="act-desc">不是景点路线，是真实的杭州生活路线。从菜市场开始，穿过老小区，进入你不知道的那条街。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('小小','小','12','老杭州本地人，溶入杭州小巷 10 年。每次路线都不一样。','normal')">小小</span><span class="act-host-bio">老杭州本地人，溶入杭州小巷 10 年</span></div></div>
             <div class="act-tags-row"><span class="act-tag">老杭州</span><span class="act-tag">Citywalk</span><span class="act-tag">周日</span></div>
-            <div class="act-footer"><div><span class="cap-text">11/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:55%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小小的老杭州 Citywalk')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">11/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:55%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('小小的老杭州 Citywalk','小小','周日 10:00','清河坐庄门口集合','城市·漫游','不是景点路线，是真实的杭州生活路线。从菜市场开始，穿过老小区，进入你不知道的那条街。',11,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('小小的老杭州 Citywalk')">申请参加 →</div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3101,7 +3119,7 @@ body {
             <span class="act-desc">不是景区骑行打卡，是真实的西湖环行。小鱼尾巴带你看到普通游客看不到的西湖。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('小鱼尾巴','鱼','22','杭州骑行爱好者，环西湖骑了数百次。喜欢在骑行中遇见陌生人。','normal')">小鱼尾巴</span><span class="act-host-bio">杭州骑行爱好者，环西湖骑了数百次</span></div></div>
             <div class="act-tags-row"><span class="act-tag">骑行</span><span class="act-tag">西湖</span><span class="act-tag">周末</span></div>
-            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小鱼尾巴的环西湖骑行')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('小鱼尾巴的环西湖骑行','小鱼尾巴','周末不定 09:00','西湖断桥堂集合','骑行·自然','不是景区骑行打卡，是真实的西湖环行。小鱼尾巴带你看到普通游客看不到的西湖。',7,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('小鱼尾巴的环西湖骑行')">申请参加 →</div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3112,7 +3130,7 @@ body {
             <span class="act-desc">道长带你走进杭州的历史街区，讲的不是景点介绍，而是这座城市真实发生过的事。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('道长','道','29','杭州本地文化研究者，漫谈杭州历史 8 年。相信每个街巷都有故事。','normal')">道长</span><span class="act-host-bio">杭州本地文化研究者</span></div></div>
             <div class="act-tags-row"><span class="act-tag">文化</span><span class="act-tag">历史</span><span class="act-tag">不定期</span></div>
-            <div class="act-footer"><div><span class="cap-text">5/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:25%"></div></div></div><div class="apply-btn" onclick="showApplyModal('道长的文化街区漫谈')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">5/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:25%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('道长的文化街区漫谈','道长','不定期','小河直街起点','文化·漫谈','道长带你走进杭州的历史街区，讲的不是景点介绍，而是这座城市真实发生过的事。',5,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('道长的文化街区漫谈')">申请参加 →</div></div>
           </div>
         </div>
         <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取本地风光月票</div></div>
@@ -3133,7 +3151,7 @@ body {
             <span class="act-desc">不是餐厅聚餐，是带着食物去郊外。坐在草地上，吃着自己带的食物，和陌生人聚在一起。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('点点','点','17','旷野饮桌发起人。相信饮食是最好的社交方式。','normal')">点点</span><span class="act-host-bio">旷野饮桌发起人</span></div></div>
             <div class="act-tags-row"><span class="act-tag">饮食</span><span class="act-tag">旷野</span><span class="act-tag">周六</span></div>
-            <div class="act-footer"><div><span class="cap-text">9/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:45%"></div></div></div><div class="apply-btn" onclick="showApplyModal('点点的旷野饮桌')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">9/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:45%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('点点的旷野饭桌','点点','周六 18:00','良渚文化村某处','饮食·社交','不是餐厅聚餐，是真实的旷野饭桌。点点带你在城市边缘找一块空地，一起做饭，一起吃饭。',9,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('点点的旷野饭桌')">申请参加 →</div></div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3144,7 +3162,7 @@ body {
             <span class="act-desc">通过游戏化的方式探索人与人之间的关系。不是心理课，是一场真实的社交实验。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('特特','特','9','关系游戏设计师，相信真实的关系可以被设计。','normal')">特特</span><span class="act-host-bio">关系游戏设计师</span></div></div>
             <div class="act-tags-row"><span class="act-tag">社交</span><span class="act-tag">关系</span><span class="act-tag">周日</span></div>
-            <div class="act-footer"><div><span class="cap-text">14/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:70%"></div></div></div><div class="apply-btn" onclick="showApplyModal('特特的关系游戏')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">14/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:70%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('特特的关系游戏','特特','周四 19:30','某私密空间（报名后告知）','关系·游戏','不是破冰游戏，是真实的关系探索。特特设计的游戏让你在不知不觉中说出真实想法。',14,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('特特的关系游戏')">申请参加 →</div></div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3155,7 +3173,7 @@ body {
             <span class="act-desc">不是创业分享会，是小型圆桌分享。每个人分享自己对“青年公社”的理解和实践。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('威廉','威','11','青年公社研究者，在杭州探索新型社区形式。','normal')">威廉</span><span class="act-host-bio">青年公社研究者</span></div></div>
             <div class="act-tags-row"><span class="act-tag">青年</span><span class="act-tag">公社</span><span class="act-tag">周五</span></div>
-            <div class="act-footer"><div><span class="cap-text">6/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:30%"></div></div></div><div class="apply-btn" onclick="showApplyModal('威廉的青年公社新范式')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">6/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:30%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('威廉的青年公社新范式','威廉','周二 20:00','天目里某共享空间','社区·探索','威廉在杭州探索新型社区形式，这不是讲座，是一次真实的社区实验。',6,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('威廉的青年公社新范式')">申请参加 →</div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3166,7 +3184,7 @@ body {
             <span class="act-desc">分享数字游民的真实生活。不是 PPT，是真实的流浪经历和实用建议。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('顾得','顾','8','数字游民，在亚洲多个城市工作过。目前在杭州落脚。','normal')">顾得</span><span class="act-host-bio">数字游民，在亚洲多个城市工作过</span></div></div>
             <div class="act-tags-row"><span class="act-tag">数字游民</span><span class="act-tag">漂流</span><span class="act-tag">不定期</span></div>
-            <div class="act-footer"><div><span class="cap-text">4/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:20%"></div></div></div><div class="apply-btn" onclick="showApplyModal('顾得的数字游民漂流计划')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">4/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:20%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('顾得的数字游民漂流计划','顾得','周五 21:00','某 Co-working Space','数字游民·分享','顾得在亚洲多个城市工作过，这次分享他的漂流经验和在杭州落脚的故事。',4,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('顾得的数字游民漂流计划')">申请参加 →</div></div></div>
           </div>
         </div>
         <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取当代青年月票</div></div>
@@ -3187,7 +3205,7 @@ body {
             <span class="act-desc">不需要舞蹈基础。身体是最诚实的语言。通过身体运动释放自己，连接当下的感受。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('Jane','J','21','身体舞动引导师，相信身体是最诚实的表达方式。','normal')">Jane</span><span class="act-host-bio">身体舞动引导师</span></div></div>
             <div class="act-tags-row"><span class="act-tag">身体</span><span class="act-tag">舞动</span><span class="act-tag">周六</span></div>
-            <div class="act-footer"><div><span class="cap-text">10/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:50%"></div></div></div><div class="apply-btn" onclick="showApplyModal('Jane 的身体舞动')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">10/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:50%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('Jane 的身体舞动','Jane','周三 19:00','某舞蹈工作室','身体·舞动','不是舞蹈课，是身体表达的探索。Jane 相信身体是最诚实的表达方式，这里没有对错。',10,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('Jane 的身体舞动')">申请参加 →</div></div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3198,7 +3216,7 @@ body {
             <span class="act-desc">去户外，用感官去感受自然。不是课程，是一场共同的自然中的存在。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('蚊子','蚊','13','自然接触引导师，相信自然是最好的治愈。','normal')">蚊子</span><span class="act-host-bio">自然接触引导师</span></div></div>
             <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">感官</span><span class="act-tag">周日</span></div>
-            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('蚊子的自然接触')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('蚊子的自然接触','蚊子','周末不定','西溪湿地入口','自然·接触','不是郊游，是真实的自然接触。蚊子相信自然是最好的治愈，这次带你真正进入自然。',8,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('蚊子的自然接触')">申请参加 →</div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3209,7 +3227,7 @@ body {
             <span class="act-desc">不需要表演经验。即兴户剧是一种当下创作的艺术。在当下发生，在当下结束。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('山猬','猬','16','即兴户剧引导师，相信当下创作是最真实的艺术。','normal')">山猬</span><span class="act-host-bio">即兴户剧引导师</span></div></div>
             <div class="act-tags-row"><span class="act-tag">户剧</span><span class="act-tag">即兴</span><span class="act-tag">周四</span></div>
-            <div class="act-footer"><div><span class="cap-text">12/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:60%"></div></div></div><div class="apply-btn" onclick="showApplyModal('山猬的即兴户剧')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">12/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:60%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('刺猬的即兴戏剧','刺猬','周五 19:30','某小剧场','戏剧·即兴','不是表演课，是即兴创作的探索。刺猬相信当下创作是最真实的艺术，没有剧本，只有当下。',12,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('刺猬的即兴戏剧')">申请参加 →</div></div></div>
           </div>
         </div>
         <div class="act-card">
@@ -3220,7 +3238,7 @@ body {
             <span class="act-desc">不是绘画课，是一场共同创作的时光。不评判，只表达。画出你当下最真实的感受。</span>
             <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('nainai','n','18','自由绘画引导师，相信画画是最直接的表达方式。','normal')">nainai</span><span class="act-host-bio">自由绘画引导师</span></div></div>
             <div class="act-tags-row"><span class="act-tag">绘画</span><span class="act-tag">自由</span><span class="act-tag">周三</span></div>
-            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('nainai 的自由绘画')">申请参加 →</div></div>
+            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div style="display:flex;gap:8px"><div class="detail-btn" onclick="openActivityDetail('nainai 的自由绘画','nainai','周日 14:00','某画室','绘画·自由','不是绘画课，是自由表达的探索。nainai 相信画画是最直接的表达方式，这里没有技法要求。',7,20,'normal')">详情</div><div class="apply-btn" onclick="showApplyModal('nainai 的自由绘画')">申请参加 →</div></div>
           </div>
         </div>
         <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取多元艺术月票</div></div>
@@ -3252,8 +3270,8 @@ body {
 
       <div class="d-card">
         <div class="d-status"><div class="d-dot d-dot-live"></div><span class="d-status-text">正在发生 · LIVE</span></div>
-        <span class="d-title">"离职之后，你是怎么重新找到节奏的？"</span>
-        <span class="d-meta"><span class="initiator">阿强</span> 发起 · 22:30 · 今晚 · 文二路某咖啡馆</span>
+        <span class="d-title" style="cursor:pointer" onclick="openDialogueDetail('离职之后，你是怎么重新找到节奏的？','阿强','对话爱好者，在杭州发起了多场深夜对话。','今晚 22:30','文二路某咖啡馆',4,6,["Gap Year", "职场"])">"离职之后，你是怎么重新找到节奏的？"</span>
+        <span class="d-meta"><span class="initiator name-link" onclick="openOtherProfile('阿强','阿','23','对话爱好者，在杭州发起了多场深夜对话。相信真实的连接从一个好问题开始。','normal')">阿强</span> 发起 · 22:30 · 今晚 · 文二路某咖啡馆</span>
         <div class="d-tags"><span class="d-tag">Gap Year</span><span class="d-tag">职场</span></div>
         <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">4/6</span><span class="d-cap-rem">余 2 位</span></div><div class="join-btn" onclick="showJoinModal('离职之后，你是怎么重新找到节奏的？')">申请加入</div></div>
         <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
@@ -3261,8 +3279,8 @@ body {
 
       <div class="d-card">
         <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">明天发生</span></div>
-        <span class="d-title">"AI 会不会让创意工作者失业？我不这么认为"</span>
-        <span class="d-meta"><span class="initiator">七哥</span> 发起 · 20:00 · 明天 · 某 Co-working Space</span>
+        <span class="d-title" style="cursor:pointer" onclick="openDialogueDetail('AI 会不会让创意工作者失业？我不这么认为','七哥','AI 创业者，在杭州做了三个项目。','明天 20:00','某 Co-working Space',3,6,["AI", "创意", "辩论"])">"AI 会不会让创意工作者失业？我不这么认为"</span>
+        <span class="d-meta"><span class="initiator name-link" onclick="openOtherProfile('七哥','七','31','AI 创业者，在杭州做了三个项目。对话是我的最爱。','normal')">七哥</span> 发起 · 20:00 · 明天 · 某 Co-working Space</span>
         <div class="d-tags"><span class="d-tag">AI</span><span class="d-tag">创意</span><span class="d-tag">辩论</span></div>
         <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">3/6</span><span class="d-cap-rem">余 3 位</span></div><div class="join-btn" onclick="showJoinModal('AI 会不会让创意工作者失业？')">申请加入</div></div>
         <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
@@ -3270,8 +3288,8 @@ body {
 
       <div class="d-card">
         <div class="d-status"><div class="d-dot d-dot-live"></div><span class="d-status-text">正在发生 · LIVE</span></div>
-        <span class="d-title">"当代城市里，什么是真正的孤独？"</span>
-        <span class="d-meta"><span class="initiator">子木</span> 发起 · 23:00 · 今晚 · 西湖边某处</span>
+        <span class="d-title" style="cursor:pointer" onclick="openDialogueDetail('当代城市里，什么是真正的孤独？','子木','独立设计师，喜欢即兴演出和自由绘画。','今晚 23:00','西湖边某处',2,6,["城市", "孤独", "深度"])">"当代城市里，什么是真正的孤独？"</span>
+        <span class="d-meta"><span class="initiator name-link" onclick="openOtherProfile('子木','子','15','独立设计师，喜欢即兴演出和自由绘画。','normal')">子木</span> 发起 · 23:00 · 今晚 · 西湖边某处</span>
         <div class="d-tags"><span class="d-tag">城市</span><span class="d-tag">孤独</span><span class="d-tag">深度</span></div>
         <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">2/6</span><span class="d-cap-rem">余 4 位</span></div><div class="join-btn" onclick="showJoinModal('当代城市里，什么是真正的孤独？')">申请加入</div></div>
         <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
@@ -3279,8 +3297,8 @@ body {
 
       <div class="d-card">
         <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">后天发生</span></div>
-        <span class="d-title">"我们这代人，还相信爱情吗？"</span>
-        <span class="d-meta"><span class="initiator">林姐</span> 发起 · 21:00 · 后天 · 待定</span>
+        <span class="d-title" style="cursor:pointer" onclick="openDialogueDetail('我们这代人，还相信爱情吗？','林姐','自由撰稿人，关注女性成长和当代青年话题。','后天 21:00','待定',5,6,["情感", "当代", "真实"])">"我们这代人，还相信爱情吗？"</span>
+        <span class="d-meta"><span class="initiator name-link" onclick="openOtherProfile('林姐','林','19','自由撰稿人，关注女性成长和当代青年话题。','normal')">林姐</span> 发起 · 21:00 · 后天 · 待定</span>
         <div class="d-tags"><span class="d-tag">情感</span><span class="d-tag">当代</span><span class="d-tag">真实</span></div>
         <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">5/6</span><span class="d-cap-rem">余 1 位</span></div><div class="join-btn" onclick="showJoinModal('我们这代人，还相信爱情吗？')">申请加入</div></div>
         <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
@@ -3288,8 +3306,8 @@ body {
 
       <div class="d-card">
         <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">周五发生</span></div>
-        <span class="d-title">"如果可以重来，你会选择不同的专业吗？"</span>
-        <span class="d-meta"><span class="initiator">大王</span> 发起 · 20:30 · 周五 · 天目里</span>
+        <span class="d-title" style="cursor:pointer" onclick="openDialogueDetail('如果可以重来，你会选择不同的专业吗？','大王','产品经理，喜欢在对话中发现新视角。','周五 20:30','天目里',1,6,["教育", "职业", "选择"])">"如果可以重来，你会选择不同的专业吗？"</span>
+        <span class="d-meta"><span class="initiator name-link" onclick="openOtherProfile('大王','大','8','产品经理，喜欢在对话中发现新视角。','normal')">大王</span> 发起 · 20:30 · 周五 · 天目里</span>
         <div class="d-tags"><span class="d-tag">教育</span><span class="d-tag">职业</span><span class="d-tag">选择</span></div>
         <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">1/6</span><span class="d-cap-rem">余 5 位</span></div><div class="join-btn" onclick="showJoinModal('如果可以重来，你会选择不同的专业吗？')">申请加入</div></div>
         <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
@@ -3752,6 +3770,16 @@ body {
     <div style="padding:20px;text-align:center;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:12px">Loading...</div>
   </div>
 
+  <!-- 活动详情页（动态内容） -->
+  <div class="page" id="page-activity-detail" style="display:none">
+    <div style="padding:20px;text-align:center;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:12px">Loading...</div>
+  </div>
+
+  <!-- 对话详情页（动态内容） -->
+  <div class="page" id="page-dialogue-detail" style="display:none">
+    <div style="padding:20px;text-align:center;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:12px">Loading...</div>
+  </div>
+
   <!-- TabBar -->
   <div class="tab-bar">
     <div class="tab-item active" id="tab-home" onclick="switchTab('home')">
@@ -3806,7 +3834,9 @@ body {
     dialogue: '对话广场',
     profile: '数字身份',
     'other-profile': '数字名片',
-    'gateway-detail': '月票详情'
+    'gateway-detail': '月票详情',
+    'activity-detail': '活动详情',
+    'dialogue-detail': '对话详情'
   };
   const mainTabs = ['home','timeline','dialogue','profile'];
   let lastTab = 'profile';
@@ -4001,30 +4031,88 @@ body {
     `;
     switchTab('gateway-detail');
   }
+  function openActivityDetail(name, host, time, location, type, desc, cur, total, badge) {
+    const pct = Math.round(cur/total*100);
+    const remaining = total - cur;
+    const urgencyColor = pct >= 70 ? '#c0392b' : '#1e3a5f';
+    const urgencyText = remaining <= 3 ? '仅剩 ' + remaining + ' 位' : remaining + ' 位空余';
+    const avatarChars = ['阿','小','七','子','林','大','一','特','威','顾','J','蚊','刺','n'];
+    let avatarsHTML = '';
+    const names = ['阿强','小小','七哥','子木','林姐','大王','一番','特特','威廉','顾得'];
+    const bios = ['对话爱好者','老杭州本地人','AI创业者','独立设计师','自由撰稿人','产品经理','自然爬山主理人','关系游戏设计师','社区探索者','数字游民'];
+    for (let i = 0; i < cur; i++) {
+      const n = names[i % names.length];
+      const b = bios[i % bios.length];
+      const av = n[0];
+      avatarsHTML += '<div class="participant-avatar" onclick="openOtherProfile('' + n + '','' + av + '','' + (10+i*3) + '','' + b + '','normal')">' + av + '</div>';
+    }
+    const page = document.getElementById('page-activity-detail');
+    page.innerHTML = '<div class="page-header"><span class="section-label">' + type + '</span><span class="section-title">' + name + '</span></div>'
+      + '<div class="act-detail-meta">'
+      + '<div class="adm-row"><span class="adm-icon">⏰</span><span class="adm-val">' + time + '</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">📍</span><span class="adm-val">' + location + '</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">👤</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('' + host + '','' + host[0] + '','20','本次活动主理人。','normal')">' + host + '</span> 主理</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">🎫</span><span class="adm-val" style="color:' + urgencyColor + ';font-weight:600">' + urgencyText + '</span></div>'
+      + '</div>'
+      + '<div class="act-detail-desc">' + desc + '</div>'
+      + '<div class="act-detail-cap"><div class="adc-header"><span class="adc-title">参与进度</span><span class="adc-num">' + cur + '/' + total + '</span></div><div class="cap-bar" style="height:6px"><div class="cap-fill" style="width:' + pct + '%"></div></div></div>'
+      + '<div class="participants-section"><span class="participants-title">已报名的人 <span style="color:var(--ink-faint);font-weight:400">(点击头像查看名片)</span></span><div class="participants-row">' + avatarsHTML + '</div></div>'
+      + '<div style="padding:20px"><div class="btn-primary" onclick="showApplyModal('' + name + '')">申请参加 →</div></div>'
+      + '<div class="footer-area"><span class="footer-copy">真实发生，才算活过。</span></div>';
+    switchTab('activity-detail');
+  }
+
+  function openDialogueDetail(title, initiator, initiatorBio, time, location, cur, total, tags) {
+    const remaining = total - cur;
+    const avatarChars = ['阿','七','子','林','大','一'];
+    const names2 = ['阿强','七哥','子木','林姐','大王','一番'];
+    const bios2 = ['对话爱好者','AI创业者','独立设计师','自由撰稿人','产品经理','自然爬山主理人'];
+    let avatarsHTML = '';
+    for (let i = 0; i < cur; i++) {
+      const n = names2[i % names2.length];
+      const b = bios2[i % bios2.length];
+      const av = n[0];
+      avatarsHTML += '<div class="participant-avatar" onclick="openOtherProfile('' + n + '','' + av + '','' + (5+i*4) + '','' + b + '','normal')">' + av + '</div>';
+    }
+    const tagsHTML = tags.map(t => '<span class="d-tag">' + t + '</span>').join('');
+    const page = document.getElementById('page-dialogue-detail');
+    page.innerHTML = '<div class="page-header"><span class="section-label">DIALOGUE · 对话详情</span><span class="section-title" style="font-size:16px;line-height:1.4">"' + title + '"</span></div>'
+      + '<div class="act-detail-meta">'
+      + '<div class="adm-row"><span class="adm-icon">⏰</span><span class="adm-val">' + time + '</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">📍</span><span class="adm-val">' + location + '</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">💬</span><span class="adm-val"><span class="name-link" onclick="openOtherProfile('' + initiator + '','' + initiator[0] + '','15','' + initiatorBio + '','normal')">' + initiator + '</span> 发起</span></div>'
+      + '<div class="adm-row"><span class="adm-icon">👥</span><span class="adm-val">' + (remaining > 0 ? '还有 ' + remaining + ' 个位置' : '已满员') + '</span></div>'
+      + '</div>'
+      + '<div class="act-detail-desc">这是一场真实发生的对话。≤ 6 人，> 2 小时，没有主题限制，只有真实的交流。</div>'
+      + '<div class="d-tags" style="padding:0 16px 16px">' + tagsHTML + '</div>'
+      + '<div class="participants-section"><span class="participants-title">参与者 <span style="color:var(--ink-faint);font-weight:400">(点击头像查看名片)</span></span><div class="participants-row">' + avatarsHTML + '</div></div>'
+      + '<div style="padding:20px">' + (remaining > 0 ? '<div class="btn-primary" onclick="showJoinModal('' + title + '')">申请加入 →</div>' : '<div class="btn-primary" style="opacity:0.5;cursor:not-allowed">已满员</div>') + '</div>'
+      + '<div class="footer-area"><span class="footer-copy">真实发生，才算活过。</span></div>';
+    switchTab('dialogue-detail');
+  }
+
   function doLogin() {
     // 隐藏未登录区域
     const loginArea = document.getElementById('profileLoginArea');
     if (loginArea) loginArea.style.display = 'none';
-    // 显示登录后用户信息
-    const userInfo = document.getElementById('profileUserInfo');
-    if (userInfo) { userInfo.classList.add('show'); userInfo.style.display = 'block'; }
-    // 显示月票标签
-    const tickets = document.getElementById('profileTickets');
-    if (tickets) { tickets.classList.add('show'); tickets.style.display = 'flex'; }
-    // 显示统计数字
-    const stats = document.getElementById('profileStats');
-    if (stats) { stats.classList.add('show'); stats.style.display = 'flex'; }
-    // 显示发布入口
-    const compose = document.getElementById('feedCompose');
-    if (compose) compose.style.display = 'block';
+    // 显示登录后完整内容容器
+    const loggedIn = document.getElementById('profileLoggedIn');
+    if (loggedIn) loggedIn.style.display = 'block';
+    // 显示时间轴
+    const timeline = document.getElementById('profileTimeline');
+    if (timeline) timeline.style.display = 'block';
     // 999 杭州月票金色标识
     const goldBadge = document.getElementById('profileGoldBadge');
     if (goldBadge) goldBadge.style.display = 'flex';
     // 勋章解锁
-    document.getElementById('badge1').className = 'badge-item badge-earned';
-    document.getElementById('badge2').className = 'badge-item badge-earned';
-    document.getElementById('badge3').className = 'badge-item badge-earned';
-    document.getElementById('badgeCount').textContent = '3 / 6';
+    const b1 = document.getElementById('badge1');
+    const b2 = document.getElementById('badge2');
+    const b3 = document.getElementById('badge3');
+    const bc = document.getElementById('badgeCount');
+    if (b1) b1.className = 'badge-item badge-earned';
+    if (b2) b2.className = 'badge-item badge-earned';
+    if (b3) b3.className = 'badge-item badge-earned';
+    if (bc) bc.textContent = '3 / 6';
     showToast('登录成功 · 欢迎回到真实发生');
   }
 
