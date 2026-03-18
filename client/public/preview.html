@@ -548,6 +548,27 @@ body {
   font-size: 9px;
   color: #2d8a2d;
   font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+}
+.feed-live-soon {
+  background: #c47c1a;
+  box-shadow: 0 0 4px rgba(196,124,26,0.5);
+}
+.feed-live-text-soon {
+  color: #c47c1a;
+}
+.feed-cap-warn {
+  color: #c47c1a;
+  font-weight: 600;
+}
+.feed-cap-urgent {
+  color: #c0392b;
+  font-weight: 700;
+  animation: pulse-text 1.5s ease-in-out infinite;
+}
+@keyframes pulse-text {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 /* 月票横向滑动 */
@@ -2153,6 +2174,114 @@ body {
   padding-bottom: 1px;
 }
 
+/* 参与记录时间轴 */
+.timeline-section {
+  padding: 20px 20px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.tl-item {
+  display: flex;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 4px;
+}
+.tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+}
+.tl-dot-activity { background: var(--navy); }
+.tl-dot-dialogue { background: #6b7280; border: 2px solid var(--navy); background: #fff; }
+.tl-line {
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--border);
+}
+.tl-item:last-child .tl-line { display: none; }
+.tl-card {
+  flex: 1;
+  background: #f9f9f9;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--navy);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  transition: background 0.15s;
+}
+.tl-item:active .tl-card { background: #f0f0f0; }
+.tl-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.tl-date {
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink-faint);
+  letter-spacing: 0.5px;
+}
+.tl-type {
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 1px 6px;
+  letter-spacing: 1px;
+}
+.tl-type-activity { background: var(--navy); color: #f5f0e8; }
+.tl-type-dialogue { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+.tl-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Noto Serif SC', serif;
+  color: var(--ink-black);
+  margin-bottom: 3px;
+  line-height: 1.4;
+}
+.tl-host {
+  display: block;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--ink-faint);
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.tl-preview {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-medium);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.5;
+  margin-bottom: 7px;
+}
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.tl-tag {
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--navy);
+  background: rgba(30,58,95,0.07);
+  padding: 2px 7px;
+  letter-spacing: 0.5px;
+}
+
 /* 活动页 Tab 切换栏 */
 .act-tab-bar {
   display: flex;
@@ -2375,6 +2504,52 @@ body {
   cursor: pointer;
   letter-spacing: 1px;
 }
+/* 杭州月票金色主题变体 */
+.gd-hero-gold {
+  background: linear-gradient(135deg, #2c1f0a 0%, #4a3210 60%, #2c1f0a 100%);
+  border-bottom: 2px solid #c9a227;
+}
+.gd-price-gold { color: #f0c040; }
+.gd-quota-bar-gold { background: rgba(201,162,39,0.2); }
+.gd-quota-fill-gold { background: #c9a227; }
+.gd-quota-urgent { color: #f0c040; font-weight: 700; }
+.gd-hangzhou-badge {
+  display: inline-block;
+  background: #c9a227;
+  color: #1a1000;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.gd-physical-gift {
+  margin-top: 12px;
+  background: rgba(201,162,39,0.15);
+  border: 1px solid rgba(201,162,39,0.4);
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #f0c040;
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.6;
+}
+.gd-benefit-gold .gd-benefit-icon { background: #c9a227; }
+.gd-host-av-gold { background: #c9a227; color: #1a1000; }
+.gd-more-hosts {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #f9f5ec;
+  border-left: 3px solid #c9a227;
+  font-size: 12px;
+  color: var(--ink-medium);
+  font-family: 'Noto Serif SC', serif;
+}
+.gd-subscribe-gold {
+  background: #c9a227;
+  color: #1a1000;
+}
+.gd-subscribe-gold:active { background: #a8861e; }
 
 .footer-area {
   padding: 20px 24px 32px;
@@ -2582,7 +2757,7 @@ body {
             </div>
             <div class="feed-card-footer">
               <span class="feed-card-time">周三/六 21:00</span>
-              <span class="feed-card-cap">8/20 人</span>
+              <span class="feed-card-cap feed-cap-warn">8/20 人 · 仅剩 12</span>
             </div>
           </div>
         </div>
@@ -2598,8 +2773,8 @@ body {
               <span class="feed-card-name">"离职之后，你是怎么重新找到节奏的？"</span>
             </div>
             <div class="feed-card-footer">
-              <span class="feed-card-time">今晚 22:30</span>
-              <span class="feed-card-cap">4/6 人</span>
+              <span class="feed-card-time">进行中</span>
+              <span class="feed-card-cap feed-cap-urgent">4/6 人 · 仅剩 2 座</span>
             </div>
           </div>
         </div>
@@ -2608,15 +2783,15 @@ body {
           <div class="feed-card-body">
             <div>
               <div class="feed-card-meta">
-                <span class="feed-card-type">当代青年</span>
+                <div class="feed-live-row"><div class="feed-live-dot feed-live-soon"></div><span class="feed-live-text feed-live-text-soon">SOON</span></div>
                 <div class="feed-card-dot"></div>
                 <span class="feed-card-cat">点点主理</span>
               </div>
               <span class="feed-card-name">点点的旁野饭桌</span>
             </div>
             <div class="feed-card-footer">
-              <span class="feed-card-time">周六 18:30</span>
-              <span class="feed-card-cap">13/20 人</span>
+              <span class="feed-card-time">周六 18:30 开始</span>
+              <span class="feed-card-cap feed-cap-warn">13/20 人 · 剩 7</span>
             </div>
           </div>
         </div>
@@ -2868,8 +3043,14 @@ body {
               <div>✓ 主理人直联渠道 + 优先报名权</div>
             </div>
           </div>
-          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:30%;background:#8b6914"></div></div><span class="progress-text">3/10 已售</span></div>
-          <div class="gw-full-footer"><div><span class="gw-full-price" style="color:#8b6914">¥999</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" style="background:#8b6914" onclick="showBuyModal('打开真实发生的杭州','999')">立即获取</div></div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:70%;background:#8b6914"></div></div><span class="progress-text" style="color:#c0392b;font-weight:700">7/10 已售 · 仅剩 3 张</span></div>
+          <div class="gw-full-footer">
+            <div><span class="gw-full-price" style="color:#8b6914">¥999</span><span class="gw-full-price-unit">/月</span></div>
+            <div style="display:flex;gap:8px">
+              <div class="buy-btn" style="background:transparent;color:#8b6914;border:1px solid #8b6914" onclick="openGatewayDetail('hangzhou')">查看详情</div>
+              <div class="buy-btn" style="background:#8b6914" onclick="showBuyModal('打开真实发生的杭州','999')">立即获取</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3352,6 +3533,71 @@ body {
           </div>
         </div>
 
+        <!-- 参与记录时间轴 -->
+        <div class="timeline-section" id="profileTimeline" style="display:none">
+          <div class="sec-header-row">
+            <span class="sec-title-text">THE RECORD · 参与记录</span>
+            <span class="sec-count">8 次参与</span>
+          </div>
+          <div class="timeline-list">
+            <div class="tl-item" onclick="openTimelineDetail('2025.03.15','自然爬山 · 一番','activity','03.15 凌晨三点上天目山。云雾里的杭州就像一幅水墨画。这就是为什么我这么多年还在这里。')"> 
+              <div class="tl-dot tl-dot-activity"></div>
+              <div class="tl-line"></div>
+              <div class="tl-card">
+                <div class="tl-meta"><span class="tl-date">2025.03.15</span><span class="tl-type tl-type-activity">活动</span></div>
+                <span class="tl-title">自然爬山 · 一番</span>
+                <span class="tl-host">HOST: 一番 · 本地风光</span>
+                <span class="tl-preview">凌晨三点上天目山。云雾里的杭州就像一幅水墨画…</span>
+                <div class="tl-tags"><span class="tl-tag">本地风光</span><span class="tl-tag">夜爬</span></div>
+              </div>
+            </div>
+            <div class="tl-item" onclick="openTimelineDetail('2025.03.12','“当代城市里，什么是真正的孤独？” · 对话','dialogue','当天子木说了一句话让我印象深刻：孤独不是没有人，而是没有人真正看见你。这场对话让我重新思考了社交的意义。')"> 
+              <div class="tl-dot tl-dot-dialogue"></div>
+              <div class="tl-line"></div>
+              <div class="tl-card">
+                <div class="tl-meta"><span class="tl-date">2025.03.12</span><span class="tl-type tl-type-dialogue">对话</span></div>
+                <span class="tl-title">“当代城市里，什么是真正的孤独？”</span>
+                <span class="tl-host">INITIATOR: 子木 · 西湖边某处</span>
+                <span class="tl-preview">孤独不是没有人，而是没有人真正看见你…</span>
+                <div class="tl-tags"><span class="tl-tag">对话</span><span class="tl-tag">城市</span><span class="tl-tag">孤独</span></div>
+              </div>
+            </div>
+            <div class="tl-item" onclick="openTimelineDetail('2025.03.08','关系游戏 · 特特','activity','第一次玩关系游戏，没想到会这么不自在。游戏设计得很巧，让人在不知不觉中就说出了真实想法。特特说“真实的关系可以被设计”，我信了。')"> 
+              <div class="tl-dot tl-dot-activity"></div>
+              <div class="tl-line"></div>
+              <div class="tl-card">
+                <div class="tl-meta"><span class="tl-date">2025.03.08</span><span class="tl-type tl-type-activity">活动</span></div>
+                <span class="tl-title">关系游戏 · 特特</span>
+                <span class="tl-host">HOST: 特特 · 当代青年</span>
+                <span class="tl-preview">第一次玩关系游戏，没想到会这么不自在…</span>
+                <div class="tl-tags"><span class="tl-tag">当代青年</span><span class="tl-tag">关系</span></div>
+              </div>
+            </div>
+            <div class="tl-item" onclick="openTimelineDetail('2025.03.03','“离职之后，你是怎么重新找到节奏的？” · 对话','dialogue','阿强发起的这场对话让我很感动。每个人都有一段迟到的节奏，但最后都找到了自己的方式。我也开始相信，过程比结果重要。')"> 
+              <div class="tl-dot tl-dot-dialogue"></div>
+              <div class="tl-line"></div>
+              <div class="tl-card">
+                <div class="tl-meta"><span class="tl-date">2025.03.03</span><span class="tl-type tl-type-dialogue">对话</span></div>
+                <span class="tl-title">“离职之后，你是怎么重新找到节奏的？”</span>
+                <span class="tl-host">INITIATOR: 阿强 · 文二路某和唱</span>
+                <span class="tl-preview">每个人都有一段迟到的节奏，但最后都找到了自己的方式…</span>
+                <div class="tl-tags"><span class="tl-tag">对话</span><span class="tl-tag">Gap Year</span></div>
+              </div>
+            </div>
+            <div class="tl-item" onclick="openTimelineDetail('2025.02.22','老杭州 Citywalk · 小小','activity','小小带我们走进了那些我从来没注意过的小巷。杭州不只是西湖，它是那些老居民的一天天。这个城市的层次感让我重新爱上了杭州。')"> 
+              <div class="tl-dot tl-dot-activity"></div>
+              <div class="tl-line"></div>
+              <div class="tl-card">
+                <div class="tl-meta"><span class="tl-date">2025.02.22</span><span class="tl-type tl-type-activity">活动</span></div>
+                <span class="tl-title">老杭州 Citywalk · 小小</span>
+                <span class="tl-host">HOST: 小小 · 本地风光</span>
+                <span class="tl-preview">小小带我们走进了那些我从来没注意过的小巷…</span>
+                <div class="tl-tags"><span class="tl-tag">本地风光</span><span class="tl-tag">Citywalk</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="footer-area">
           <div class="footer-links">
             <span class="footer-link">关于 Simpex</span><span class="footer-sep">·</span>
@@ -3705,37 +3951,52 @@ body {
                 {av:'蚊',name:'蚊子',act:'自然接触',bio:'自然接触引导师，相信自然是最好的治愈。',ev:'13',type:'normal'},
                 {av:'猬',name:'山猬',act:'即兴户剧',bio:'即兴户剧引导师，相信当下创作是最真实的艺术。',ev:'16',type:'normal'},
                 {av:'n',name:'nainai',act:'自由绘画',bio:'自由绘画引导师，相信画画是最直接的表达方式。',ev:'18',type:'normal'}]
+      },
+      hangzhou: { label:'GATEWAY: HANGZHOU · 杭州合集', title:'打开真实发生的杭州', price:'¥999', quota:'7/10', fill:'70%', limit:10,
+        benefits:['本地风光 + 当代青年 + 多元艺术全部活动免费参加','三个主题专属社群同时开通','真实发生数字身份 + 金色特殊标识','赠送实体数字身份纸质本（小山之山设计）'],
+        hosts:[{av:'一',name:'一番',act:'自然爬山',bio:'Let\'s Roll 社群发起人，天目山爬了 200 次以上。',ev:'38',type:'normal'},
+                {av:'点',name:'点点',act:'旁野饭桌',bio:'旁野饭桌发起人。相信饮食是最好的社交方式。',ev:'17',type:'normal'},
+                {av:'J',name:'Jane',act:'身体舞动',bio:'身体舞动引导师，相信身体是最诚实的表达方式。',ev:'21',type:'normal'}]
       }
     };
     const d = data[key]; if (!d) return;
     // 写入月票详情页
     const page = document.getElementById('page-gateway-detail');
     if (!page) return;
+    const isHangzhou = key === 'hangzhou';
+    const limitNum = d.limit || 30;
+    const soldNum = parseInt(d.quota);
+    const remainNum = limitNum - soldNum;
     page.innerHTML = `
-      <div class="gateway-detail-page">
-        <div class="gd-hero">
+      <div class="gateway-detail-page${isHangzhou ? ' gd-hangzhou' : ''}">
+        <div class="gd-hero${isHangzhou ? ' gd-hero-gold' : ''}">
           <span class="gd-label">${d.label}</span>
           <span class="gd-title">${d.title}</span>
-          <div class="gd-price-row"><span class="gd-price">${d.price}</span><span class="gd-price-sub">/月 · 首月限 30 张</span></div>
-          <div class="gd-quota-bar"><div class="gd-quota-fill" style="width:${d.fill}"></div></div>
-          <span class="gd-quota-text">已售 ${d.quota} 张 · 剩余 ${30 - parseInt(d.quota)} 张</span>
+          ${isHangzhou ? `<div class="gd-hangzhou-badge">★ 杭州合集 · 全域通行</div>` : ''}
+          <div class="gd-price-row"><span class="gd-price${isHangzhou ? ' gd-price-gold' : ''}">${d.price}</span><span class="gd-price-sub">/月 · 首月限 ${limitNum} 张</span></div>
+          <div class="gd-quota-bar${isHangzhou ? ' gd-quota-bar-gold' : ''}">
+            <div class="gd-quota-fill${isHangzhou ? ' gd-quota-fill-gold' : ''}" style="width:${d.fill}"></div>
+          </div>
+          <span class="gd-quota-text${remainNum <= 3 ? ' gd-quota-urgent' : ''}">已售 ${soldNum} 张 · 仅剩 <strong>${remainNum}</strong> 张${remainNum <= 3 ? ' — 即将售罄' : ''}</span>
+          ${isHangzhou ? `<div class="gd-physical-gift">📖 赠送实体数字身份纸质本，小山之山设计，全国限量 10 本</div>` : ''}
         </div>
         <div class="gd-benefits">
           <span class="gd-benefits-title">BENEFITS · 月票权益</span>
-          ${d.benefits.map((b,i) => `<div class="gd-benefit-item"><div class="gd-benefit-icon">${['\ud83c\udfab','\ud83d\udc65','\ud83c\udfe0','\ud83d\udcd6'][i]}</div><div><span class="gd-benefit-text">${b}</span></div></div>`).join('')}
+          ${d.benefits.map((b,i) => `<div class="gd-benefit-item${isHangzhou ? ' gd-benefit-gold' : ''}"><div class="gd-benefit-icon">${isHangzhou ? ['🌏','👥','★','📖'][i] : ['🎫','👥','🏠','📖'][i]}</div><div><span class="gd-benefit-text">${b}</span></div></div>`).join('')}
         </div>
         <div class="gd-hosts">
-          <span class="gd-benefits-title">HOSTS · 本月主理人</span>
+          <span class="gd-benefits-title">${isHangzhou ? 'FEATURED HOSTS · 三领域主理人代表' : 'HOSTS · 本月主理人'}</span>
           ${d.hosts.map(h => `<div class="gd-host-card" onclick="openOtherProfile('${h.name}','${h.av}','${h.ev}','${h.bio}','${h.type}')">
-            <div class="gd-host-av">${h.av}</div>
+            <div class="gd-host-av${isHangzhou ? ' gd-host-av-gold' : ''}">${h.av}</div>
             <div class="gd-host-info">
               <span class="gd-host-name">${h.name}</span>
               <span class="gd-host-act">${h.act}</span>
               <span class="gd-host-bio">${h.bio}</span>
             </div>
           </div>`).join('')}
+          ${isHangzhou ? `<div class="gd-more-hosts">及全部 12 位主理人，包含本地风光、当代青年、多元艺术三个领域</div>` : ''}
         </div>
-        <div class="gd-subscribe-btn" onclick="showModal('订阅成功','已成功订阅 ${d.title}！本月全部活动已免费解锁。','确认',()=>{})">立即订阅 ${d.price}/月</div>
+        <div class="gd-subscribe-btn${isHangzhou ? ' gd-subscribe-gold' : ''}" onclick="showModal('订阅成功','已成功订阅 ${d.title}！本月全部活动已免费解锁。','确认',()=>{})">立即订阅 ${d.price}/月</div>
       </div>
     `;
     switchTab('gateway-detail');
