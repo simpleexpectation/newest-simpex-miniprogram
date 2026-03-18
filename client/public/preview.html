@@ -1,0 +1,2386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>真实发生 · 小程序预览</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* 全局背景改为纯白/浅灰 */
+  --kraft-base: #ffffff;
+  --kraft-light: #f7f7f7;
+  --kraft-dark: #f0f0f0;
+  --ink-black: #1a1a1a;
+  --ink-medium: #333333;
+  --ink-muted: #666666;
+  --ink-faint: #999999;
+  --navy: #1e3a5f;
+  --navy-light: #2e5080;
+  --amber: #a0622a;
+  --amber-light: #c07840;
+  --stamp-red: #8b2e2e;
+  --border: rgba(0,0,0,0.08);
+  --border-strong: rgba(0,0,0,0.15);
+}
+
+body {
+  background: #2a2520;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px 20px 60px;
+  font-family: 'IBM Plex Mono', 'PingFang SC', monospace;
+}
+
+.preview-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.preview-label {
+  color: #9a9080;
+  font-size: 11px;
+  letter-spacing: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+}
+.preview-title {
+  color: #e3dccb;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-top: 4px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* 手机外壳 */
+.phone-shell {
+  width: 390px;
+  height: 844px;
+  background: #ffffff;
+  border-radius: 48px;
+  box-shadow:
+    0 0 0 2px #4a4540,
+    0 0 0 5px #2a2520,
+    0 0 0 7px #3a3530,
+    0 50px 100px rgba(0,0,0,0.7);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 刘海 */
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 34px;
+  background: #1a1510;
+  border-radius: 0 0 20px 20px;
+  z-index: 10;
+}
+
+/* 状态栏 */
+.status-bar {
+  height: 50px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 24px 8px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+.status-time {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.status-icons {
+  color: #ffffff;
+  font-size: 11px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+/* 导航栏 */
+.nav-bar {
+  height: 44px;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+}
+.nav-title {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+.nav-back {
+  position: absolute;
+  left: 16px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.nav-back.visible { display: block; }
+
+/* 内容区 */
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #f7f7f7;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.page-content::-webkit-scrollbar { display: none; }
+
+/* TabBar */
+.tab-bar {
+  height: 60px;
+  background: #ffffff;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-shrink: 0;
+  padding-bottom: 8px;
+}
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-icon { font-size: 18px; line-height: 1; }
+.tab-label {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+}
+.tab-item.active .tab-label { color: var(--navy); }
+.tab-item.active .tab-icon { filter: none; }
+
+/* 页面 */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== 纸张噪点纹理 ===== */
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ===== 通用组件 ===== */
+.section-label {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-muted);
+  letter-spacing: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.section-title {
+  display: block;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.section-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* 主按钮（深海军蓝） */
+.btn-primary {
+  display: block;
+  background: var(--navy);
+  color: #f5f0e8;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 14px 0;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  transition: background 0.2s;
+}
+.btn-primary:hover { background: var(--navy-light); }
+
+/* 次按钮（边框） */
+.btn-outline {
+  display: block;
+  background: transparent;
+  color: var(--ink-medium);
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  width: 100%;
+}
+
+/* 标签/徽章 */
+.stamp-tag {
+  display: inline-block;
+  border: 1px solid var(--border-strong);
+  padding: 2px 8px;
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+.stamp-tag-navy {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+.stamp-tag-amber {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+/* ===== 首页 - 深色沉浸式封面 ===== */
+.hero-cover {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.hero-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.2) 0%,
+    rgba(0,0,0,0.05) 25%,
+    rgba(0,0,0,0.55) 65%,
+    rgba(0,0,0,0.92) 100%
+  );
+}
+.hero-cover-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hero-cover-brand {
+  font-size: 12px;
+  color: rgba(255,255,255,0.95);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+.hero-cover-city-tag {
+  font-size: 9px;
+  color: rgba(255,255,255,0.75);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  border: 1px solid rgba(255,255,255,0.4);
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+.hero-cover-bottom {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 18px 18px;
+}
+.hero-cover-eyebrow {
+  display: block;
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+.hero-cover-title {
+  display: block;
+  font-size: 30px;
+  font-weight: 900;
+  color: #ffffff;
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.hero-cover-sub {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.hero-cover-actions {
+  display: flex;
+  gap: 8px;
+}
+.hca-primary {
+  flex: 1.6;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.hca-secondary {
+  flex: 1;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.9);
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+/* 快捷入口网格 */
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+.quick-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 4px;
+  gap: 6px;
+  cursor: pointer;
+  border-right: 1px solid var(--border);
+}
+.quick-item:last-child { border-right: none; }
+.quick-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.qi-navy { background: rgba(30,58,95,0.08); }
+.qi-amber { background: rgba(160,98,42,0.08); }
+.qi-green { background: rgba(45,106,45,0.08); }
+.qi-red { background: rgba(139,46,46,0.08); }
+.quick-label {
+  font-size: 10px;
+  color: var(--ink-medium);
+  font-family: 'IBM Plex Mono', monospace;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* 数据统计条 */
+.stats-strip {
+  display: flex;
+  background: var(--navy);
+  padding: 14px 0;
+}
+.ss-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.ss-item:last-child { border-right: none; }
+.ss-num {
+  display: block;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Noto Serif SC', serif;
+}
+.ss-lbl {
+  display: block;
+  font-size: 9px;
+  color: rgba(255,255,255,0.55);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 2px;
+}
+
+/* 活动信息流卡片 */
+.feed-section {
+  background: #f7f7f7;
+  padding: 16px 0;
+}
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px 10px;
+}
+.feed-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.feed-more {
+  font-size: 11px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+}
+.feed-card {
+  background: #ffffff;
+  margin: 0 12px 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  cursor: pointer;
+  display: flex;
+}
+.feed-card-img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.feed-card-body {
+  flex: 1;
+  padding: 11px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.feed-card-meta {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 3px;
+}
+.feed-card-type {
+  font-size: 9px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+}
+.feed-card-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border-strong); flex-shrink:0; }
+.feed-card-cat {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.feed-card-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.feed-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.feed-card-time {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.feed-card-cap {
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.feed-live-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.feed-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2d8a2d;
+  box-shadow: 0 0 4px rgba(45,138,45,0.6);
+}
+.feed-live-text {
+  font-size: 9px;
+  color: #2d8a2d;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* 月票横向滑动 */
+.gw-scroll-section {
+  background: #ffffff;
+  padding: 16px 0;
+  border-top: 1px solid var(--border);
+}
+.gw-scroll-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 14px 10px;
+}
+.gw-scroll-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.gw-scroll-more {
+  font-size: 11px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+}
+.gw-h-scroll {
+  overflow-x: auto;
+  padding: 0 14px;
+  scrollbar-width: none;
+}
+.gw-h-scroll::-webkit-scrollbar { display: none; }
+.gw-h-row {
+  display: inline-flex;
+  gap: 10px;
+  padding-right: 14px;
+}
+.gw-h-card {
+  width: 148px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.gw-h-img {
+  width: 100%;
+  height: 88px;
+  object-fit: cover;
+  display: block;
+}
+.gw-h-body { padding: 10px; }
+.gw-h-tag {
+  font-size: 8px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 3px;
+}
+.gw-h-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  display: block;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.gw-h-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gw-h-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'Noto Serif SC', serif;
+}
+.gw-h-remain {
+  font-size: 8px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* 数据统计条 */
+.stats-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 16px;
+  background: var(--kraft-dark);
+  border-bottom: 1px solid var(--border);
+}
+.stat-item { text-align: center; }
+.stat-num {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.stat-lbl {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.stat-sep { width: 1px; height: 28px; background: var(--border); }
+
+/* 宣言区 */
+.manifesto-section {
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.manifesto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+.manifesto-vol {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+}
+.manifesto-title {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.3;
+  margin-bottom: 14px;
+}
+.manifesto-title .highlight { color: var(--navy); }
+.manifesto-body {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+.manifesto-point {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.manifesto-point:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.point-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--border-strong);
+  font-family: 'Noto Serif SC', serif;
+  width: 36px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.point-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 6px;
+}
+.point-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+}
+
+/* 月票预览区 */
+.gateways-preview {
+  padding: 28px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.gw-scroll {
+  overflow-x: auto;
+  margin: 0 -24px;
+  padding: 0 24px;
+  scrollbar-width: none;
+}
+.gw-scroll::-webkit-scrollbar { display: none; }
+.gw-cards-row {
+  display: inline-flex;
+  gap: 12px;
+  padding-right: 24px;
+}
+.gw-mini-card {
+  display: inline-block;
+  width: 200px;
+  background: var(--kraft-light);
+  border: 1px solid var(--border-strong);
+  vertical-align: top;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.gw-mini-card:hover { box-shadow: 0 4px 16px rgba(28,26,23,0.15); }
+.gw-mini-img {
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}
+.gw-mini-body { padding: 12px; }
+.gw-mini-tag {
+  font-size: 8px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+.gw-mini-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.gw-mini-slogan {
+  font-size: 10px;
+  color: var(--ink-muted);
+  display: block;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.gw-mini-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.gw-mini-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.gw-mini-remain {
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.view-all {
+  display: block;
+  text-align: center;
+  font-size: 11px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 14px 0;
+  border: 1px solid var(--navy);
+  margin-top: 16px;
+  cursor: pointer;
+}
+
+/* ===== 月票详情页 ===== */
+.page-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+}
+.rules-strip {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 16px;
+  background: #f7f7f7;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.rule-it {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.rule-icon { font-size: 14px; }
+.rule-text {
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.gw-full-card {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.gw-full-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+.gw-full-body { padding: 20px 24px; }
+.gw-full-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+.gw-full-tag {
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 4px;
+}
+.gw-full-remain {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gw-full-remain.urgent { color: var(--stamp-red); }
+.host-av {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+}
+.gw-full-name {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.gw-full-slogan {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+}
+.gw-full-quote {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-medium);
+  line-height: 1.8;
+  border-left: 2px solid var(--navy);
+  padding-left: 12px;
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.gw-full-host {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 14px;
+  padding-left: 14px;
+}
+.act-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.act-tag {
+  font-size: 10px;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+  padding: 3px 8px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.progress-wrap { margin-bottom: 14px; }
+.progress-bar {
+  height: 2px;
+  background: var(--border-strong);
+  margin-bottom: 4px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--navy);
+}
+.progress-text {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gw-full-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.gw-full-price {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.gw-full-price-unit {
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+.buy-btn {
+  background: var(--navy);
+  color: #f5f0e8;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s;
+}
+.buy-btn:hover { background: var(--navy-light); }
+
+/* ===== 活动页 ===== */
+.route-overview {
+  background: #f7f7f7;
+  border-bottom: 1px solid var(--border);
+  padding: 4px 24px;
+  margin-bottom: 0;
+}
+.route-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.route-item:last-child { border-bottom: none; }
+.route-time-col { width: 70px; flex-shrink: 0; }
+.route-day {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.route-t {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.route-type {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 2px;
+}
+.route-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+
+.act-card {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.act-time-badge {
+  background: #f0f0f0;
+  padding: 10px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.atb-day {
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.atb-time {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.act-body { padding: 16px 24px; }
+.act-type-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.act-type {
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+.act-cat {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.act-name {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.act-desc {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+.act-host-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.host-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--navy);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.act-host-name {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-black);
+}
+.act-host-bio {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 2px;
+}
+.act-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+.cap-text {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 4px;
+}
+.cap-bar {
+  height: 2px;
+  background: var(--border-strong);
+  width: 90px;
+}
+.cap-fill {
+  height: 100%;
+  background: var(--navy);
+}
+.apply-btn {
+  background: transparent;
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 10px 16px;
+  border: 1px solid var(--navy);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.apply-btn:hover { background: var(--navy); color: #f5f0e8; }
+
+.cta-block {
+  padding: 28px 24px;
+  background: #f0f0f0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.cta-price {
+  display: block;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.cta-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* ===== 对话页 ===== */
+.d-rule-card {
+  margin: 16px 24px;
+  background: #f7f7f7;
+  border: 1px solid var(--border-strong);
+  padding: 16px;
+}
+.d-rule-title {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.d-rule-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.d-rule-item {
+  background: #eeeeee;
+  padding: 4px 10px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.d-rk {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.d-rv {
+  font-size: 9px;
+  color: var(--navy);
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.d-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 14px 16px;
+  background: #f0f0f0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.d-stat-num {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  text-align: center;
+}
+.d-stat-lbl {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  text-align: center;
+  margin-top: 2px;
+}
+.d-card {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+}
+.d-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.d-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.d-dot-live { background: #2d6a2d; box-shadow: 0 0 4px rgba(45,106,45,0.5); }
+.d-dot-soon { background: var(--ink-faint); }
+.d-status-text {
+  font-size: 9px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+.d-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.d-meta {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+.d-meta .initiator { color: var(--navy); }
+.d-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.d-tag {
+  font-size: 9px;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+  padding: 2px 7px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.d-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-bottom: 6px;
+}
+.d-cap { display: flex; align-items: center; gap: 8px; }
+.d-cap-cur {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.d-cap-rem {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.join-btn {
+  background: transparent;
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  padding: 8px 14px;
+  border: 1px solid var(--navy);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.join-btn:hover { background: var(--navy); color: #f5f0e8; }
+.join-btn-full { border-color: var(--border-strong); color: var(--ink-faint); cursor: default; }
+.join-btn-full:hover { background: transparent; color: var(--ink-faint); }
+.d-rule-note {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.initiate-cta {
+  padding: 28px 24px;
+  background: #f0f0f0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.init-title {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 6px;
+}
+.init-desc {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.init-ticket {
+  display: block;
+  font-size: 10px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+/* ===== 我的页 ===== */
+.identity-hero {
+  background: #f0f0f0;
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.login-card {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  padding: 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+.login-title {
+  display: block;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 8px;
+}
+.login-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+.user-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+}
+.user-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.user-joined {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 3px;
+}
+.ticket-badges {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+.ticket-lbl {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+.ticket-badge {
+  border: 1px solid var(--navy);
+  padding: 2px 8px;
+  font-size: 10px;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.badges-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.sec-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.sec-title-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.sec-count {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.badge-item {
+  background: #f7f7f7;
+  border: 1px solid var(--border-strong);
+  padding: 14px 8px;
+  text-align: center;
+  position: relative;
+}
+.badge-earned { border-color: var(--navy); background: rgba(30,58,95,0.05); }
+.badge-locked { opacity: 0.4; }
+.badge-emoji { display: block; font-size: 22px; margin-bottom: 6px; }
+.badge-name {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 3px;
+}
+.badge-cond {
+  display: block;
+  font-size: 8px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  line-height: 1.4;
+}
+
+.community-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+.community-desc {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+}
+.cu-user {
+  display: flex;
+  gap: 12px;
+  background: #f7f7f7;
+  border: 1px solid var(--border);
+  padding: 12px;
+  margin-bottom: 8px;
+  align-items: flex-start;
+}
+.cu-av {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+}
+.cu-info { flex: 1; }
+.cu-name-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.cu-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+}
+.cu-count {
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.cu-badges { display: flex; gap: 3px; margin-bottom: 5px; font-size: 13px; }
+.cu-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.cu-tag {
+  font-size: 9px;
+  color: var(--ink-muted);
+  border: 1px solid var(--border-strong);
+  padding: 1px 6px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.footer-area {
+  padding: 20px 24px 32px;
+  text-align: center;
+  background: #f0f0f0;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.footer-link {
+  font-size: 10px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  cursor: pointer;
+}
+.footer-sep { font-size: 10px; color: var(--border-strong); }
+.footer-copy {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 4px;
+}
+.footer-motto {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(28,26,23,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal-overlay.show { display: flex; }
+.modal-box {
+  background: #ffffff;
+  border: 1px solid var(--border-strong);
+  padding: 28px 24px;
+  width: 300px;
+  text-align: center;
+}
+.modal-title {
+  display: block;
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 10px;
+}
+.modal-content {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-muted);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+.modal-btns { display: flex; gap: 10px; }
+.modal-cancel {
+  flex: 1;
+  border: 1px solid var(--border-strong);
+  color: var(--ink-muted);
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 12px 0;
+  cursor: pointer;
+  background: transparent;
+}
+.modal-confirm {
+  flex: 1;
+  background: var(--navy);
+  color: #f5f0e8;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 12px 0;
+  cursor: pointer;
+  border: none;
+}
+
+/* Toast */
+.toast {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink-black);
+  color: var(--kraft-light);
+  font-size: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  padding: 10px 20px;
+  white-space: nowrap;
+  display: none;
+  z-index: 200;
+}
+.toast.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <div class="preview-label">MINIPROGRAM PREVIEW · 小程序预览</div>
+  <div class="preview-title">真实发生 · Simpex</div>
+</div>
+
+<div class="phone-shell">
+  <div class="phone-notch"></div>
+
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span class="status-time" id="clock">9:41</span>
+    <div class="status-icons">
+      <span>▲▲▲</span>
+      <span>Wi-Fi</span>
+      <span>▮▮▮</span>
+    </div>
+  </div>
+
+  <!-- 导航栏 -->
+  <div class="nav-bar">
+    <span class="nav-back" id="navBack" onclick="goBack()">‹ 返回</span>
+    <span class="nav-title" id="navTitle">真实发生</span>
+  </div>
+
+  <!-- 内容区 -->
+  <div class="page-content" id="pageContent">
+
+    <!-- ===== 首页 ===== -->
+    <div class="page active" id="page-home">
+
+      <!-- 深色封面 -->
+      <div class="hero-cover">
+        <img class="hero-cover-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="杭州夜景">
+        <div class="hero-cover-overlay"></div>
+        <div class="hero-cover-top">
+          <span class="hero-cover-brand">SIMPEX</span>
+          <span class="hero-cover-city-tag">HANGZHOU</span>
+        </div>
+        <div class="hero-cover-bottom">
+          <span class="hero-cover-eyebrow">TRUE THINGS HAPPEN</span>
+          <span class="hero-cover-title">真实发生的杭州</span>
+          <span class="hero-cover-sub">不是打卡，不是内容。是真实的人，在真实的地方。</span>
+          <div class="hero-cover-actions">
+            <div class="hca-primary" onclick="switchTab('gateways')">选择月票入口</div>
+            <div class="hca-secondary" onclick="switchTab('timeline')">查看活动</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 快捷入口 -->
+      <div class="quick-grid">
+        <div class="quick-item" onclick="switchTab('gateways')">
+          <div class="quick-icon qi-navy">🎫</div>
+          <span class="quick-label">月票</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('timeline')">
+          <div class="quick-icon qi-amber">📅</div>
+          <span class="quick-label">活动</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('dialogue')">
+          <div class="quick-icon qi-green">💬</div>
+          <span class="quick-label">对话</span>
+        </div>
+        <div class="quick-item" onclick="switchTab('profile')">
+          <div class="quick-icon qi-red">👤</div>
+          <span class="quick-label">我的</span>
+        </div>
+      </div>
+
+      <!-- 数据统计条 -->
+      <div class="stats-strip">
+        <div class="ss-item"><span class="ss-num">127</span><span class="ss-lbl">本月活动</span></div>
+        <div class="ss-item"><span class="ss-num">340+</span><span class="ss-lbl">发生者</span></div>
+        <div class="ss-item"><span class="ss-num">47</span><span class="ss-lbl">对话进行中</span></div>
+        <div class="ss-item"><span class="ss-num">6</span><span class="ss-lbl">月票主题</span></div>
+      </div>
+
+      <!-- 活动信息流 -->
+      <div class="feed-section">
+        <div class="feed-header">
+          <span class="feed-title">正在发生</span>
+          <span class="feed-more" onclick="switchTab('timeline')">查看全部 →</span>
+        </div>
+        <div class="feed-card" onclick="switchTab('timeline')">
+          <img class="feed-card-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="自然爬山">
+          <div class="feed-card-body">
+            <div>
+              <div class="feed-card-meta">
+                <span class="feed-card-type">自然 · 爬山</span>
+                <div class="feed-card-dot"></div>
+                <span class="feed-card-cat">本地风光</span>
+              </div>
+              <span class="feed-card-name">一番的自然爬山</span>
+            </div>
+            <div class="feed-card-footer">
+              <span class="feed-card-time">周三/六 21:00</span>
+              <span class="feed-card-cap">8/20 人</span>
+            </div>
+          </div>
+        </div>
+        <div class="feed-card" onclick="switchTab('dialogue')">
+          <img class="feed-card-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=200&auto=format&fit=crop" alt="对话">
+          <div class="feed-card-body">
+            <div>
+              <div class="feed-card-meta">
+                <div class="feed-live-row"><div class="feed-live-dot"></div><span class="feed-live-text">LIVE</span></div>
+                <div class="feed-card-dot"></div>
+                <span class="feed-card-cat">对话广场</span>
+              </div>
+              <span class="feed-card-name">"离职之后，你是怎么重新找到节奏的？"</span>
+            </div>
+            <div class="feed-card-footer">
+              <span class="feed-card-time">今晚 22:30</span>
+              <span class="feed-card-cap">4/6 人</span>
+            </div>
+          </div>
+        </div>
+        <div class="feed-card" onclick="switchTab('timeline')">
+          <img class="feed-card-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-youth-Q9VSgLpH7s3to8rrGs8KZx.webp" alt="旁野饭桌">
+          <div class="feed-card-body">
+            <div>
+              <div class="feed-card-meta">
+                <span class="feed-card-type">当代青年</span>
+                <div class="feed-card-dot"></div>
+                <span class="feed-card-cat">点点主理</span>
+              </div>
+              <span class="feed-card-name">点点的旁野饭桌</span>
+            </div>
+            <div class="feed-card-footer">
+              <span class="feed-card-time">周六 18:30</span>
+              <span class="feed-card-cap">13/20 人</span>
+            </div>
+          </div>
+        </div>
+        <div class="feed-card" onclick="switchTab('timeline')">
+          <img class="feed-card-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-art-Lc7NQTCbjzurxoxkfxmqA6.webp" alt="即兴戏剧">
+          <div class="feed-card-body">
+            <div>
+              <div class="feed-card-meta">
+                <span class="feed-card-type">多元艺术</span>
+                <div class="feed-card-dot"></div>
+                <span class="feed-card-cat">山猪主理</span>
+              </div>
+              <span class="feed-card-name">山猪的即兴戏剧</span>
+            </div>
+            <div class="feed-card-footer">
+              <span class="feed-card-time">周日 15:00</span>
+              <span class="feed-card-cap">6/20 人</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 月票横向滑动 -->
+      <div class="gw-scroll-section">
+        <div class="gw-scroll-header">
+          <span class="gw-scroll-title">月票入口</span>
+          <span class="gw-scroll-more" onclick="switchTab('gateways')">全部 →</span>
+        </div>
+        <div class="gw-h-scroll">
+          <div class="gw-h-row">
+            <div class="gw-h-card" onclick="switchTab('gateways')">
+              <img class="gw-h-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="本地风光">
+              <div class="gw-h-body">
+                <span class="gw-h-tag">LOCAL</span>
+                <span class="gw-h-name">本地风光</span>
+                <div class="gw-h-footer"><span class="gw-h-price">¥399/月</span><span class="gw-h-remain">13张剩余</span></div>
+              </div>
+            </div>
+            <div class="gw-h-card" onclick="switchTab('gateways')">
+              <img class="gw-h-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-youth-Q9VSgLpH7s3to8rrGs8KZx.webp" alt="当代青年">
+              <div class="gw-h-body">
+                <span class="gw-h-tag">YOUTH</span>
+                <span class="gw-h-name">当代青年</span>
+                <div class="gw-h-footer"><span class="gw-h-price">¥399/月</span><span class="gw-h-remain">15张剩余</span></div>
+              </div>
+            </div>
+            <div class="gw-h-card" onclick="switchTab('gateways')">
+              <img class="gw-h-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-art-Lc7NQTCbjzurxoxkfxmqA6.webp" alt="多元艺术">
+              <div class="gw-h-body">
+                <span class="gw-h-tag">ART</span>
+                <span class="gw-h-name">多元艺术</span>
+                <div class="gw-h-footer"><span class="gw-h-price">¥399/月</span><span class="gw-h-remain">18张剩余</span></div>
+              </div>
+            </div>
+            <div class="gw-h-card" onclick="switchTab('gateways')">
+              <img class="gw-h-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-ai-2mSKSpopXZcynKctyYFSvq.webp" alt="AI世界">
+              <div class="gw-h-body">
+                <span class="gw-h-tag">AI WORLD</span>
+                <span class="gw-h-name">AI 世界</span>
+                <div class="gw-h-footer"><span class="gw-h-price">¥399/月</span><span class="gw-h-remain">21张剩余</span></div>
+              </div>
+            </div>
+            <div class="gw-h-card" onclick="switchTab('gateways')" style="border-top:2px solid #8b6914">
+              <img class="gw-h-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="杭州">
+              <div class="gw-h-body">
+                <span class="gw-h-tag" style="color:#8b6914;border-color:#8b6914">杭州 ALL-IN</span>
+                <span class="gw-h-name">打开杭州</span>
+                <div class="gw-h-footer"><span class="gw-h-price" style="color:#8b6914">¥999/月</span><span class="gw-h-remain" style="color:#c0392b">仅10张</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== 月票页 ===== -->
+    <div class="page" id="page-gateways">
+      <div class="page-header">
+        <span class="section-label">THE GATEWAYS · 月票体系</span>
+        <span class="section-title">选择你的入口</span>
+        <span style="font-size:11px;color:var(--ink-muted);display:block;margin-top:4px">首月每张限量 30 席 · 有效期 30 天</span>
+      </div>
+      <div class="rules-strip">
+        <div class="rule-it"><span class="rule-icon">🎫</span><span class="rule-text">全部活动免费</span></div>
+        <div class="rule-it"><span class="rule-icon">💬</span><span class="rule-text">赠送对话月票</span></div>
+        <div class="rule-it"><span class="rule-icon">🪪</span><span class="rule-text">数字身份</span></div>
+        <div class="rule-it"><span class="rule-icon">👥</span><span class="rule-text">进入当月社群</span></div>
+      </div>
+
+      <!-- 权益总览卡 -->
+      <div style="margin:12px 14px;background:#f7f7f7;border-radius:8px;padding:14px;border-left:3px solid var(--navy)">
+        <div style="font-size:12px;font-weight:700;color:var(--navy);font-family:'IBM Plex Mono',monospace;letter-spacing:1px;margin-bottom:8px">THE VALUE PROP · 订阅权益</div>
+        <div style="font-size:11px;color:var(--ink-medium);line-height:1.8">
+          <div style="margin-bottom:4px">① <b>8 场深度领域活动</b> + 2 场跨领域大型派对，每场限额 20 人，官方包销基础饮品</div>
+          <div style="margin-bottom:4px">② <b>60+ 场小而美对话</b>随时发起参与，精选 7-8 个杭州共识空间，凭会员享 8.5 折</div>
+          <div style="margin-bottom:4px">③ <b>数字身份资产</b>沉淀，记录每次活动感悟，建设个人数字信用</div>
+          <div>④ 展现引导力可申请成为<b>官方主理人</b>，票费全免 + 参与利润分成</div>
+        </div>
+      </div>
+
+      <!-- 本地风光月票 -->
+      <div class="gw-full-card">
+        <img class="gw-full-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="本地风光">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag">GATEWAY: LOCAL</span><span class="gw-full-remain">首月限 30 张</span></div>
+            <div class="host-av">风</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的本地风光</span>
+          <span class="gw-full-slogan">杭州不只是景点，它是你的后院</span>
+          <span class="gw-full-quote">本地风光不在攻略里。它在每周三凌晨的山顶，在小鱼尾巴的骑行路线，在道长的文化街区漫谈。</span>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">本月包含活动</div>
+          <div class="act-tags-row">
+            <span class="act-tag">一番 · 自然爬山</span>
+            <span class="act-tag">小小 · 老杭州 Citywalk</span>
+            <span class="act-tag">小鱼尾巴 · 环西湖骑行</span>
+            <span class="act-tag">道长 · 文化街区漫谈</span>
+          </div>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:57%"></div></div><span class="progress-text">17/30 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的本地风光','399')">立即获取</div></div>
+        </div>
+      </div>
+
+      <!-- 当代青年月票 -->
+      <div class="gw-full-card">
+        <img class="gw-full-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-youth-Q9VSgLpH7s3to8rrGs8KZx.webp" alt="当代青年">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag">GATEWAY: YOUTH</span><span class="gw-full-remain">首月限 30 张</span></div>
+            <div class="host-av">青</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的当代青年</span>
+          <span class="gw-full-slogan">离职不是终点，是另一种开始</span>
+          <span class="gw-full-quote">当代青年的真实议题没有人在认真讨论。旁野饭桌、关系游戏、数字游民——这些才是真实发生的青年议题。</span>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">本月包含活动</div>
+          <div class="act-tags-row">
+            <span class="act-tag">点点 · 旁野饭桌</span>
+            <span class="act-tag">特特 · 关系游戏</span>
+            <span class="act-tag">威廉 · 青年公社新范式</span>
+            <span class="act-tag">顾得 · 数字游民漂流计划</span>
+          </div>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div><span class="progress-text">15/30 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的当代青年','399')">立即获取</div></div>
+        </div>
+      </div>
+
+      <!-- 多元艺术月票 -->
+      <div class="gw-full-card">
+        <img class="gw-full-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-art-Lc7NQTCbjzurxoxkfxmqA6.webp" alt="多元艺术">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag">GATEWAY: ART</span><span class="gw-full-remain">首月限 30 张</span></div>
+            <div class="host-av">艺</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的多元艺术</span>
+          <span class="gw-full-slogan">艺术不在美术馆里，在人的身上</span>
+          <span class="gw-full-quote">身体舞动、自然接触、即兴戏剧、自由绘画——艺术不是观看，是参与，是你自己的表达。</span>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">本月包含活动</div>
+          <div class="act-tags-row">
+            <span class="act-tag">Jane · 身体舞动</span>
+            <span class="act-tag">蚊子 · 自然接触</span>
+            <span class="act-tag">山猪 · 即兴戏剧</span>
+            <span class="act-tag">nainai · 自由绘画</span>
+          </div>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-text">12/30 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的多元艺术','399')">立即获取</div></div>
+        </div>
+      </div>
+
+      <!-- AI 世界月票 -->
+      <div class="gw-full-card">
+        <img class="gw-full-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/gateway-ai-2mSKSpopXZcynKctyYFSvq.webp" alt="AI世界">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag">GATEWAY: AI WORLD</span><span class="gw-full-remain">首月限 30 张</span></div>
+            <div class="host-av">AI</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的 AI 世界</span>
+          <span class="gw-full-slogan">拒绝线上废话，直接上手</span>
+          <span class="gw-full-quote">AI 不是工具，是一种新的思维方式。我们当场上手，不讲 PPT。</span>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">本月包含活动</div>
+          <div class="act-tags-row">
+            <span class="act-tag">Prompt 实战工坊</span>
+            <span class="act-tag">AI 工具拆解</span>
+            <span class="act-tag">产品共创局</span>
+            <span class="act-tag">模型对话实验</span>
+          </div>
+          <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div><span class="progress-text">9/30 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的 AI 世界','399')">立即获取</div></div>
+        </div>
+      </div>
+
+      <!-- 对话月票 · 特殊 -->
+      <div class="gw-full-card" style="border-top:3px solid var(--navy)">
+        <img class="gw-full-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop" alt="对话">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag">GATEWAY: DIALOGUE · 特殊</span><span class="gw-full-remain">首月限 30 张</span></div>
+            <div class="host-av" style="font-size:9px;background:var(--navy);color:#fff">对</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的对话</span>
+          <span class="gw-full-slogan">唯一由用户自己发起的内容</span>
+          <span class="gw-full-quote">这是 Simpex 的灵魂。不限主题，不限场地，你有想聊的就发起。规则只有两条。</span>
+          <div style="margin:10px 0;background:#f0f4ff;border-radius:6px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:var(--navy);font-family:'IBM Plex Mono',monospace;margin-bottom:6px">RULES · 对话规则</div>
+            <div style="display:flex;gap:10px">
+              <div style="flex:1;background:#fff;border-radius:4px;padding:8px;text-align:center">
+                <div style="font-size:16px;font-weight:900;color:var(--navy);font-family:'Noto Serif SC',serif">≤ 6</div>
+                <div style="font-size:9px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">参与人数</div>
+              </div>
+              <div style="flex:1;background:#fff;border-radius:4px;padding:8px;text-align:center">
+                <div style="font-size:16px;font-weight:900;color:var(--navy);font-family:'Noto Serif SC',serif">&gt; 2h</div>
+                <div style="font-size:9px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">对话时长</div>
+              </div>
+              <div style="flex:1;background:#fff;border-radius:4px;padding:8px;text-align:center">
+                <div style="font-size:16px;font-weight:900;color:var(--navy);font-family:'Noto Serif SC',serif">自发</div>
+                <div style="font-size:9px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">用户发起</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;margin-bottom:8px">门槛：参与并发起对话 · 赠送给订阅 399 月票的用户</div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:83%"></div></div><span class="progress-text">25/30 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥99</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的对话','99')">立即获取</div></div>
+        </div>
+      </div>
+
+      <!-- 杭州合集月票 · 特殊 -->
+      <div class="gw-full-card" style="border-top:3px solid #8b6914">
+        <img class="gw-full-img" src="https://d2xsxph8kpxj0f.cloudfront.net/310519663406931084/gs5jyn4xzJ9UNEUx4tvnnp/hero-hangzhou-night-3dNYS2Azc8QQJPCfZxtysM.webp" alt="杭州">
+        <div class="gw-full-body">
+          <div class="gw-full-head">
+            <div><span class="gw-full-tag" style="color:#8b6914;border-color:#8b6914">GATEWAY: HANGZHOU · ALL-IN</span><span class="gw-full-remain urgent">首月限 10 张</span></div>
+            <div class="host-av" style="background:#8b6914;color:#fff;font-size:9px">杭</div>
+          </div>
+          <span class="gw-full-name">打开真实发生的杭州</span>
+          <span class="gw-full-slogan" style="color:#8b6914">三个领域全部打开 · 杭州先锋圈子通行证</span>
+          <span class="gw-full-quote">本地风光 + 当代青年 + 多元艺术——三个领域的全部活动向你开放。这是一张杭州先锋圈子的通行证。</span>
+          <div style="margin:10px 0;background:#fdf8ee;border-radius:6px;padding:10px 12px;border:1px solid #e8d5a0">
+            <div style="font-size:11px;font-weight:700;color:#8b6914;font-family:'IBM Plex Mono',monospace;margin-bottom:6px">EXCLUSIVE · 专属权益</div>
+            <div style="font-size:11px;color:var(--ink-medium);line-height:1.8">
+              <div>✓ 全部 3 个领域所有活动免费参与</div>
+              <div>✓ 专属特殊标识（数字身份内展示）</div>
+              <div>✓ 赠送数字身份纸质本（实体手册）</div>
+              <div>✓ 主理人直联渠道 + 优先报名权</div>
+            </div>
+          </div>
+          <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:30%;background:#8b6914"></div></div><span class="progress-text">3/10 已售</span></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price" style="color:#8b6914">¥999</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" style="background:#8b6914" onclick="showBuyModal('打开真实发生的杭州','999')">立即获取</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 活动页 ===== -->
+    <div class="page" id="page-timeline">
+      <div class="page-header">
+        <span class="section-label">GATEWAY: LOCAL · 本地风光</span>
+        <span class="section-title">本月活动</span>
+        <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥399/月 · 首月限 30 张 · 订阅后全部免费参加</span>
+      </div>
+      <div class="route-overview">
+        <div class="route-item"><div class="route-time-col"><span class="route-day">周三/六</span><span class="route-t">21:00</span></div><div><span class="route-type">自然 · 爬山</span><span class="route-name">一番 · 自然爬山</span></div></div>
+        <div class="route-item"><div class="route-time-col"><span class="route-day">周日</span><span class="route-t">10:00</span></div><div><span class="route-type">城市 · 漫游</span><span class="route-name">小小 · 老杭州 Citywalk</span></div></div>
+        <div class="route-item"><div class="route-time-col"><span class="route-day">周末</span><span class="route-t">不定</span></div><div><span class="route-type">骑行 · 自然</span><span class="route-name">小鱼尾巴 · 环西湖骑行</span></div></div>
+        <div class="route-item"><div class="route-time-col"><span class="route-day">不定期</span><span class="route-t">随机</span></div><div><span class="route-type">文化 · 漫谈</span><span class="route-name">道长 · 文化街区漫谈</span></div></div>
+      </div>
+
+      <div class="act-card">
+        <div class="act-time-badge"><span class="atb-day">周三 / 周六</span><span class="atb-time">21:00</span></div>
+        <div class="act-body">
+          <div class="act-type-row"><span class="act-type">自然 · 爬山</span><span class="act-cat">Let's Roll 社群</span></div>
+          <span class="act-name">一番的自然爬山</span>
+          <span class="act-desc">不是景区打卡，是真实的山野行走。从山脚出发，穿过树林，到达山顶。不带手电，只靠月光和彼此。</span>
+          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">一番</span><span class="act-host-bio">Let's Roll 社群发起人，自然爬山主理人</span></div></div>
+          <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">爬山</span><span class="act-tag">周三/周六</span></div>
+          <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('一番的自然爬山')">申请参加 →</div></div>
+        </div>
+      </div>
+
+      <div class="act-card">
+        <div class="act-time-badge"><span class="atb-day">周日</span><span class="atb-time">10:00</span></div>
+        <div class="act-body">
+          <div class="act-type-row"><span class="act-type">城市 · 漫游</span><span class="act-cat">每次路线不同</span></div>
+          <span class="act-name">小小的老杭州 Citywalk</span>
+          <span class="act-desc">不是景点路线，是真实的杭州生活路线。从菜市场开始，穿过老小区，进入你不知道的那条街。每次路线不同。</span>
+          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">小小</span><span class="act-host-bio">老杭州本地人，熔入杭州小巷 10 年</span></div></div>
+          <div class="act-tags-row"><span class="act-tag">老杭州</span><span class="act-tag">Citywalk</span><span class="act-tag">周日</span></div>
+          <div class="act-footer"><div><span class="cap-text">11/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:55%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小小的老杭州 Citywalk')">申请参加 →</div></div>
+        </div>
+      </div>
+
+      <div class="act-card">
+        <div class="act-time-badge"><span class="atb-day">周末不定</span><span class="atb-time">09:00</span></div>
+        <div class="act-body">
+          <div class="act-type-row"><span class="act-type">骑行 · 自然</span><span class="act-cat">环西湖路线</span></div>
+          <span class="act-name">小鱼尾巴的环西湖骑行</span>
+          <span class="act-desc">不是景区骑行打卡，是真实的西湖环行。小鱼尾巴带你看到普通游客看不到的西湖。</span>
+          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">小鱼尾巴</span><span class="act-host-bio">杭州骑行爱好者，环西湖骑了数百次</span></div></div>
+          <div class="act-tags-row"><span class="act-tag">骑行</span><span class="act-tag">西湖</span><span class="act-tag">周末</span></div>
+          <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小鱼尾巴的环西湖骑行')">申请参加 →</div></div>
+        </div>
+      </div>
+
+      <div class="act-card">
+        <div class="act-time-badge"><span class="atb-day">不定期</span><span class="atb-time">随机</span></div>
+        <div class="act-body">
+          <div class="act-type-row"><span class="act-type">文化 · 漫谈</span><span class="act-cat">杭州本地</span></div>
+          <span class="act-name">道长的文化街区漫谈</span>
+          <span class="act-desc">道长带你走进杭州的历史街区，讲的不是景点介绍，而是这座城市真实发生过的事。</span>
+          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">道长</span><span class="act-host-bio">杭州本地文化研究者，漫谈杭州历史 8 年</span></div></div>
+          <div class="act-tags-row"><span class="act-tag">文化</span><span class="act-tag">历史</span><span class="act-tag">不定期</span></div>
+          <div class="act-footer"><div><span class="cap-text">5/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:25%"></div></div></div><div class="apply-btn" onclick="showApplyModal('道长的文化街区漫谈')">申请参加 →</div></div>
+        </div>
+      </div>
+
+      <div class="cta-block">
+        <span class="cta-price">¥399</span>
+        <span class="cta-desc">/月 · 首月限 30 张 · 订阅后全部活动免费</span>
+        <div class="btn-primary" onclick="switchTab('gateways')">获取本地风光月票</div>
+      </div>
+    </div>
+
+    <!-- ===== 对话页 ===== -->
+    <div class="page" id="page-dialogue">
+      <div class="page-header">
+        <span class="section-label">GATEWAY: DIALOGUE · 对话广场</span>
+        <span class="section-title">正在发生的对话</span>
+        <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥99/月 · 唯一用户可自发的内容</span>
+      </div>
+      <div class="d-rule-card">
+        <span class="d-rule-title">"打开真实发生的对话"月票持有者可随时发起对话。这是 Simpex 唯一由用户自己主导的内容。</span>
+        <div class="d-rule-items">
+          <div class="d-rule-item"><span class="d-rk">人数</span><span class="d-rv">≤ 6 人</span></div>
+          <div class="d-rule-item"><span class="d-rk">时长</span><span class="d-rv">&gt; 2 小时</span></div>
+          <div class="d-rule-item"><span class="d-rk">性质</span><span class="d-rv">用户自发</span></div>
+          <div class="d-rule-item"><span class="d-rk">赠送</span><span class="d-rv">399 月票赠</span></div>
+        </div>
+      </div>
+      <div class="d-stats">
+        <div><span class="d-stat-num">47场</span><span class="d-stat-lbl">已发生的对话</span></div>
+        <div><span class="d-stat-num">218人</span><span class="d-stat-lbl">参与人次</span></div>
+        <div><span class="d-stat-num">2.8h</span><span class="d-stat-lbl">平均时长</span></div>
+        <div><span class="d-stat-num">73%</span><span class="d-stat-lbl">重复参与率</span></div>
+      </div>
+
+      <div class="d-card">
+        <div class="d-status"><div class="d-dot d-dot-live"></div><span class="d-status-text">正在发生 · LIVE</span></div>
+        <span class="d-title">"离职之后，你是怎么重新找到节奏的？"</span>
+        <span class="d-meta"><span class="initiator">阿强</span> 发起 · 22:30 · 今晚 · 文二路某咖啡馆</span>
+        <div class="d-tags"><span class="d-tag">Gap Year</span><span class="d-tag">职场</span></div>
+        <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">4/6</span><span class="d-cap-rem">余 2 位</span></div><div class="join-btn" onclick="showJoinModal('离职之后，你是怎么重新找到节奏的？')">申请加入</div></div>
+        <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
+      </div>
+
+      <div class="d-card">
+        <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">明天发生</span></div>
+        <span class="d-title">"AI 会不会让创意工作者失业？我不这么认为"</span>
+        <span class="d-meta"><span class="initiator">七哥</span> 发起 · 20:00 · 明天 · 某 Co-working Space</span>
+        <div class="d-tags"><span class="d-tag">AI</span><span class="d-tag">创意</span><span class="d-tag">辩论</span></div>
+        <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">3/6</span><span class="d-cap-rem">余 3 位</span></div><div class="join-btn" onclick="showJoinModal('AI 会不会让创意工作者失业？')">申请加入</div></div>
+        <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
+      </div>
+
+      <div class="d-card">
+        <div class="d-status"><div class="d-dot d-dot-live"></div><span class="d-status-text">正在发生 · LIVE</span></div>
+        <span class="d-title">"当代城市里，什么是真正的孤独？"</span>
+        <span class="d-meta"><span class="initiator">子木</span> 发起 · 23:00 · 今晚 · 西湖边某处</span>
+        <div class="d-tags"><span class="d-tag">城市</span><span class="d-tag">孤独</span><span class="d-tag">深度</span></div>
+        <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">2/6</span><span class="d-cap-rem">余 4 位</span></div><div class="join-btn" onclick="showJoinModal('当代城市里，什么是真正的孤独？')">申请加入</div></div>
+        <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
+      </div>
+
+      <div class="d-card">
+        <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">后天发生</span></div>
+        <span class="d-title">"我们这代人，还相信爱情吗？"</span>
+        <span class="d-meta"><span class="initiator">林姐</span> 发起 · 21:00 · 后天 · 待定</span>
+        <div class="d-tags"><span class="d-tag">情感</span><span class="d-tag">当代</span><span class="d-tag">真实</span></div>
+        <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">5/6</span><span class="d-cap-rem">余 1 位</span></div><div class="join-btn" onclick="showJoinModal('我们这代人，还相信爱情吗？')">申请加入</div></div>
+        <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
+      </div>
+
+      <div class="d-card">
+        <div class="d-status"><div class="d-dot d-dot-soon"></div><span class="d-status-text">周五发生</span></div>
+        <span class="d-title">"如果可以重来，你会选择不同的专业吗？"</span>
+        <span class="d-meta"><span class="initiator">大王</span> 发起 · 20:30 · 周五 · 天目里</span>
+        <div class="d-tags"><span class="d-tag">教育</span><span class="d-tag">职业</span><span class="d-tag">选择</span></div>
+        <div class="d-footer"><div class="d-cap"><span class="d-cap-cur">1/6</span><span class="d-cap-rem">余 5 位</span></div><div class="join-btn" onclick="showJoinModal('如果可以重来，你会选择不同的专业吗？')">申请加入</div></div>
+        <span class="d-rule-note">规则：≤ 6 人 · 时长 > 2小时 · 用户自发</span>
+      </div>
+
+      <div class="initiate-cta">
+        <span class="init-title">发起一场对话</span>
+        <span class="init-desc">你有什么想聊的？≤ 6 人，> 2 小时，就可以开始。</span>
+        <span class="init-ticket">"打开真实发生的对话"月票 · ¥99/月 · 订阅 399 月票赠送</span>
+        <div class="btn-primary" onclick="showInitiateModal()">发起对话 →</div>
+      </div>
+    </div>
+
+    <!-- ===== 我的页 ===== -->
+    <div class="page" id="page-profile">
+      <div class="identity-hero">
+        <span class="section-label">THE IDENTITY · 数字身份</span>
+        <span style="font-size:13px;color:var(--ink-muted);display:block;margin-bottom:16px">你的真实发生轨迹</span>
+
+        <div id="loginCard" class="login-card">
+          <span class="login-title">创建你的数字身份</span>
+          <span class="login-desc">每一次参与都会在你的数字身份上留下印记。勋章、足迹、路线——这是你在真实世界里真实发生过的证明。</span>
+          <div class="btn-primary" onclick="doLogin()">微信一键登录</div>
+        </div>
+
+        <div id="userCard" class="user-card" style="display:none">
+          <div class="user-av">阿</div>
+          <div><span class="user-name">阿强</span><span class="user-joined">加入 2024-01 · 23 次活动</span></div>
+        </div>
+        <div id="ticketBadges" class="ticket-badges" style="display:none">
+          <span class="ticket-lbl">持有月票</span>
+          <span class="ticket-badge">杭州</span>
+          <span class="ticket-badge">当代青年</span>
+          <span class="ticket-badge">对话</span>
+        </div>
+      </div>
+
+      <div class="badges-section">
+        <div class="sec-header-row">
+          <span class="sec-title-text">我的勋章</span>
+          <span class="sec-count" id="badgeCount">0/6</span>
+        </div>
+        <div class="badges-grid">
+          <div class="badge-item badge-locked" id="badge1"><span class="badge-emoji">🌙</span><span class="badge-name">夜行者</span><span class="badge-cond">参加 5 次夜爬</span></div>
+          <div class="badge-item badge-locked" id="badge2"><span class="badge-emoji">💬</span><span class="badge-name">对话发起者</span><span class="badge-cond">发起第一次对话</span></div>
+          <div class="badge-item badge-locked" id="badge3"><span class="badge-emoji">🗺️</span><span class="badge-name">城市漫游者</span><span class="badge-cond">完成 10 次 Citywalk</span></div>
+          <div class="badge-item badge-locked" id="badge4"><span class="badge-emoji">🎨</span><span class="badge-name">艺术探索者</span><span class="badge-cond">参加 3 次画室探访</span></div>
+          <div class="badge-item badge-locked" id="badge5"><span class="badge-emoji">🤖</span><span class="badge-name">AI 先锋</span><span class="badge-cond">参加首期 Prompt 会</span></div>
+          <div class="badge-item badge-locked" id="badge6"><span class="badge-emoji">⭐</span><span class="badge-name">真实发生者</span><span class="badge-cond">累计参与 30 次</span></div>
+        </div>
+      </div>
+
+      <div class="community-section">
+        <div class="sec-header-row" style="margin-bottom:4px">
+          <span class="sec-title-text">真实发生者</span>
+        </div>
+        <span class="community-desc">每一次出现，都是一枚勋章</span>
+        <div class="cu-user"><div class="cu-av">老</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">老陈</span><span class="cu-count">47 次活动</span></div><div class="cu-badges">🏯⭐</div><div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">世界</span></div></div></div>
+        <div class="cu-user"><div class="cu-av">七</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">七哥</span><span class="cu-count">31 次活动</span></div><div class="cu-badges">🤖🧠</div><div class="cu-tags"><span class="cu-tag">AI 世界</span><span class="cu-tag">对话</span></div></div></div>
+        <div class="cu-user"><div class="cu-av">阿</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">阿强</span><span class="cu-count">23 次活动</span></div><div class="cu-badges">🌙💬🗺️</div><div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">对话</span></div></div></div>
+        <div class="cu-user"><div class="cu-av">林</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">林姐</span><span class="cu-count">19 次活动</span></div><div class="cu-badges">⚡🚀</div><div class="cu-tags"><span class="cu-tag">当代青年</span><span class="cu-tag">对话</span></div></div></div>
+        <div class="cu-user"><div class="cu-av">子</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">子木</span><span class="cu-count">15 次活动</span></div><div class="cu-badges">🎨📷</div><div class="cu-tags"><span class="cu-tag">艺术</span><span class="cu-tag">对话</span></div></div></div>
+      </div>
+
+      <div class="footer-area">
+        <div class="footer-links">
+          <span class="footer-link">关于 Simpex</span><span class="footer-sep">·</span>
+          <span class="footer-link">真实发生宣言</span><span class="footer-sep">·</span>
+          <span class="footer-link">主理人招募</span>
+        </div>
+        <span class="footer-copy">© 2024 Simpex · 真实发生 · 杭州</span>
+        <span class="footer-motto">真实发生，才算活过。</span>
+      </div>
+    </div>
+
+  </div><!-- end page-content -->
+
+  <!-- TabBar -->
+  <div class="tab-bar">
+    <div class="tab-item active" id="tab-home" onclick="switchTab('home')">
+      <span class="tab-icon">🏠</span>
+      <span class="tab-label">首页</span>
+    </div>
+    <div class="tab-item" id="tab-timeline" onclick="switchTab('timeline')">
+      <span class="tab-icon">📅</span>
+      <span class="tab-label">活动</span>
+    </div>
+    <div class="tab-item" id="tab-dialogue" onclick="switchTab('dialogue')">
+      <span class="tab-icon">💬</span>
+      <span class="tab-label">对话</span>
+    </div>
+    <div class="tab-item" id="tab-profile" onclick="switchTab('profile')">
+      <span class="tab-icon">👤</span>
+      <span class="tab-label">我的</span>
+    </div>
+  </div>
+
+  <!-- 弹窗 -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <span class="modal-title" id="modalTitle"></span>
+      <span class="modal-content" id="modalContent"></span>
+      <div class="modal-btns">
+        <div class="modal-cancel" onclick="closeModal()">取消</div>
+        <div class="modal-confirm" id="modalConfirm" onclick="confirmModal()">确认</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+</div><!-- end phone-shell -->
+
+<script>
+  // 时钟
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  const tabTitles = {
+    home: '真实发生 · Simpex',
+    gateways: '月票入口',
+    timeline: '活动',
+    dialogue: '对话广场',
+    profile: '数字身份'
+  };
+  const mainTabs = ['home','timeline','dialogue','profile'];
+
+  function switchTab(tab) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+
+    const page = document.getElementById('page-' + tab);
+    if (page) {
+      page.classList.add('active');
+      document.getElementById('pageContent').scrollTop = 0;
+    }
+    const tabEl = document.getElementById('tab-' + tab);
+    if (tabEl) tabEl.classList.add('active');
+
+    document.getElementById('navTitle').textContent = tabTitles[tab] || '真实发生';
+    document.getElementById('navBack').classList.toggle('visible', !mainTabs.includes(tab));
+  }
+
+  function goBack() { switchTab('home'); }
+
+  let modalAction = null;
+  function showModal(title, content, confirmText, action) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalContent').textContent = content;
+    document.getElementById('modalConfirm').textContent = confirmText || '确认';
+    document.getElementById('modal').classList.add('show');
+    modalAction = action;
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+    modalAction = null;
+  }
+  function confirmModal() {
+    closeModal();
+    if (modalAction) modalAction();
+  }
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  }
+
+  function showBuyModal(name, price) {
+    showModal('获取月票', `${name}\n¥${price}/月\n\n正式版本将接入微信支付`, '确认购买', () => {
+      showToast('购买成功！');
+    });
+  }
+  function showApplyModal(name) {
+    showModal('申请参加', `申请参加「${name}」\n\n需持有对应月票才可参加`, '确认申请', () => {
+      showToast('申请已发送！');
+    });
+  }
+  function showJoinModal(title) {
+    showModal('申请加入对话', `"${title}"\n\n需持有"打开对话"月票才可申请加入`, '申请加入', () => {
+      showToast('申请已发送！');
+    });
+  }
+  function showInitiateModal() {
+    showModal('发起一场对话', '需要持有"打开对话"月票（¥199/月）才可发起对话。\n\n是否前往购买月票？', '去购买', () => {
+      switchTab('gateways');
+    });
+  }
+  function doLogin() {
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('userCard').style.display = 'flex';
+    document.getElementById('ticketBadges').style.display = 'flex';
+    document.getElementById('badge1').className = 'badge-item badge-earned';
+    document.getElementById('badge2').className = 'badge-item badge-earned';
+    document.getElementById('badgeCount').textContent = '2/6';
+    showToast('登录成功！');
+  }
+</script>
+</body>
+</html>
