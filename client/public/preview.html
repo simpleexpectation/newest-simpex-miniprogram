@@ -1359,90 +1359,357 @@ body {
   margin-bottom: 16px;
 }
 
-/* ===== 我的页 ===== */
-.identity-hero {
-  background: #f0f0f0;
-  padding: 24px;
-  border-bottom: 1px solid var(--border);
-}
-.login-card {
+/* ===== 我的页（Bonjour 风格数字名片）===== */
+
+/* 顶部个人信息区 */
+.profile-header {
   background: #ffffff;
-  border: 1px solid var(--border-strong);
-  padding: 24px;
-  text-align: center;
-  margin-top: 16px;
+  padding: 20px 16px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
-.login-title {
-  display: block;
-  font-size: 18px;
-  font-weight: 900;
-  color: var(--ink-black);
-  font-family: 'Noto Serif SC', serif;
-  margin-bottom: 8px;
-}
-.login-desc {
-  display: block;
-  font-size: 11px;
-  color: var(--ink-muted);
-  line-height: 1.8;
-  margin-bottom: 16px;
-}
-.user-card {
+.profile-top-row {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
-.user-av {
-  width: 48px;
-  height: 48px;
+.profile-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1677ff;
+  color: #fff;
+  border-radius: 24px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'PingFang SC', sans-serif;
+  cursor: pointer;
+  border: none;
+  flex: 1;
+  max-width: 200px;
+}
+.profile-create-btn .btn-icon { font-size: 16px; }
+.profile-action-btns {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.profile-wechat-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+}
+.profile-more-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  font-weight: 700;
+}
+
+/* 登录后的用户信息区 */
+.profile-user-info {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.profile-user-info.show { display: flex; }
+.profile-avatar {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: var(--navy);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 700;
-  color: #f5f0e8;
+  color: #fff;
   font-family: 'Noto Serif SC', serif;
   flex-shrink: 0;
+  border: 2px solid #e8e8e8;
 }
-.user-name {
-  display: block;
+.profile-user-detail { flex: 1; }
+.profile-user-name {
   font-size: 18px;
   font-weight: 700;
-  color: var(--ink-black);
+  color: #111;
   font-family: 'Noto Serif SC', serif;
-}
-.user-joined {
   display: block;
-  font-size: 10px;
-  color: var(--ink-muted);
-  font-family: 'IBM Plex Mono', monospace;
-  margin-top: 3px;
 }
-.ticket-badges {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 14px;
-}
-.ticket-lbl {
-  font-size: 9px;
-  color: var(--ink-faint);
+.profile-user-handle {
+  font-size: 12px;
+  color: #999;
   font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: 1px;
+  display: block;
+  margin-top: 2px;
 }
-.ticket-badge {
-  border: 1px solid var(--navy);
-  padding: 2px 8px;
-  font-size: 10px;
-  color: var(--navy);
-  font-family: 'IBM Plex Mono', monospace;
+.profile-user-bio {
+  font-size: 12px;
+  color: #555;
+  display: block;
+  margin-top: 6px;
+  line-height: 1.5;
+  font-family: 'PingFang SC', sans-serif;
 }
 
-.badges-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+/* 持有月票标签行 */
+.profile-tickets-row {
+  display: none;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px 0 14px;
+  border-top: 1px solid #f0f0f0;
+}
+.profile-tickets-row.show { display: flex; }
+.profile-ticket-tag {
+  background: rgba(30,58,95,0.08);
+  color: var(--navy);
+  border: 1px solid rgba(30,58,95,0.2);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.profile-ticket-tag.gold {
+  background: rgba(139,105,20,0.08);
+  color: #8b6914;
+  border-color: rgba(139,105,20,0.25);
+}
+
+/* 统计数字行 */
+.profile-stats-row {
+  display: none;
+  gap: 0;
+  border-top: 1px solid #f0f0f0;
+  margin: 0 -16px;
+}
+.profile-stats-row.show { display: flex; }
+.profile-stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  border-right: 1px solid #f0f0f0;
+}
+.profile-stat-item:last-child { border-right: none; }
+.profile-stat-num {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.profile-stat-label {
+  display: block;
+  font-size: 10px;
+  color: #999;
+  margin-top: 2px;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+/* 动态信息流 */
+.feed-section {
+  background: #ffffff;
+  margin-top: 8px;
+  padding: 16px 16px 0;
+}
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.feed-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'PingFang SC', sans-serif;
+}
+.feed-more {
+  font-size: 13px;
+  color: #1677ff;
+  font-family: 'PingFang SC', sans-serif;
+  cursor: pointer;
+}
+.feed-card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.feed-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.feed-av {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.feed-av img { width: 100%; height: 100%; object-fit: cover; }
+.feed-meta { flex: 1; }
+.feed-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'PingFang SC', sans-serif;
+}
+.feed-time {
+  font-size: 11px;
+  color: #bbb;
+  margin-left: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.feed-more-dot {
+  color: #bbb;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+.feed-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 10px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.feed-text .feed-blur {
+  filter: blur(4px);
+  user-select: none;
+  color: #aaa;
+  font-size: 13px;
+}
+.feed-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #1677ff;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.feed-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #f5f5f5;
+}
+.feed-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+  font-family: 'PingFang SC', sans-serif;
+}
+.feed-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0 14px;
+}
+.feed-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1677ff;
+}
+.feed-dot.inactive { background: #ddd; }
+
+/* 社交账号关联卡片 */
+.social-section {
+  background: #ffffff;
+  margin-top: 8px;
+  padding: 0 16px;
+}
+.social-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+.social-card:last-child { border-bottom: none; }
+.social-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  font-weight: 700;
+  color: #fff;
+}
+.social-icon.xiaohongshu { background: #fe2c55; font-size: 13px; font-family: 'PingFang SC', sans-serif; }
+.social-icon.x { background: #000; }
+.social-icon.wechat { background: #07c160; }
+.social-icon.bilibili { background: #00a1d6; font-size: 13px; font-family: 'PingFang SC', sans-serif; }
+.social-info { flex: 1; }
+.social-handle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  font-family: 'PingFang SC', sans-serif;
+  display: block;
+}
+.social-platform {
+  font-size: 12px;
+  color: #999;
+  display: block;
+  margin-top: 2px;
+  font-family: 'PingFang SC', sans-serif;
+}
+.social-follow-btn {
+  border-radius: 20px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: 'PingFang SC', sans-serif;
+}
+.social-follow-btn.red { background: #fe2c55; color: #fff; }
+.social-follow-btn.black { background: #111; color: #fff; }
+.social-follow-btn.green { background: #07c160; color: #fff; }
+.social-follow-btn.blue { background: #00a1d6; color: #fff; }
+
+/* 勋章区 */
+.badges-section { padding: 16px 16px; background: #fff; margin-top: 8px; border-bottom: 1px solid var(--border); }
 .sec-header-row {
   display: flex;
   justify-content: space-between;
@@ -1453,7 +1720,7 @@ body {
   font-size: 16px;
   font-weight: 700;
   color: var(--ink-black);
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'PingFang SC', sans-serif;
 }
 .sec-count {
   font-size: 10px;
@@ -1468,6 +1735,7 @@ body {
 .badge-item {
   background: #f7f7f7;
   border: 1px solid var(--border-strong);
+  border-radius: 10px;
   padding: 14px 8px;
   text-align: center;
   position: relative;
@@ -1480,7 +1748,7 @@ body {
   font-size: 10px;
   font-weight: 700;
   color: var(--ink-black);
-  font-family: 'Noto Serif SC', serif;
+  font-family: 'PingFang SC', sans-serif;
   margin-bottom: 3px;
 }
 .badge-cond {
@@ -1491,7 +1759,8 @@ body {
   line-height: 1.4;
 }
 
-.community-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+/* 真实发生者社区 */
+.community-section { padding: 16px 16px; border-bottom: 1px solid var(--border); background: #fff; margin-top: 8px; }
 .community-desc {
   display: block;
   font-size: 11px;
@@ -2192,29 +2461,120 @@ body {
     </div>
 
     <!-- ===== 我的页 ===== -->
-    <div class="page" id="page-profile">
-      <div class="identity-hero">
-        <span class="section-label">THE IDENTITY · 数字身份</span>
-        <span style="font-size:13px;color:var(--ink-muted);display:block;margin-bottom:16px">你的真实发生轨迹</span>
+    <div class="page" id="page-profile" style="background:#f5f5f5">
 
-        <div id="loginCard" class="login-card">
-          <span class="login-title">创建你的数字身份</span>
-          <span class="login-desc">每一次参与都会在你的数字身份上留下印记。勋章、足迹、路线——这是你在真实世界里真实发生过的证明。</span>
-          <div class="btn-primary" onclick="doLogin()">微信一键登录</div>
+      <!-- 顶部个人信息头 -->
+      <div class="profile-header">
+        <!-- 未登录状态 -->
+        <div class="profile-top-row" id="profileLoginRow">
+          <button class="profile-create-btn" onclick="doLogin()">
+            <span class="btn-icon">👤</span>
+            创建真实发生身份
+          </button>
+          <div class="profile-action-btns">
+            <button class="profile-wechat-btn">📱</button>
+            <button class="profile-more-btn">⋯</button>
+          </div>
         </div>
 
-        <div id="userCard" class="user-card" style="display:none">
-          <div class="user-av">阿</div>
-          <div><span class="user-name">阿强</span><span class="user-joined">加入 2024-01 · 23 次活动</span></div>
+        <!-- 登录后状态 -->
+        <div class="profile-user-info" id="profileUserInfo">
+          <div class="profile-avatar">阿</div>
+          <div class="profile-user-detail">
+            <span class="profile-user-name">阿强</span>
+            <span class="profile-user-handle">@aqiang_hz · 加入 2024-01</span>
+            <span class="profile-user-bio">在杭州寻找真实连接，喜欢夜爬和即兴对话，欢迎一起发生。</span>
+          </div>
         </div>
-        <div id="ticketBadges" class="ticket-badges" style="display:none">
-          <span class="ticket-lbl">持有月票</span>
-          <span class="ticket-badge">杭州</span>
-          <span class="ticket-badge">当代青年</span>
-          <span class="ticket-badge">对话</span>
+
+        <!-- 持有月票 -->
+        <div class="profile-tickets-row" id="profileTickets">
+          <span class="profile-ticket-tag gold">🏵 打开杭州</span>
+          <span class="profile-ticket-tag">💬 对话月票</span>
+          <span class="profile-ticket-tag">🌟 当代青年</span>
+        </div>
+
+        <!-- 统计数字 -->
+        <div class="profile-stats-row" id="profileStats">
+          <div class="profile-stat-item">
+            <span class="profile-stat-num">23</span>
+            <span class="profile-stat-label">参与活动</span>
+          </div>
+          <div class="profile-stat-item">
+            <span class="profile-stat-num">4</span>
+            <span class="profile-stat-label">发起对话</span>
+          </div>
+          <div class="profile-stat-item">
+            <span class="profile-stat-num">3</span>
+            <span class="profile-stat-label">获得勋章</span>
+          </div>
+          <div class="profile-stat-item">
+            <span class="profile-stat-num">12</span>
+            <span class="profile-stat-label">真实发生者</span>
+          </div>
         </div>
       </div>
 
+      <!-- 动态信息流 -->
+      <div class="feed-section">
+        <div class="feed-header">
+          <span class="feed-title">动态</span>
+          <span class="feed-more">全部 &gt;</span>
+        </div>
+
+        <!-- 动态卡片 1 -->
+        <div class="feed-card">
+          <div class="feed-card-top">
+            <div class="feed-av">阿</div>
+            <div class="feed-meta">
+              <span class="feed-name">阿强<span class="feed-time">· 3 天前</span></span>
+            </div>
+            <span class="feed-more-dot">⋯</span>
+          </div>
+          <div class="feed-text">上周参加了小小的老杭州 Citywalk，穿过小河工巧巧遇见了一个平时不会进的老店。这就是真实发生的魅力。<span class="feed-blur">后来和同行一起吃了香干肉簽，聚了两个小时就这样还不想走</span></div>
+          <div class="feed-tag">#🚶 Citywalk 本地风光</div>
+          <div class="feed-actions">
+            <span class="feed-action-btn">♡ 5</span>
+            <span class="feed-action-btn">💬 评论</span>
+            <span class="feed-action-btn">➤ 分享</span>
+          </div>
+        </div>
+        <div class="feed-dots">
+          <div class="feed-dot"></div>
+          <div class="feed-dot inactive"></div>
+          <div class="feed-dot inactive"></div>
+        </div>
+      </div>
+
+      <!-- 社交账号关联 -->
+      <div class="social-section">
+        <div class="social-card">
+          <div class="social-icon xiaohongshu">小红书</div>
+          <div class="social-info">
+            <span class="social-handle">@🚢 aqiang_hz</span>
+            <span class="social-platform">小红书</span>
+          </div>
+          <button class="social-follow-btn red">关注</button>
+        </div>
+        <div class="social-card">
+          <div class="social-icon x">X</div>
+          <div class="social-info">
+            <span class="social-handle">@aqiang_hz_</span>
+            <span class="social-platform">X</span>
+          </div>
+          <button class="social-follow-btn black">Follow</button>
+        </div>
+        <div class="social-card">
+          <div class="social-icon bilibili">B站</div>
+          <div class="social-info">
+            <span class="social-handle">@真实发生的阿强</span>
+            <span class="social-platform">Bilibili</span>
+          </div>
+          <button class="social-follow-btn blue">关注</button>
+        </div>
+      </div>
+
+      <!-- 勋章 -->
       <div class="badges-section">
         <div class="sec-header-row">
           <span class="sec-title-text">我的勋章</span>
@@ -2224,18 +2584,19 @@ body {
           <div class="badge-item badge-locked" id="badge1"><span class="badge-emoji">🌙</span><span class="badge-name">夜行者</span><span class="badge-cond">参加 5 次夜爬</span></div>
           <div class="badge-item badge-locked" id="badge2"><span class="badge-emoji">💬</span><span class="badge-name">对话发起者</span><span class="badge-cond">发起第一次对话</span></div>
           <div class="badge-item badge-locked" id="badge3"><span class="badge-emoji">🗺️</span><span class="badge-name">城市漫游者</span><span class="badge-cond">完成 10 次 Citywalk</span></div>
-          <div class="badge-item badge-locked" id="badge4"><span class="badge-emoji">🎨</span><span class="badge-name">艺术探索者</span><span class="badge-cond">参加 3 次画室探访</span></div>
+          <div class="badge-item badge-locked" id="badge4"><span class="badge-emoji">🎨</span><span class="badge-name">艺术探索者</span><span class="badge-cond">参加 3 次艺术活动</span></div>
           <div class="badge-item badge-locked" id="badge5"><span class="badge-emoji">🤖</span><span class="badge-name">AI 先锋</span><span class="badge-cond">参加首期 Prompt 会</span></div>
           <div class="badge-item badge-locked" id="badge6"><span class="badge-emoji">⭐</span><span class="badge-name">真实发生者</span><span class="badge-cond">累计参与 30 次</span></div>
         </div>
       </div>
 
+      <!-- 真实发生者社区 -->
       <div class="community-section">
         <div class="sec-header-row" style="margin-bottom:4px">
           <span class="sec-title-text">真实发生者</span>
         </div>
         <span class="community-desc">每一次出现，都是一枚勋章</span>
-        <div class="cu-user"><div class="cu-av">老</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">老陈</span><span class="cu-count">47 次活动</span></div><div class="cu-badges">🏯⭐</div><div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">世界</span></div></div></div>
+        <div class="cu-user"><div class="cu-av">老</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">老陈</span><span class="cu-count">47 次活动</span></div><div class="cu-badges">🏰⭐</div><div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">世界</span></div></div></div>
         <div class="cu-user"><div class="cu-av">七</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">七哥</span><span class="cu-count">31 次活动</span></div><div class="cu-badges">🤖🧠</div><div class="cu-tags"><span class="cu-tag">AI 世界</span><span class="cu-tag">对话</span></div></div></div>
         <div class="cu-user"><div class="cu-av">阿</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">阿强</span><span class="cu-count">23 次活动</span></div><div class="cu-badges">🌙💬🗺️</div><div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">对话</span></div></div></div>
         <div class="cu-user"><div class="cu-av">林</div><div class="cu-info"><div class="cu-name-row"><span class="cu-name">林姐</span><span class="cu-count">19 次活动</span></div><div class="cu-badges">⚡🚀</div><div class="cu-tags"><span class="cu-tag">当代青年</span><span class="cu-tag">对话</span></div></div></div>
@@ -2248,7 +2609,7 @@ body {
           <span class="footer-link">真实发生宣言</span><span class="footer-sep">·</span>
           <span class="footer-link">主理人招募</span>
         </div>
-        <span class="footer-copy">© 2024 Simpex · 真实发生 · 杭州</span>
+        <span class="footer-copy">© 2025 Simpex · 真实发生 · 杭州</span>
         <span class="footer-motto">真实发生，才算活过。</span>
       </div>
     </div>
@@ -2373,13 +2734,24 @@ body {
     });
   }
   function doLogin() {
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('userCard').style.display = 'flex';
-    document.getElementById('ticketBadges').style.display = 'flex';
+    // 隐藏未登录按鈕
+    const loginRow = document.getElementById('profileLoginRow');
+    if (loginRow) loginRow.style.display = 'none';
+    // 显示登录后用户信息
+    const userInfo = document.getElementById('profileUserInfo');
+    if (userInfo) userInfo.classList.add('show');
+    // 显示月票标签
+    const tickets = document.getElementById('profileTickets');
+    if (tickets) tickets.classList.add('show');
+    // 显示统计数字
+    const stats = document.getElementById('profileStats');
+    if (stats) stats.classList.add('show');
+    // 勋章解锁
     document.getElementById('badge1').className = 'badge-item badge-earned';
     document.getElementById('badge2').className = 'badge-item badge-earned';
-    document.getElementById('badgeCount').textContent = '2/6';
-    showToast('登录成功！');
+    document.getElementById('badge3').className = 'badge-item badge-earned';
+    document.getElementById('badgeCount').textContent = '3/6';
+    showToast('登录成功！欢迎回到真实发生 🌟');
   }
 </script>
 </body>
