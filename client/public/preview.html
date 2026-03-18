@@ -1936,6 +1936,446 @@ body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
+/* 新版数字名片：大头像 + 介绍区 */
+.profile-identity-block {
+  background: #ffffff;
+  padding: 24px 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.profile-identity-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.profile-big-avatar-wrap { position: relative; }
+.profile-big-avatar {
+  width: 80px;
+  height: 80px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  border: 2px solid var(--border-strong);
+}
+.profile-big-avatar-wrap .profile-gold-badge {
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+  bottom: -5px;
+  right: -5px;
+}
+.profile-identity-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.profile-action-sm {
+  padding: 6px 16px;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--ink-medium);
+  cursor: pointer;
+}
+.profile-big-name {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ink-black);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 4px;
+}
+.profile-big-handle {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+.profile-intro-lines {
+  margin-bottom: 14px;
+}
+.profile-intro-line {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-medium);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 2;
+}
+.profile-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.profile-tag {
+  font-size: 11px;
+  border: 1px solid var(--border-strong);
+  color: var(--ink-medium);
+  padding: 3px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+}
+.profile-tag.gold-tag {
+  border-color: #8b6914;
+  color: #8b6914;
+  background: rgba(139,105,20,0.06);
+  font-weight: 600;
+}
+.profile-friend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.profile-friend-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.profile-friend-lbl {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: 'Noto Serif SC', serif;
+}
+.profile-friend-sep { flex-shrink: 0; }
+.profile-friend-avs {
+  display: flex;
+  margin-left: auto;
+}
+.friend-av {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  margin-left: -6px;
+  border: 2px solid #fff;
+}
+
+/* 统计数字行（新版，独立于 header 外） */
+.profile-stats-row {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+.profile-stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 14px 0;
+  border-right: 1px solid var(--border);
+}
+.profile-stat-item:last-child { border-right: none; }
+.profile-stat-num {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink-black);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.profile-stat-label {
+  display: block;
+  font-size: 9px;
+  color: var(--ink-faint);
+  margin-top: 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.5px;
+}
+
+/* 事件照片瀑布流 */
+.events-photo-section {
+  background: #fff;
+  padding: 20px 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.events-photo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.event-photo-card {
+  position: relative;
+  height: 90px;
+  overflow: hidden;
+}
+.event-photo-card.tall {
+  grid-row: span 2;
+  height: 186px;
+}
+.event-photo-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 10px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+}
+.event-photo-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Noto Serif SC', serif;
+}
+.event-photo-sub {
+  display: block;
+  font-size: 9px;
+  color: rgba(255,255,255,0.7);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 2px;
+}
+
+/* 感悟中的人名链接 */
+.name-link {
+  color: var(--navy);
+  font-weight: 700;
+  cursor: pointer;
+  border-bottom: 1px solid var(--navy);
+  padding-bottom: 1px;
+}
+
+/* 活动页 Tab 切换栏 */
+.act-tab-bar {
+  display: flex;
+  border-bottom: 2px solid var(--border-strong);
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.act-tab {
+  flex: 1;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 12px;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  color: var(--ink-faint);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.act-tab.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+.act-theme-panel { display: block; }
+
+/* 对话页发起表单弹窗 */
+.initiate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.form-label {
+  display: block;
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: 'Noto Serif SC', serif;
+  color: var(--ink-black);
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+}
+.form-textarea { resize: none; height: 72px; line-height: 1.6; }
+.form-row { display: flex; gap: 10px; }
+.form-row .form-group { flex: 1; }
+.form-group { display: flex; flex-direction: column; }
+.form-hint {
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 3px;
+}
+
+/* 月票详情页 */
+.gateway-detail-page {
+  background: #fff;
+}
+.gd-hero {
+  background: var(--navy);
+  padding: 28px 20px 20px;
+  color: #f5f0e8;
+}
+.gd-label {
+  display: block;
+  font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 2px;
+  color: rgba(245,240,232,0.5);
+  margin-bottom: 8px;
+}
+.gd-title {
+  display: block;
+  font-size: 20px;
+  font-weight: 900;
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 6px;
+}
+.gd-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.gd-price {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gd-price-sub {
+  font-size: 11px;
+  color: rgba(245,240,232,0.6);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gd-quota-bar {
+  background: rgba(255,255,255,0.15);
+  height: 4px;
+  margin-bottom: 6px;
+}
+.gd-quota-fill {
+  background: #f5f0e8;
+  height: 4px;
+}
+.gd-quota-text {
+  font-size: 10px;
+  color: rgba(245,240,232,0.6);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.gd-benefits {
+  padding: 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.gd-benefits-title {
+  font-size: 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+  display: block;
+  margin-bottom: 12px;
+}
+.gd-benefit-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.gd-benefit-item:last-child { border-bottom: none; }
+.gd-benefit-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.gd-benefit-text {
+  font-size: 13px;
+  font-family: 'Noto Serif SC', serif;
+  color: var(--ink-black);
+  line-height: 1.6;
+}
+.gd-benefit-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-top: 2px;
+}
+.gd-hosts {
+  padding: 20px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.gd-host-card {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.gd-host-card:last-child { border-bottom: none; }
+.gd-host-av {
+  width: 44px;
+  height: 44px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+}
+.gd-host-info { flex: 1; }
+.gd-host-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'Noto Serif SC', serif;
+  margin-bottom: 3px;
+}
+.gd-host-act {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 3px;
+}
+.gd-host-bio {
+  font-size: 12px;
+  color: var(--ink-medium);
+  font-family: 'Noto Serif SC', serif;
+  line-height: 1.5;
+}
+.gd-subscribe-btn {
+  margin: 20px 20px 32px;
+  background: var(--navy);
+  color: #f5f0e8;
+  text-align: center;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Noto Serif SC', serif;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
 .footer-area {
   padding: 20px 24px 32px;
   text-align: center;
@@ -2298,7 +2738,7 @@ body {
           </div>
           <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
           <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:57%"></div></div><span class="progress-text">17/30 已售</span></div>
-          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的本地风光','399')">立即获取</div></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div style="display:flex;gap:8px"><div class="buy-btn" style="background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 14px;font-size:11px" onclick="openGatewayDetail('local')">查看详情</div><div class="buy-btn" onclick="showBuyModal('打开真实发生的本地风光','399')">立即获取</div></div></div>
         </div>
       </div>
 
@@ -2322,7 +2762,7 @@ body {
           </div>
           <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
           <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div><span class="progress-text">15/30 已售</span></div>
-          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的当代青年','399')">立即获取</div></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div style="display:flex;gap:8px"><div class="buy-btn" style="background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 14px;font-size:11px" onclick="openGatewayDetail('youth')">查看详情</div><div class="buy-btn" onclick="showBuyModal('打开真实发生的当代青年','399')">立即获取</div></div></div>
         </div>
       </div>
 
@@ -2346,7 +2786,7 @@ body {
           </div>
           <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
           <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div><span class="progress-text">12/30 已售</span></div>
-          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div class="buy-btn" onclick="showBuyModal('打开真实发生的多元艺术','399')">立即获取</div></div>
+          <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div style="display:flex;gap:8px"><div class="buy-btn" style="background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 14px;font-size:11px" onclick="openGatewayDetail('art')">查看详情</div><div class="buy-btn" onclick="showBuyModal('打开真实发生的多元艺术','399')">立即获取</div></div></div>
         </div>
       </div>
 
@@ -2436,70 +2876,173 @@ body {
 
     <!-- ===== 活动页 ===== -->
     <div class="page" id="page-timeline">
-      <div class="page-header">
-        <span class="section-label">GATEWAY: LOCAL · 本地风光</span>
-        <span class="section-title">本月活动</span>
-        <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥399/月 · 首月限 30 张 · 订阅后全部免费参加</span>
-      </div>
-      <div class="route-overview">
-        <div class="route-item"><div class="route-time-col"><span class="route-day">周三/六</span><span class="route-t">21:00</span></div><div><span class="route-type">自然 · 爬山</span><span class="route-name">一番 · 自然爬山</span></div></div>
-        <div class="route-item"><div class="route-time-col"><span class="route-day">周日</span><span class="route-t">10:00</span></div><div><span class="route-type">城市 · 漫游</span><span class="route-name">小小 · 老杭州 Citywalk</span></div></div>
-        <div class="route-item"><div class="route-time-col"><span class="route-day">周末</span><span class="route-t">不定</span></div><div><span class="route-type">骑行 · 自然</span><span class="route-name">小鱼尾巴 · 环西湖骑行</span></div></div>
-        <div class="route-item"><div class="route-time-col"><span class="route-day">不定期</span><span class="route-t">随机</span></div><div><span class="route-type">文化 · 漫谈</span><span class="route-name">道长 · 文化街区漫谈</span></div></div>
+      <!-- 主题 Tab 切换栏 -->
+      <div class="act-tab-bar">
+        <div class="act-tab active" id="actTab-local" onclick="switchActTab('local')">本地风光</div>
+        <div class="act-tab" id="actTab-youth" onclick="switchActTab('youth')">当代青年</div>
+        <div class="act-tab" id="actTab-art" onclick="switchActTab('art')">多元艺术</div>
       </div>
 
-      <div class="act-card">
-        <div class="act-time-badge"><span class="atb-day">周三 / 周六</span><span class="atb-time">21:00</span></div>
-        <div class="act-body">
-          <div class="act-type-row"><span class="act-type">自然 · 爬山</span><span class="act-cat">Let's Roll 社群</span></div>
-          <span class="act-name">一番的自然爬山</span>
-          <span class="act-desc">不是景区打卡，是真实的山野行走。从山脚出发，穿过树林，到达山顶。不带手电，只靠月光和彼此。</span>
-          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">一番</span><span class="act-host-bio">Let's Roll 社群发起人，自然爬山主理人</span></div></div>
-          <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">爬山</span><span class="act-tag">周三/周六</span></div>
-          <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('一番的自然爬山')">申请参加 →</div></div>
+      <!-- 本地风光 -->
+      <div class="act-theme-panel" id="actPanel-local">
+        <div class="page-header" style="border-top:none">
+          <span class="section-label">GATEWAY: LOCAL · 本地风光</span>
+          <span class="section-title">本月活动</span>
+          <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥399/月 · 首月限 30 张 · 订阅后全部免费参加</span>
         </div>
-      </div>
-
-      <div class="act-card">
-        <div class="act-time-badge"><span class="atb-day">周日</span><span class="atb-time">10:00</span></div>
-        <div class="act-body">
-          <div class="act-type-row"><span class="act-type">城市 · 漫游</span><span class="act-cat">每次路线不同</span></div>
-          <span class="act-name">小小的老杭州 Citywalk</span>
-          <span class="act-desc">不是景点路线，是真实的杭州生活路线。从菜市场开始，穿过老小区，进入你不知道的那条街。每次路线不同。</span>
-          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">小小</span><span class="act-host-bio">老杭州本地人，熔入杭州小巷 10 年</span></div></div>
-          <div class="act-tags-row"><span class="act-tag">老杭州</span><span class="act-tag">Citywalk</span><span class="act-tag">周日</span></div>
-          <div class="act-footer"><div><span class="cap-text">11/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:55%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小小的老杭州 Citywalk')">申请参加 →</div></div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周三 / 周六</span><span class="atb-time">21:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">自然 · 爬山</span><span class="act-cat">Let's Roll 社群</span></div>
+            <span class="act-name">一番的自然爬山</span>
+            <span class="act-desc">不是景区打卡，是真实的山野行走。从山脚出发，穿过树林，到达山顶。不带手电，只靠月光和彼此。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('一番','一','38','Let\'s Roll 社群发起人，自然爬山主理人。天目山爬了 200 次以上。','normal')">一番</span><span class="act-host-bio">Let's Roll 社群发起人</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">爬山</span><span class="act-tag">周三/周六</span></div>
+            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('一番的自然爬山')">申请参加 →</div></div>
+          </div>
         </div>
-      </div>
-
-      <div class="act-card">
-        <div class="act-time-badge"><span class="atb-day">周末不定</span><span class="atb-time">09:00</span></div>
-        <div class="act-body">
-          <div class="act-type-row"><span class="act-type">骑行 · 自然</span><span class="act-cat">环西湖路线</span></div>
-          <span class="act-name">小鱼尾巴的环西湖骑行</span>
-          <span class="act-desc">不是景区骑行打卡，是真实的西湖环行。小鱼尾巴带你看到普通游客看不到的西湖。</span>
-          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">小鱼尾巴</span><span class="act-host-bio">杭州骑行爱好者，环西湖骑了数百次</span></div></div>
-          <div class="act-tags-row"><span class="act-tag">骑行</span><span class="act-tag">西湖</span><span class="act-tag">周末</span></div>
-          <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小鱼尾巴的环西湖骑行')">申请参加 →</div></div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周日</span><span class="atb-time">10:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">城市 · 漫游</span><span class="act-cat">每次路线不同</span></div>
+            <span class="act-name">小小的老杭州 Citywalk</span>
+            <span class="act-desc">不是景点路线，是真实的杭州生活路线。从菜市场开始，穿过老小区，进入你不知道的那条街。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('小小','小','12','老杭州本地人，溶入杭州小巷 10 年。每次路线都不一样。','normal')">小小</span><span class="act-host-bio">老杭州本地人，溶入杭州小巷 10 年</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">老杭州</span><span class="act-tag">Citywalk</span><span class="act-tag">周日</span></div>
+            <div class="act-footer"><div><span class="cap-text">11/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:55%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小小的老杭州 Citywalk')">申请参加 →</div></div>
+          </div>
         </div>
-      </div>
-
-      <div class="act-card">
-        <div class="act-time-badge"><span class="atb-day">不定期</span><span class="atb-time">随机</span></div>
-        <div class="act-body">
-          <div class="act-type-row"><span class="act-type">文化 · 漫谈</span><span class="act-cat">杭州本地</span></div>
-          <span class="act-name">道长的文化街区漫谈</span>
-          <span class="act-desc">道长带你走进杭州的历史街区，讲的不是景点介绍，而是这座城市真实发生过的事。</span>
-          <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name">道长</span><span class="act-host-bio">杭州本地文化研究者，漫谈杭州历史 8 年</span></div></div>
-          <div class="act-tags-row"><span class="act-tag">文化</span><span class="act-tag">历史</span><span class="act-tag">不定期</span></div>
-          <div class="act-footer"><div><span class="cap-text">5/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:25%"></div></div></div><div class="apply-btn" onclick="showApplyModal('道长的文化街区漫谈')">申请参加 →</div></div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周末不定</span><span class="atb-time">09:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">骑行 · 自然</span><span class="act-cat">环西湖路线</span></div>
+            <span class="act-name">小鱼尾巴的环西湖骑行</span>
+            <span class="act-desc">不是景区骑行打卡，是真实的西湖环行。小鱼尾巴带你看到普通游客看不到的西湖。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('小鱼尾巴','鱼','22','杭州骑行爱好者，环西湖骑了数百次。喜欢在骑行中遇见陌生人。','normal')">小鱼尾巴</span><span class="act-host-bio">杭州骑行爱好者，环西湖骑了数百次</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">骑行</span><span class="act-tag">西湖</span><span class="act-tag">周末</span></div>
+            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('小鱼尾巴的环西湖骑行')">申请参加 →</div></div>
+          </div>
         </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">不定期</span><span class="atb-time">随机</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">文化 · 漫谈</span><span class="act-cat">杭州本地</span></div>
+            <span class="act-name">道长的文化街区漫谈</span>
+            <span class="act-desc">道长带你走进杭州的历史街区，讲的不是景点介绍，而是这座城市真实发生过的事。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('道长','道','29','杭州本地文化研究者，漫谈杭州历史 8 年。相信每个街巷都有故事。','normal')">道长</span><span class="act-host-bio">杭州本地文化研究者</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">文化</span><span class="act-tag">历史</span><span class="act-tag">不定期</span></div>
+            <div class="act-footer"><div><span class="cap-text">5/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:25%"></div></div></div><div class="apply-btn" onclick="showApplyModal('道长的文化街区漫谈')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取本地风光月票</div></div>
       </div>
 
-      <div class="cta-block">
-        <span class="cta-price">¥399</span>
-        <span class="cta-desc">/月 · 首月限 30 张 · 订阅后全部活动免费</span>
-        <div class="btn-primary" onclick="switchTab('gateways')">获取本地风光月票</div>
+      <!-- 当代青年 -->
+      <div class="act-theme-panel" id="actPanel-youth" style="display:none">
+        <div class="page-header" style="border-top:none">
+          <span class="section-label">GATEWAY: YOUTH · 当代青年</span>
+          <span class="section-title">本月活动</span>
+          <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥399/月 · 首月限 30 张 · 订阅后全部免费参加</span>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周六</span><span class="atb-time">18:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">饮食 · 社交</span><span class="act-cat">旷野饮食</span></div>
+            <span class="act-name">点点的旷野饮桌</span>
+            <span class="act-desc">不是餐厅聚餐，是带着食物去郊外。坐在草地上，吃着自己带的食物，和陌生人聚在一起。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('点点','点','17','旷野饮桌发起人。相信饮食是最好的社交方式。','normal')">点点</span><span class="act-host-bio">旷野饮桌发起人</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">饮食</span><span class="act-tag">旷野</span><span class="act-tag">周六</span></div>
+            <div class="act-footer"><div><span class="cap-text">9/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:45%"></div></div></div><div class="apply-btn" onclick="showApplyModal('点点的旷野饮桌')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周日</span><span class="atb-time">14:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">社交 · 心理</span><span class="act-cat">关系游戏</span></div>
+            <span class="act-name">特特的关系游戏</span>
+            <span class="act-desc">通过游戏化的方式探索人与人之间的关系。不是心理课，是一场真实的社交实验。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('特特','特','9','关系游戏设计师，相信真实的关系可以被设计。','normal')">特特</span><span class="act-host-bio">关系游戏设计师</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">社交</span><span class="act-tag">关系</span><span class="act-tag">周日</span></div>
+            <div class="act-footer"><div><span class="cap-text">14/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:70%"></div></div></div><div class="apply-btn" onclick="showApplyModal('特特的关系游戏')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周五</span><span class="atb-time">19:30</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">思想 · 分享</span><span class="act-cat">青年公社</span></div>
+            <span class="act-name">威廉的青年公社新范式</span>
+            <span class="act-desc">不是创业分享会，是小型圆桌分享。每个人分享自己对“青年公社”的理解和实践。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('威廉','威','11','青年公社研究者，在杭州探索新型社区形式。','normal')">威廉</span><span class="act-host-bio">青年公社研究者</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">青年</span><span class="act-tag">公社</span><span class="act-tag">周五</span></div>
+            <div class="act-footer"><div><span class="cap-text">6/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:30%"></div></div></div><div class="apply-btn" onclick="showApplyModal('威廉的青年公社新范式')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">不定期</span><span class="atb-time">随机</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">漫游 · 生活</span><span class="act-cat">数字游民</span></div>
+            <span class="act-name">顾得的数字游民漂流计划</span>
+            <span class="act-desc">分享数字游民的真实生活。不是 PPT，是真实的流浪经历和实用建议。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('顾得','顾','8','数字游民，在亚洲多个城市工作过。目前在杭州落脚。','normal')">顾得</span><span class="act-host-bio">数字游民，在亚洲多个城市工作过</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">数字游民</span><span class="act-tag">漂流</span><span class="act-tag">不定期</span></div>
+            <div class="act-footer"><div><span class="cap-text">4/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:20%"></div></div></div><div class="apply-btn" onclick="showApplyModal('顾得的数字游民漂流计划')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取当代青年月票</div></div>
+      </div>
+
+      <!-- 多元艺术 -->
+      <div class="act-theme-panel" id="actPanel-art" style="display:none">
+        <div class="page-header" style="border-top:none">
+          <span class="section-label">GATEWAY: ART · 多元艺术</span>
+          <span class="section-title">本月活动</span>
+          <span style="font-size:11px;color:var(--navy);font-family:'IBM Plex Mono',monospace;display:block;margin-top:4px">¥399/月 · 首月限 30 张 · 订阅后全部免费参加</span>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周六</span><span class="atb-time">15:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">身体 · 舞动</span><span class="act-cat">即兴舞动</span></div>
+            <span class="act-name">Jane 的身体舞动</span>
+            <span class="act-desc">不需要舞蹈基础。身体是最诚实的语言。通过身体运动释放自己，连接当下的感受。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('Jane','J','21','身体舞动引导师，相信身体是最诚实的表达方式。','normal')">Jane</span><span class="act-host-bio">身体舞动引导师</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">身体</span><span class="act-tag">舞动</span><span class="act-tag">周六</span></div>
+            <div class="act-footer"><div><span class="cap-text">10/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:50%"></div></div></div><div class="apply-btn" onclick="showApplyModal('Jane 的身体舞动')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周日</span><span class="atb-time">10:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">自然 · 感官</span><span class="act-cat">自然接触</span></div>
+            <span class="act-name">蚊子的自然接触</span>
+            <span class="act-desc">去户外，用感官去感受自然。不是课程，是一场共同的自然中的存在。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('蚊子','蚊','13','自然接触引导师，相信自然是最好的治愈。','normal')">蚊子</span><span class="act-host-bio">自然接触引导师</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">自然</span><span class="act-tag">感官</span><span class="act-tag">周日</span></div>
+            <div class="act-footer"><div><span class="cap-text">8/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:40%"></div></div></div><div class="apply-btn" onclick="showApplyModal('蚊子的自然接触')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周四</span><span class="atb-time">19:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">户外 · 即兴</span><span class="act-cat">即兴户剧</span></div>
+            <span class="act-name">山猬的即兴户剧</span>
+            <span class="act-desc">不需要表演经验。即兴户剧是一种当下创作的艺术。在当下发生，在当下结束。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('山猬','猬','16','即兴户剧引导师，相信当下创作是最真实的艺术。','normal')">山猬</span><span class="act-host-bio">即兴户剧引导师</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">户剧</span><span class="act-tag">即兴</span><span class="act-tag">周四</span></div>
+            <div class="act-footer"><div><span class="cap-text">12/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:60%"></div></div></div><div class="apply-btn" onclick="showApplyModal('山猬的即兴户剧')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="act-card">
+          <div class="act-time-badge"><span class="atb-day">周三</span><span class="atb-time">14:00</span></div>
+          <div class="act-body">
+            <div class="act-type-row"><span class="act-type">绘画 · 创作</span><span class="act-cat">自由绘画</span></div>
+            <span class="act-name">nainai 的自由绘画</span>
+            <span class="act-desc">不是绘画课，是一场共同创作的时光。不评判，只表达。画出你当下最真实的感受。</span>
+            <div class="act-host-row"><div class="host-dot"></div><div><span class="act-host-name name-link" onclick="openOtherProfile('nainai','n','18','自由绘画引导师，相信画画是最直接的表达方式。','normal')">nainai</span><span class="act-host-bio">自由绘画引导师</span></div></div>
+            <div class="act-tags-row"><span class="act-tag">绘画</span><span class="act-tag">自由</span><span class="act-tag">周三</span></div>
+            <div class="act-footer"><div><span class="cap-text">7/20 人</span><div class="cap-bar"><div class="cap-fill" style="width:35%"></div></div></div><div class="apply-btn" onclick="showApplyModal('nainai 的自由绘画')">申请参加 →</div></div>
+          </div>
+        </div>
+        <div class="cta-block"><span class="cta-price">¥399</span><span class="cta-desc">/月 · 首月限 30 张</span><div class="btn-primary" onclick="switchTab('gateways')">获取多元艺术月票</div></div>
       </div>
     </div>
 
@@ -2582,223 +3125,314 @@ body {
     <!-- ===== 我的页 ===== -->
     <div class="page" id="page-profile">
 
-      <!-- 顶部个人名片头 -->
-      <div class="profile-header">
+      <!-- 未登录状态 -->
+      <div id="profileLoginArea" class="profile-login-area">
+        <span class="profile-login-label">THE IDENTITY · 数字身份</span>
+        <span class="profile-login-title">创建你的数字身份</span>
+        <span class="profile-login-desc">每一次参与都会在你的数字身份上留下印记。勋章、足迹、对话——这是你在真实世界里真实发生过的证明。</span>
+        <div class="btn-primary" onclick="doLogin()">微信一键登录</div>
+      </div>
 
-        <!-- 未登录状态 -->
-        <div id="profileLoginArea" class="profile-login-area">
-          <span class="profile-login-label">THE IDENTITY · 数字身份</span>
-          <span class="profile-login-title">创建你的数字身份</span>
-          <span class="profile-login-desc">每一次参与都会在你的数字身份上留下印记。勋章、足迹、对话——这是你在真实世界里真实发生过的证明。</span>
-          <div class="btn-primary" onclick="doLogin()">微信一键登录</div>
-        </div>
+      <!-- 登录后内容 -->
+      <div id="profileLoggedIn" style="display:none">
 
-        <!-- 登录后用户信息 -->
-        <div class="profile-user-info" id="profileUserInfo">
-          <div class="profile-user-top">
-            <div class="profile-avatar-wrap">
-              <div class="profile-avatar">阿</div>
+        <!-- 大头像 + 个人介绍区 -->
+        <div class="profile-identity-block">
+          <div class="profile-identity-top">
+            <div class="profile-big-avatar-wrap">
+              <div class="profile-big-avatar">阿</div>
               <div class="profile-gold-badge" id="profileGoldBadge">★</div>
             </div>
-            <div class="profile-user-detail">
-              <span class="profile-user-name">阿强</span>
-              <span class="profile-user-handle">@AQIANG_HZ · 2024.01 加入</span>
-              <span class="profile-user-bio">在杭州寻找真实连接，喜欢夜爬和即兴对话。相信每一次真实发生都在改变什么。</span>
+            <div class="profile-identity-actions">
+              <button class="profile-action-sm" onclick="showToast('已分享数字名片')">SHARE</button>
+              <button class="profile-action-sm" onclick="showToast('设置')">EDIT</button>
             </div>
           </div>
-          <div class="profile-tickets-row" id="profileTickets">
-            <span class="profile-ticket-tag gold">★ 打开杭州</span>
-            <span class="profile-ticket-tag">对话月票</span>
-            <span class="profile-ticket-tag">当代青年</span>
+          <span class="profile-big-name">阿强</span>
+          <span class="profile-big-handle">@AQIANG_HZ · 2024.01 加入</span>
+          <div class="profile-intro-lines">
+            <span class="profile-intro-line">🌿 真实发生者 | 00后</span>
+            <span class="profile-intro-line">💬 对话爱好者 | 夜爬达人 | 即兴演出新手</span>
+            <span class="profile-intro-line">📍 杭州 · 在寻找真实连接</span>
           </div>
-          <div class="profile-stats-row" id="profileStats">
-            <div class="profile-stat-item"><span class="profile-stat-num">23</span><span class="profile-stat-label">EVENTS</span></div>
-            <div class="profile-stat-item"><span class="profile-stat-num">4</span><span class="profile-stat-label">DIALOGUES</span></div>
-            <div class="profile-stat-item"><span class="profile-stat-num">3</span><span class="profile-stat-label">BADGES</span></div>
-            <div class="profile-stat-item"><span class="profile-stat-num">12</span><span class="profile-stat-label">CONNECTS</span></div>
+          <div class="profile-tag-row">
+            <span class="profile-tag">🌙 夜爬</span>
+            <span class="profile-tag">💬 对话</span>
+            <span class="profile-tag">🗺️ Citywalk</span>
+            <span class="profile-tag gold-tag">★ 打开杭州</span>
           </div>
-        </div>
-      </div>
-
-      <!-- 感悟动态区 -->
-      <div class="feed-section">
-        <div class="feed-header">
-          <span class="feed-title">感悟与足迹</span>
-          <span class="feed-more">ALL →</span>
-        </div>
-
-        <!-- 发布入口（登录后显示）-->
-        <div class="feed-compose" id="feedCompose">
-          <span class="feed-compose-hint">记录这次发生的感悟…</span>
-          <div class="feed-compose-tags">
-            <span class="feed-compose-tag active" onclick="this.classList.toggle('active')"># 本地风光</span>
-            <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 对话</span>
-            <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 当代青年</span>
-            <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 夜爬</span>
-          </div>
-          <button class="feed-compose-submit" onclick="showToast('感悟已发布，已沉淀到你的数字身份')">PUBLISH</button>
-          <div style="clear:both"></div>
-        </div>
-
-        <!-- 感悟卡片 1 -->
-        <div class="feed-card">
-          <div class="feed-card-top">
-            <div class="feed-av">阿</div>
-            <div class="feed-meta">
-              <span class="feed-name">阿强<span class="feed-time"> · 3d ago</span></span>
+          <div class="profile-friend-row">
+            <span class="profile-friend-num">12</span>
+            <span class="profile-friend-lbl">真实发生者</span>
+            <span class="profile-friend-sep">&nbsp;&nbsp;</span>
+            <span class="profile-friend-num">4</span>
+            <span class="profile-friend-lbl">对话</span>
+            <div class="profile-friend-avs">
+              <div class="friend-av">老</div>
+              <div class="friend-av">七</div>
+              <div class="friend-av">林</div>
             </div>
-            <span class="feed-more-dot">⋯</span>
-          </div>
-          <div class="feed-text">上周参加了小小的老杭州 Citywalk，穿过小河工巧巧遇见了一个平时不会进的老店。这就是真实发生的魅力。<span class="feed-blur">后来和同行一起吃了香干肉簽，聚了两个小时就这样还不想走</span></div>
-          <div class="feed-tag"># CITYWALK · 本地风光</div>
-          <div class="feed-actions">
-            <span class="feed-action-btn">♡ 5</span>
-            <span class="feed-action-btn">□ 评论</span>
-            <span class="feed-action-btn">⇨ 分享</span>
           </div>
         </div>
 
-        <!-- 感悟卡片 2 -->
-        <div class="feed-card">
-          <div class="feed-card-top">
-            <div class="feed-av">阿</div>
-            <div class="feed-meta">
-              <span class="feed-name">阿强<span class="feed-time"> · 12d ago</span></span>
+        <!-- 统计数字条 -->
+        <div class="profile-stats-row">
+          <div class="profile-stat-item"><span class="profile-stat-num">23</span><span class="profile-stat-label">EVENTS</span></div>
+          <div class="profile-stat-item"><span class="profile-stat-num">4</span><span class="profile-stat-label">DIALOGUES</span></div>
+          <div class="profile-stat-item"><span class="profile-stat-num">3</span><span class="profile-stat-label">BADGES</span></div>
+          <div class="profile-stat-item"><span class="profile-stat-num">12</span><span class="profile-stat-label">CONNECTS</span></div>
+        </div>
+
+        <!-- 事件照片瀑布流 -->
+        <div class="events-photo-section">
+          <div class="sec-header-row">
+            <span class="sec-title-text">发生过的事</span>
+            <span class="feed-more">ALL →</span>
+          </div>
+          <div class="events-photo-grid">
+            <div class="event-photo-card tall" style="background:linear-gradient(160deg,#1a2a1a 0%,#2d4a2d 100%)">
+              <div class="event-photo-overlay">
+                <span class="event-photo-label">天目山夜爬</span>
+                <span class="event-photo-sub">一番 · 本地风光</span>
+              </div>
             </div>
-            <span class="feed-more-dot">⋯</span>
-          </div>
-          <div class="feed-text">特特的「关系游戏」让我第一次意识到自己在人群中的默认角色。不是一个舒适的发现，但是一个必要的发现。</div>
-          <div class="feed-tag"># 当代青年 · 关系游戏</div>
-          <div class="feed-actions">
-            <span class="feed-action-btn">♡ 11</span>
-            <span class="feed-action-btn">□ 评论</span>
-            <span class="feed-action-btn">⇨ 分享</span>
+            <div class="event-photo-card" style="background:linear-gradient(160deg,#1a1a2e 0%,#2e2e4a 100%)">
+              <div class="event-photo-overlay">
+                <span class="event-photo-label">关系游戏</span>
+                <span class="event-photo-sub">特特 · 当代青年</span>
+              </div>
+            </div>
+            <div class="event-photo-card" style="background:linear-gradient(160deg,#2e1a1a 0%,#4a2e2e 100%)">
+              <div class="event-photo-overlay">
+                <span class="event-photo-label">Citywalk</span>
+                <span class="event-photo-sub">小小 · 本地风光</span>
+              </div>
+            </div>
+            <div class="event-photo-card tall" style="background:linear-gradient(160deg,#1a1e2e 0%,#2e3a4a 100%)">
+              <div class="event-photo-overlay">
+                <span class="event-photo-label">即兴演出</span>
+                <span class="event-photo-sub">山猬 · 多元艺术</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="feed-section-footer">
-          <span style="font-size:10px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">LOAD MORE ↓</span>
-        </div>
-      </div>
 
-      <!-- 社交账号 -->
-      <div class="social-section">
-        <span class="social-section-title">社交账号</span>
-        <div class="social-card">
-          <div class="social-icon xiaohongshu">XHS</div>
-          <div class="social-info">
-            <span class="social-handle">@aqiang_hz</span>
-            <span class="social-platform">XIAOHONGSHU</span>
+        <!-- 感悟动态区 -->
+        <div class="feed-section">
+          <div class="feed-header">
+            <span class="feed-title">感悟与足迹</span>
+            <span class="feed-more">ALL →</span>
           </div>
-          <button class="social-follow-btn filled">关注</button>
-        </div>
-        <div class="social-card">
-          <div class="social-icon x">X</div>
-          <div class="social-info">
-            <span class="social-handle">@aqiang_hz_</span>
-            <span class="social-platform">X / TWITTER</span>
+          <div class="feed-compose" id="feedCompose">
+            <span class="feed-compose-hint">记录这次发生的感悟…</span>
+            <div class="feed-compose-tags">
+              <span class="feed-compose-tag active" onclick="this.classList.toggle('active')"># 本地风光</span>
+              <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 对话</span>
+              <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 当代青年</span>
+              <span class="feed-compose-tag" onclick="this.classList.toggle('active')"># 夜爬</span>
+            </div>
+            <button class="feed-compose-submit" onclick="showToast('感悟已发布，已沉淀到你的数字身份')">PUBLISH</button>
+            <div style="clear:both"></div>
           </div>
-          <button class="social-follow-btn">FOLLOW</button>
-        </div>
-        <div class="social-card">
-          <div class="social-icon bilibili">BLB</div>
-          <div class="social-info">
-            <span class="social-handle">@真实发生的阿强</span>
-            <span class="social-platform">BILIBILI</span>
+          <div class="feed-card">
+            <div class="feed-card-top">
+              <div class="feed-av">阿</div>
+              <div class="feed-meta"><span class="feed-name">阿强<span class="feed-time"> · 3d ago</span></span></div>
+              <span class="feed-more-dot">⋯</span>
+            </div>
+            <div class="feed-text">上周参加了<span class="name-link" onclick="openOtherProfile('小小','小','12','老杭州本地人，熔入杭州小巷 10 年。每次路线都不一样。','normal')">小小</span>的老杭州 Citywalk，穿过小河工巧巧遇见了一个平时不会进的老店。<span class="feed-blur">后来和同行一起吃了香干肉簽，聚了两个小时还不想走</span></div>
+            <div class="feed-tag"># CITYWALK · 本地风光</div>
+            <div class="feed-actions">
+              <span class="feed-action-btn">♡ 5</span>
+              <span class="feed-action-btn">□ 评论</span>
+              <span class="feed-action-btn">⇨ 分享</span>
+            </div>
           </div>
-          <button class="social-follow-btn">关注</button>
+          <div class="feed-card">
+            <div class="feed-card-top">
+              <div class="feed-av">阿</div>
+              <div class="feed-meta"><span class="feed-name">阿强<span class="feed-time"> · 12d ago</span></span></div>
+              <span class="feed-more-dot">⋯</span>
+            </div>
+            <div class="feed-text"><span class="name-link" onclick="openOtherProfile('特特','特','9','关系游戏设计师，相信真实的关系可以被设计。','normal')">特特</span>的「关系游戏」让我第一次意识到自己在人群中的默认角色。不是一个舒适的发现，但是一个必要的发现。</div>
+            <div class="feed-tag"># 当代青年 · 关系游戏</div>
+            <div class="feed-actions">
+              <span class="feed-action-btn">♡ 11</span>
+              <span class="feed-action-btn">□ 评论</span>
+              <span class="feed-action-btn">⇨ 分享</span>
+            </div>
+          </div>
+          <div class="feed-section-footer">
+            <span style="font-size:10px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;letter-spacing:1px">LOAD MORE ↓</span>
+          </div>
         </div>
-      </div>
 
-      <!-- 勋章 -->
-      <div class="badges-section">
-        <div class="sec-header-row">
-          <span class="sec-title-text">勋章与足迹</span>
-          <span class="sec-count" id="badgeCount">0 / 6</span>
+        <!-- 社交账号 -->
+        <div class="social-section">
+          <span class="social-section-title">社交账号</span>
+          <div class="social-card">
+            <div class="social-icon xiaohongshu">XHS</div>
+            <div class="social-info">
+              <span class="social-handle">@aqiang_hz</span>
+              <span class="social-platform">XIAOHONGSHU</span>
+            </div>
+            <button class="social-follow-btn filled">关注</button>
+          </div>
+          <div class="social-card">
+            <div class="social-icon x">X</div>
+            <div class="social-info">
+              <span class="social-handle">@aqiang_hz_</span>
+              <span class="social-platform">X / TWITTER</span>
+            </div>
+            <button class="social-follow-btn">FOLLOW</button>
+          </div>
+          <div class="social-card">
+            <div class="social-icon bilibili">BLB</div>
+            <div class="social-info">
+              <span class="social-handle">@真实发生的阿强</span>
+              <span class="social-platform">BILIBILI</span>
+            </div>
+            <button class="social-follow-btn">关注</button>
+          </div>
         </div>
-        <div class="badges-grid">
-          <div class="badge-item badge-locked" id="badge1"><span class="badge-emoji">🌙</span><span class="badge-name">夜行者</span><span class="badge-cond">参加 5 次夜爬</span></div>
-          <div class="badge-item badge-locked" id="badge2"><span class="badge-emoji">💬</span><span class="badge-name">对话发起者</span><span class="badge-cond">发起第一次对话</span></div>
-          <div class="badge-item badge-locked" id="badge3"><span class="badge-emoji">🗺️</span><span class="badge-name">城市漫游者</span><span class="badge-cond">完成 10 次 Citywalk</span></div>
-          <div class="badge-item badge-locked" id="badge4"><span class="badge-emoji">🎨</span><span class="badge-name">艺术探索者</span><span class="badge-cond">参加 3 次艺术活动</span></div>
-          <div class="badge-item badge-locked" id="badge5"><span class="badge-emoji">🤖</span><span class="badge-name">AI 先锋</span><span class="badge-cond">参加首期 Prompt 会</span></div>
-          <div class="badge-item badge-locked" id="badge6"><span class="badge-emoji">⭐</span><span class="badge-name">真实发生者</span><span class="badge-cond">累计参与 30 次</span></div>
-        </div>
-      </div>
 
-      <!-- 真实发生者社区 -->
-      <div class="community-section">
-        <div class="sec-header-row" style="margin-bottom:4px">
-          <span class="sec-title-text">真实发生者</span>
-        </div>
-        <span class="community-desc">每一次出现，都是一枚勋章 · 点击查看对方的数字名片</span>
-        <div class="cu-user gold-user" onclick="openOtherProfile('老陈','老','47','杭州本地人，在杭州生活了 20 年。喜欢山地、小吃和不明所以的小店。','gold')">
-          <div class="cu-av gold-av">老</div>
-          <div class="cu-info">
-            <div class="cu-name-row"><span class="cu-name">老陈 <span style="font-size:9px;color:#8b6914;font-family:'IBM Plex Mono',monospace">★ 杭州</span></span><span class="cu-count">47 次活动</span></div>
-            <div class="cu-badges">🏰⭐</div>
-            <div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">世界</span></div>
+        <!-- 勋章 -->
+        <div class="badges-section">
+          <div class="sec-header-row">
+            <span class="sec-title-text">勋章与足迹</span>
+            <span class="sec-count" id="badgeCount">0 / 6</span>
+          </div>
+          <div class="badges-grid">
+            <div class="badge-item badge-locked" id="badge1"><span class="badge-emoji">🌙</span><span class="badge-name">夜行者</span><span class="badge-cond">参加 5 次夜爬</span></div>
+            <div class="badge-item badge-locked" id="badge2"><span class="badge-emoji">💬</span><span class="badge-name">对话发起者</span><span class="badge-cond">发起第一次对话</span></div>
+            <div class="badge-item badge-locked" id="badge3"><span class="badge-emoji">🗺️</span><span class="badge-name">城市漫游者</span><span class="badge-cond">完成 10 次 Citywalk</span></div>
+            <div class="badge-item badge-locked" id="badge4"><span class="badge-emoji">🎨</span><span class="badge-name">艺术探索者</span><span class="badge-cond">参加 3 次艺术活动</span></div>
+            <div class="badge-item badge-locked" id="badge5"><span class="badge-emoji">🤖</span><span class="badge-name">AI 先锋</span><span class="badge-cond">参加首期 Prompt 会</span></div>
+            <div class="badge-item badge-locked" id="badge6"><span class="badge-emoji">⭐</span><span class="badge-name">真实发生者</span><span class="badge-cond">累计参与 30 次</span></div>
           </div>
         </div>
-        <div class="cu-user" onclick="openOtherProfile('七哥','七','31','AI 创业者，在杭州做了三个项目。对话是我的最爱。','normal')">
-          <div class="cu-av">七</div>
-          <div class="cu-info">
-            <div class="cu-name-row"><span class="cu-name">七哥</span><span class="cu-count">31 次活动</span></div>
-            <div class="cu-badges">🤖🧠</div>
-            <div class="cu-tags"><span class="cu-tag">AI 世界</span><span class="cu-tag">对话</span></div>
-          </div>
-        </div>
-        <div class="cu-user" onclick="openOtherProfile('林姐','林','19','自由撰稿人，关注女性成长和当代青年话题。','normal')">
-          <div class="cu-av">林</div>
-          <div class="cu-info">
-            <div class="cu-name-row"><span class="cu-name">林姐</span><span class="cu-count">19 次活动</span></div>
-            <div class="cu-badges">⚡🚀</div>
-            <div class="cu-tags"><span class="cu-tag">当代青年</span><span class="cu-tag">对话</span></div>
-          </div>
-        </div>
-        <div class="cu-user" onclick="openOtherProfile('子木','子','15','独立设计师，喜欢即兴演出和自由绘画。','normal')">
-          <div class="cu-av">子</div>
-          <div class="cu-info">
-            <div class="cu-name-row"><span class="cu-name">子木</span><span class="cu-count">15 次活动</span></div>
-            <div class="cu-badges">🎨📷</div>
-            <div class="cu-tags"><span class="cu-tag">艺术</span><span class="cu-tag">对话</span></div>
-          </div>
-        </div>
-      </div>
 
-      <div class="footer-area">
-        <div class="footer-links">
-          <span class="footer-link">关于 Simpex</span><span class="footer-sep">·</span>
-          <span class="footer-link">真实发生宣言</span><span class="footer-sep">·</span>
-          <span class="footer-link">主理人招募</span>
+        <!-- 真实发生者社区 -->
+        <div class="community-section">
+          <div class="sec-header-row" style="margin-bottom:4px">
+            <span class="sec-title-text">真实发生者</span>
+          </div>
+          <span class="community-desc">每一次出现，都是一枚勋章 · 点击名字查看对方的数字名片</span>
+          <div class="cu-user gold-user" onclick="openOtherProfile('老陈','老','47','杭州本地人，在杭州生活了 20 年。喜欢山地、小吃和不明所以的小店。','gold')">
+            <div class="cu-av gold-av">老</div>
+            <div class="cu-info">
+              <div class="cu-name-row"><span class="cu-name">老陈 <span style="font-size:9px;color:#8b6914;font-family:'IBM Plex Mono',monospace">★ 杭州</span></span><span class="cu-count">47 次活动</span></div>
+              <div class="cu-badges">🏰⭐</div>
+              <div class="cu-tags"><span class="cu-tag">杭州</span><span class="cu-tag">世界</span></div>
+            </div>
+          </div>
+          <div class="cu-user" onclick="openOtherProfile('七哥','七','31','AI 创业者，在杭州做了三个项目。对话是我的最爱。','normal')">
+            <div class="cu-av">七</div>
+            <div class="cu-info">
+              <div class="cu-name-row"><span class="cu-name">七哥</span><span class="cu-count">31 次活动</span></div>
+              <div class="cu-badges">🤖🧠</div>
+              <div class="cu-tags"><span class="cu-tag">AI 世界</span><span class="cu-tag">对话</span></div>
+            </div>
+          </div>
+          <div class="cu-user" onclick="openOtherProfile('林姐','林','19','自由撰稿人，关注女性成长和当代青年话题。','normal')">
+            <div class="cu-av">林</div>
+            <div class="cu-info">
+              <div class="cu-name-row"><span class="cu-name">林姐</span><span class="cu-count">19 次活动</span></div>
+              <div class="cu-badges">⚡🚀</div>
+              <div class="cu-tags"><span class="cu-tag">当代青年</span><span class="cu-tag">对话</span></div>
+            </div>
+          </div>
+          <div class="cu-user" onclick="openOtherProfile('子木','子','15','独立设计师，喜欢即兴演出和自由绘画。','normal')">
+            <div class="cu-av">子</div>
+            <div class="cu-info">
+              <div class="cu-name-row"><span class="cu-name">子木</span><span class="cu-count">15 次活动</span></div>
+              <div class="cu-badges">🎨📷</div>
+              <div class="cu-tags"><span class="cu-tag">艺术</span><span class="cu-tag">对话</span></div>
+            </div>
+          </div>
         </div>
-        <span class="footer-copy">© 2025 Simpex · 真实发生 · 杭州</span>
-        <span class="footer-motto">真实发生，才算活过。</span>
+
+        <div class="footer-area">
+          <div class="footer-links">
+            <span class="footer-link">关于 Simpex</span><span class="footer-sep">·</span>
+            <span class="footer-link">真实发生宣言</span><span class="footer-sep">·</span>
+            <span class="footer-link">主理人招募</span>
+          </div>
+          <span class="footer-copy">© 2025 Simpex · 真实发生 · 杭州</span>
+          <span class="footer-motto">真实发生，才算活过。</span>
+        </div>
       </div>
     </div>
 
     <!-- ===== 他人数字名片页 ===== -->
     <div class="page" id="page-other-profile">
-      <div class="other-profile-header">
-        <div class="other-profile-top">
-          <div class="profile-avatar-wrap">
-            <div class="profile-avatar" id="otherAvatar">老</div>
+
+      <!-- 大头像 + 个人介绍 -->
+      <div class="profile-identity-block">
+        <div class="profile-identity-top">
+          <div class="profile-big-avatar-wrap">
+            <div class="profile-big-avatar" id="otherAvatar">老</div>
             <div class="profile-gold-badge" id="otherGoldBadge">★</div>
           </div>
-          <div class="profile-user-detail">
-            <span class="profile-user-name" id="otherName">老陈</span>
-            <span class="profile-user-handle" id="otherHandle">@LAOLAO_HZ · 2023.06 加入</span>
-            <span class="profile-user-bio" id="otherBio">杭州本地人，在杭州生活了 20 年。喜欢山地、小吃和不明所以的小店。</span>
+          <div class="profile-identity-actions">
+            <button class="other-action-btn primary" onclick="showToast('已发起连接请求')">CONNECT</button>
+            <button class="other-action-btn" onclick="showToast('已关注')">FOLLOW</button>
           </div>
         </div>
-        <div class="other-profile-actions">
-          <button class="other-action-btn primary" onclick="showToast('已发起连接请求')">CONNECT</button>
-          <button class="other-action-btn" onclick="showToast('已关注')">FOLLOW</button>
-          <button class="other-action-btn" onclick="showToast('已发起对话邀请')">DIALOGUE</button>
+        <span class="profile-big-name" id="otherName">老陈</span>
+        <span class="profile-big-handle" id="otherHandle">@LAOLAO_HZ · 2023.06 加入</span>
+        <div class="profile-intro-lines" id="otherIntroLines">
+          <span class="profile-intro-line">🌿 杭州本地人 | 70后</span>
+          <span class="profile-intro-line">📍 杭州 · 在这里生活了 20 年</span>
         </div>
-        <div class="other-profile-stats">
-          <div class="other-stat-item"><span class="other-stat-num" id="otherEvents">47</span><span class="other-stat-label">EVENTS</span></div>
-          <div class="other-stat-item"><span class="other-stat-num">8</span><span class="other-stat-label">DIALOGUES</span></div>
-          <div class="other-stat-item"><span class="other-stat-num">5</span><span class="other-stat-label">BADGES</span></div>
+        <div class="profile-tag-row" id="otherTagRow">
+          <span class="profile-tag">🌙 夜爬</span>
+          <span class="profile-tag">🗺️ Citywalk</span>
+          <span class="profile-tag gold-tag">★ 打开杭州</span>
+        </div>
+        <div class="profile-friend-row">
+          <span class="profile-friend-num" id="otherEvents">47</span>
+          <span class="profile-friend-lbl">活动</span>
+          <span class="profile-friend-sep">&nbsp;&nbsp;</span>
+          <span class="profile-friend-num">8</span>
+          <span class="profile-friend-lbl">对话</span>
+          <span class="profile-friend-sep">&nbsp;&nbsp;</span>
+          <span class="profile-friend-num">5</span>
+          <span class="profile-friend-lbl">勋章</span>
+        </div>
+      </div>
+
+      <!-- 事件照片瀑布流 -->
+      <div class="events-photo-section">
+        <div class="sec-header-row">
+          <span class="sec-title-text" id="otherPhotoTitle">发生过的事</span>
+          <span class="feed-more">ALL →</span>
+        </div>
+        <div class="events-photo-grid">
+          <div class="event-photo-card tall" style="background:linear-gradient(160deg,#1a2a1a 0%,#2d4a2d 100%)">
+            <div class="event-photo-overlay">
+              <span class="event-photo-label">天目山夜爬</span>
+              <span class="event-photo-sub">一番 · 本地风光</span>
+            </div>
+          </div>
+          <div class="event-photo-card" style="background:linear-gradient(160deg,#1e1a2e 0%,#2e2a4a 100%)">
+            <div class="event-photo-overlay">
+              <span class="event-photo-label">文化街区漫谈</span>
+              <span class="event-photo-sub">道长 · 本地风光</span>
+            </div>
+          </div>
+          <div class="event-photo-card" style="background:linear-gradient(160deg,#2e1a1a 0%,#4a2a2a 100%)">
+            <div class="event-photo-overlay">
+              <span class="event-photo-label">环西湖骑行</span>
+              <span class="event-photo-sub">小鱼尾巴 · 本地风光</span>
+            </div>
+          </div>
+          <div class="event-photo-card tall" style="background:linear-gradient(160deg,#1a1e2e 0%,#2a2e4a 100%)">
+            <div class="event-photo-overlay">
+              <span class="event-photo-label">老杭州 Citywalk</span>
+              <span class="event-photo-sub">小小 · 本地风光</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2867,6 +3501,11 @@ body {
 
   </div><!-- end page-content -->
 
+  <!-- 月票详情页（动态内容） -->
+  <div class="page" id="page-gateway-detail" style="display:none">
+    <div style="padding:20px;text-align:center;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:12px">Loading...</div>
+  </div>
+
   <!-- TabBar -->
   <div class="tab-bar">
     <div class="tab-item active" id="tab-home" onclick="switchTab('home')">
@@ -2920,7 +3559,8 @@ body {
     timeline: '活动',
     dialogue: '对话广场',
     profile: '数字身份',
-    'other-profile': '数字名片'
+    'other-profile': '数字名片',
+    'gateway-detail': '月票详情'
   };
   const mainTabs = ['home','timeline','dialogue','profile'];
   let lastTab = 'profile';
@@ -2983,9 +3623,122 @@ body {
     });
   }
   function showInitiateModal() {
-    showModal('发起一场对话', '需要持有"打开对话"月票（¥199/月）才可发起对话。\n\n是否前往购买月票？', '去购买', () => {
-      switchTab('gateways');
+    // 替换弹窗内容为发起对话表单
+    const box = document.querySelector('.modal-box');
+    box.innerHTML = `
+      <span class="modal-title">发起一场对话</span>
+      <div class="initiate-form">
+        <div class="form-group">
+          <label class="form-label">TOPIC · 对话主题</label>
+          <input class="form-input" id="formTopic" placeholder="你想聊什么？" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">DATE · 日期</label>
+            <input class="form-input" id="formDate" placeholder="如 03/25" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">TIME · 时间</label>
+            <input class="form-input" id="formTime" placeholder="如 20:00" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">PEOPLE · 人数上限</label>
+            <input class="form-input" id="formPeople" type="number" placeholder="≤ 6" max="6" />
+            <span class="form-hint">最多 6 人</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">DURATION · 时长</label>
+            <input class="form-input" id="formDuration" placeholder="如 2.5h" />
+            <span class="form-hint">必须 > 2 小时</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">LOCATION · 地点</label>
+          <input class="form-input" id="formLocation" placeholder="地点或地址" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">DESC · 补充说明（可选）</label>
+          <textarea class="form-textarea" id="formDesc" placeholder="对这场对话的期待…"></textarea>
+        </div>
+      </div>
+      <div class="modal-btns" style="margin-top:16px">
+        <button class="modal-cancel" onclick="closeModal()">取消</button>
+        <button class="modal-confirm" onclick="submitDialogue()">发起对话</button>
+      </div>
+    `;
+    document.getElementById('modal').classList.add('show');
+  }
+  function submitDialogue() {
+    const topic = document.getElementById('formTopic')?.value;
+    if (!topic) { showToast('请填写对话主题'); return; }
+    closeModal();
+    showToast('对话已发起！将在对话广场展示');
+  }
+  function switchActTab(tab) {
+    ['local','youth','art'].forEach(t => {
+      document.getElementById('actTab-'+t)?.classList.toggle('active', t===tab);
+      const panel = document.getElementById('actPanel-'+t);
+      if (panel) panel.style.display = t===tab ? 'block' : 'none';
     });
+  }
+  function openGatewayDetail(key) {
+    const data = {
+      local: { label:'GATEWAY: LOCAL · 本地风光', title:'打开真实发生的本地风光', price:'¥399', quota:'22/30', fill:'73%',
+        benefits:['免费参加本月全部本地风光活动','进入本月本地风光专属社群','真实发生数字身份','赠送本月活动手册'],
+        hosts:[{av:'一',name:'一番',act:'自然爬山',bio:'Let\'s Roll 社群发起人，天目山爬了 200 次以上。',ev:'38',type:'normal'},
+                {av:'小',name:'小小',act:'老杭州 Citywalk',bio:'老杭州本地人，溶入杭州小巷 10 年。',ev:'12',type:'normal'},
+                {av:'鱼',name:'小鱼尾巴',act:'环西湖骑行',bio:'杭州骑行爱好者，环西湖骑了数百次。',ev:'22',type:'normal'},
+                {av:'道',name:'道长',act:'文化街区漫谈',bio:'杭州本地文化研究者，漫谈杭州历史 8 年。',ev:'29',type:'normal'}]
+      },
+      youth: { label:'GATEWAY: YOUTH · 当代青年', title:'打开真实发生的当代青年', price:'¥399', quota:'18/30', fill:'60%',
+        benefits:['免费参加本月全部当代青年活动','进入本月当代青年专属社群','真实发生数字身份','赠送本月活动手册'],
+        hosts:[{av:'点',name:'点点',act:'旷野饮桌',bio:'旷野饮桌发起人。相信饮食是最好的社交方式。',ev:'17',type:'normal'},
+                {av:'特',name:'特特',act:'关系游戏',bio:'关系游戏设计师，相信真实的关系可以被设计。',ev:'9',type:'normal'},
+                {av:'威',name:'威廉',act:'青年公社新范式',bio:'青年公社研究者，在杭州探索新型社区形式。',ev:'11',type:'normal'},
+                {av:'顾',name:'顾得',act:'数字游民漂流计划',bio:'数字游民，在亚洲多个城市工作过。目前在杭州落脚。',ev:'8',type:'normal'}]
+      },
+      art: { label:'GATEWAY: ART · 多元艺术', title:'打开真实发生的多元艺术', price:'¥399', quota:'15/30', fill:'50%',
+        benefits:['免费参加本月全部多元艺术活动','进入本月多元艺术专属社群','真实发生数字身份','赠送本月活动手册'],
+        hosts:[{av:'J',name:'Jane',act:'身体舞动',bio:'身体舞动引导师，相信身体是最诚实的表达方式。',ev:'21',type:'normal'},
+                {av:'蚊',name:'蚊子',act:'自然接触',bio:'自然接触引导师，相信自然是最好的治愈。',ev:'13',type:'normal'},
+                {av:'猬',name:'山猬',act:'即兴户剧',bio:'即兴户剧引导师，相信当下创作是最真实的艺术。',ev:'16',type:'normal'},
+                {av:'n',name:'nainai',act:'自由绘画',bio:'自由绘画引导师，相信画画是最直接的表达方式。',ev:'18',type:'normal'}]
+      }
+    };
+    const d = data[key]; if (!d) return;
+    // 写入月票详情页
+    const page = document.getElementById('page-gateway-detail');
+    if (!page) return;
+    page.innerHTML = `
+      <div class="gateway-detail-page">
+        <div class="gd-hero">
+          <span class="gd-label">${d.label}</span>
+          <span class="gd-title">${d.title}</span>
+          <div class="gd-price-row"><span class="gd-price">${d.price}</span><span class="gd-price-sub">/月 · 首月限 30 张</span></div>
+          <div class="gd-quota-bar"><div class="gd-quota-fill" style="width:${d.fill}"></div></div>
+          <span class="gd-quota-text">已售 ${d.quota} 张 · 剩余 ${30 - parseInt(d.quota)} 张</span>
+        </div>
+        <div class="gd-benefits">
+          <span class="gd-benefits-title">BENEFITS · 月票权益</span>
+          ${d.benefits.map((b,i) => `<div class="gd-benefit-item"><div class="gd-benefit-icon">${['\ud83c\udfab','\ud83d\udc65','\ud83c\udfe0','\ud83d\udcd6'][i]}</div><div><span class="gd-benefit-text">${b}</span></div></div>`).join('')}
+        </div>
+        <div class="gd-hosts">
+          <span class="gd-benefits-title">HOSTS · 本月主理人</span>
+          ${d.hosts.map(h => `<div class="gd-host-card" onclick="openOtherProfile('${h.name}','${h.av}','${h.ev}','${h.bio}','${h.type}')">
+            <div class="gd-host-av">${h.av}</div>
+            <div class="gd-host-info">
+              <span class="gd-host-name">${h.name}</span>
+              <span class="gd-host-act">${h.act}</span>
+              <span class="gd-host-bio">${h.bio}</span>
+            </div>
+          </div>`).join('')}
+        </div>
+        <div class="gd-subscribe-btn" onclick="showModal('订阅成功','已成功订阅 ${d.title}！本月全部活动已免费解锁。','确认',()=>{})">立即订阅 ${d.price}/月</div>
+      </div>
+    `;
+    switchTab('gateway-detail');
   }
   function doLogin() {
     // 隐藏未登录区域
