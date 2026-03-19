@@ -1,3 +1,5 @@
+const PREVIEW_URL = `${import.meta.env.BASE_URL}preview.html`;
+
 export default function Home() {
   return (
     <div
@@ -35,7 +37,7 @@ export default function Home() {
         </div>
       </div>
       <iframe
-        src="/preview.html"
+        src={PREVIEW_URL}
         style={{
           width: "430px",
           height: "900px",

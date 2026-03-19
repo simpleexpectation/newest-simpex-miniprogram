@@ -2675,6 +2675,156 @@ body {
   z-index: 200;
 }
 .toast.show { display: block; }
+
+/* ===== NFC/BLE 签到页面 ===== */
+.nfc-page { background: #0a0f1a; min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 0; }
+.nfc-hero { width: 100%; background: linear-gradient(180deg, #0a0f1a 0%, #0d1829 100%); padding: 32px 24px 20px; text-align: center; }
+.nfc-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #3a6aad; text-transform: uppercase; margin-bottom: 8px; display: block; }
+.nfc-title { font-size: 18px; font-weight: 700; color: #e8f0ff; letter-spacing: 1px; margin-bottom: 4px; display: block; }
+.nfc-subtitle { font-size: 12px; color: #5a7aad; font-family: 'IBM Plex Mono', monospace; display: block; }
+.nfc-ring-wrap { position: relative; width: 180px; height: 180px; margin: 20px auto 12px; }
+.nfc-ring { position: absolute; border-radius: 50%; border: 2px solid; animation: nfcPulse 2s ease-in-out infinite; }
+.nfc-ring-1 { width: 180px; height: 180px; top: 0; left: 0; border-color: rgba(30,90,180,0.15); animation-delay: 0s; }
+.nfc-ring-2 { width: 140px; height: 140px; top: 20px; left: 20px; border-color: rgba(30,90,180,0.3); animation-delay: 0.3s; }
+.nfc-ring-3 { width: 100px; height: 100px; top: 40px; left: 40px; border-color: rgba(30,90,180,0.5); animation-delay: 0.6s; }
+.nfc-core { position: absolute; width: 68px; height: 68px; top: 56px; left: 56px; background: linear-gradient(135deg, #1e3a6e, #2a5aad); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 30px rgba(30,90,180,0.5); }
+@keyframes nfcPulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } }
+.nfc-scanning { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #3a6aad; letter-spacing: 2px; text-align: center; margin-bottom: 6px; }
+.nfc-dots { display: inline-flex; gap: 4px; vertical-align: middle; margin-left: 4px; }
+.nfc-dot { width: 5px; height: 5px; border-radius: 50%; background: #3a6aad; display: inline-block; animation: dotBlink 1.2s ease-in-out infinite; }
+.nfc-dot:nth-child(2) { animation-delay: 0.2s; }
+.nfc-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBlink { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
+.nfc-method-tabs { display: flex; gap: 8px; margin: 0 20px 12px; }
+.nfc-method-tab { flex: 1; padding: 10px 6px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); text-align: center; cursor: pointer; transition: all 0.2s; }
+.nfc-method-tab.active { background: rgba(30,90,180,0.2); border-color: rgba(30,90,180,0.5); }
+.nfc-method-tab-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.nfc-method-tab-label { font-size: 10px; color: #8aa0c8; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; }
+.nfc-method-tab.active .nfc-method-tab-label { color: #5a9aff; }
+.nfc-info-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin: 0 20px 12px; padding: 14px; }
+.nfc-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.nfc-info-row:last-child { margin-bottom: 0; }
+.nfc-info-icon { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; margin-top: 1px; }
+.nfc-info-text { font-size: 12px; color: #8aa0c8; line-height: 1.5; }
+.nfc-info-text b { color: #c0d0e8; }
+.nfc-btn-primary { margin: 0 20px 10px; padding: 15px; background: linear-gradient(135deg, #1e3a6e, #2a5aad); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 1px; box-shadow: 0 4px 20px rgba(30,90,180,0.3); }
+.nfc-btn-secondary { margin: 0 20px 20px; padding: 12px; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5a7aad; letter-spacing: 1px; }
+.nfc-success-wrap { display: flex; flex-direction: column; align-items: center; padding: 32px 24px; width: 100%; }
+.nfc-success-icon { width: 72px; height: 72px; background: linear-gradient(135deg, #1a4a2a, #2a7a4a); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; box-shadow: 0 0 40px rgba(30,180,80,0.3); animation: successPop 0.4s ease-out; }
+@keyframes successPop { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+.nfc-success-title { font-size: 20px; font-weight: 700; color: #e8f8ee; margin-bottom: 6px; }
+.nfc-success-sub { font-size: 12px; color: #5aad7a; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; margin-bottom: 20px; }
+.nfc-proof-card { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(30,180,80,0.2); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+.nfc-proof-label { font-size: 10px; color: #3aad5a; font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+.nfc-proof-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.nfc-proof-key { font-size: 11px; color: #5a8a6a; }
+.nfc-proof-val { font-size: 11px; color: #c0e8d0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+.nfc-hash { font-size: 9px; color: #3a6a4a; font-family: 'IBM Plex Mono', monospace; word-break: break-all; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(30,180,80,0.1); }
+.nfc-badge-row { display: flex; gap: 8px; width: 100%; margin-bottom: 14px; }
+.nfc-badge { flex: 1; background: rgba(30,90,180,0.15); border: 1px solid rgba(30,90,180,0.3); border-radius: 8px; padding: 10px 8px; text-align: center; }
+.nfc-badge-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+.nfc-badge-label { font-size: 10px; color: #8aaac8; font-family: 'IBM Plex Mono', monospace; }
+
+/* ===== 引导人看板 ===== */
+.fac-page { background: #f7f7f7; min-height: 100%; }
+.fac-header { background: linear-gradient(135deg, #1e3a5f 0%, #0a1f3a 100%); padding: 24px 20px 20px; }
+.fac-header-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #5a8aad; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.fac-header-title { font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 4px; display: block; }
+.fac-header-sub { font-size: 12px; color: #8aaac8; font-family: 'IBM Plex Mono', monospace; display: block; }
+.fac-header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.fac-header-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, #c07840, #a05020); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.fac-header-info { flex: 1; }
+.fac-tier-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(192,120,64,0.2); border: 1px solid rgba(192,120,64,0.4); border-radius: 20px; padding: 4px 12px; font-size: 11px; color: #c07840; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; }
+.fac-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 16px; }
+.fac-stat-card { background: #ffffff; border-radius: 12px; padding: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.fac-stat-label { font-size: 10px; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; margin-bottom: 6px; display: block; }
+.fac-stat-num { font-size: 26px; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 2px; display: block; }
+.fac-stat-unit { font-size: 11px; color: var(--ink-muted); }
+.fac-stat-trend { font-size: 10px; color: #2a8a4a; font-family: 'IBM Plex Mono', monospace; margin-top: 4px; display: block; }
+.fac-revenue-card { background: #ffffff; border-radius: 12px; margin: 0 16px 14px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.fac-revenue-title { font-size: 11px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 14px; display: block; }
+.fac-revenue-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.fac-revenue-row:last-child { border-bottom: none; }
+.fac-revenue-name { font-size: 12px; color: var(--ink-medium); }
+.fac-revenue-pct { font-size: 10px; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; }
+.fac-revenue-amount { font-size: 14px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; }
+.fac-revenue-total { background: linear-gradient(135deg, #1e3a5f, #2a5a8f); border-radius: 10px; padding: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+.fac-revenue-total-label { font-size: 12px; color: rgba(255,255,255,0.7); font-family: 'IBM Plex Mono', monospace; }
+.fac-revenue-total-num { font-size: 24px; font-weight: 700; color: #ffffff; font-family: 'IBM Plex Mono', monospace; }
+.fac-section-title { font-size: 11px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; padding: 0 16px; margin-bottom: 10px; display: block; }
+.fac-user-list { padding: 0 16px; }
+.fac-user-card { background: #ffffff; border-radius: 10px; padding: 12px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); cursor: pointer; }
+.fac-user-av { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #1e3a5f, #2a5a8f); display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0; }
+.fac-user-av.gold { background: linear-gradient(135deg, #c07840, #a05020); }
+.fac-user-info { flex: 1; }
+.fac-user-name { font-size: 13px; font-weight: 600; color: var(--ink-black); margin-bottom: 2px; }
+.fac-user-bio { font-size: 11px; color: var(--ink-muted); }
+.fac-user-meta { text-align: right; }
+.fac-user-events { font-size: 12px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; display: block; }
+.fac-user-label { font-size: 10px; color: var(--ink-muted); display: block; }
+.fac-user-tag { display: inline-block; font-size: 9px; padding: 2px 6px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; margin-top: 3px; }
+.fac-user-tag.gold { background: rgba(192,120,64,0.1); color: #c07840; border: 1px solid rgba(192,120,64,0.3); }
+.fac-user-tag.active { background: rgba(30,90,60,0.1); color: #2a7a4a; border: 1px solid rgba(30,90,60,0.3); }
+.fac-chart-wrap { background: #ffffff; border-radius: 12px; margin: 0 16px 14px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.fac-chart-bars { display: flex; align-items: flex-end; gap: 5px; height: 72px; margin-top: 10px; }
+.fac-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.fac-bar { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #2a5aad, #1e3a5f); }
+.fac-bar-label { font-size: 9px; color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; }
+.fac-payout-btn { margin: 0 16px 20px; padding: 15px; background: linear-gradient(135deg, #1e3a5f, #2a5a8f); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 1px; }
+
+/* ===== 邀请海报生成 ===== */
+.poster-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; display: none; align-items: flex-end; justify-content: center; }
+.poster-overlay.show { display: flex; }
+.poster-sheet { background: #ffffff; border-radius: 20px 20px 0 0; width: 100%; padding: 20px; max-height: 88%; overflow-y: auto; }
+.poster-sheet-handle { width: 36px; height: 4px; background: var(--border-strong); border-radius: 2px; margin: 0 auto 16px; }
+.poster-sheet-title { font-size: 14px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 2px; display: block; }
+.poster-sheet-sub { font-size: 11px; color: var(--ink-muted); margin-bottom: 16px; display: block; }
+.poster-space-info { background: var(--kraft-light); border-radius: 10px; padding: 12px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.poster-space-icon { font-size: 22px; }
+.poster-space-name { font-size: 13px; font-weight: 600; color: var(--ink-black); display: block; }
+.poster-space-addr { font-size: 11px; color: var(--ink-muted); margin-top: 2px; display: block; }
+.poster-topic-label { font-size: 10px; font-weight: 700; color: var(--navy); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+.poster-topic-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+.poster-topic-chip { padding: 7px 12px; border-radius: 20px; border: 1px solid var(--border-strong); font-size: 12px; color: var(--ink-medium); cursor: pointer; transition: all 0.2s; }
+.poster-topic-chip.selected { background: var(--navy); color: #ffffff; border-color: var(--navy); }
+.poster-custom-input { width: 100%; border: 1px solid var(--border-strong); border-radius: 10px; padding: 11px 14px; font-size: 13px; color: var(--ink-black); font-family: 'IBM Plex Mono', monospace; outline: none; margin-bottom: 14px; background: var(--kraft-light); }
+.poster-preview { background: linear-gradient(135deg, #1a1a2e 0%, #0a0f1a 100%); border-radius: 14px; padding: 20px; margin-bottom: 14px; position: relative; overflow: hidden; }
+.poster-preview::before { content: ''; position: absolute; top: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; background: rgba(30,90,180,0.15); }
+.poster-preview-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 3px; color: #3a6aad; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.poster-preview-topic { font-size: 17px; font-weight: 700; color: #e8f0ff; line-height: 1.4; margin-bottom: 14px; display: block; }
+.poster-preview-meta { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.poster-preview-meta-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #8aaac8; }
+.poster-qr-area { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px; }
+.poster-qr-box { width: 52px; height: 52px; background: #ffffff; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+.poster-qr-text { font-size: 11px; color: #8aaac8; line-height: 1.6; }
+.poster-qr-text b { color: #c0d0e8; display: block; margin-bottom: 2px; }
+.poster-generate-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #1e3a5f, #2a5a8f); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 1px; margin-bottom: 8px; }
+.poster-cancel-btn { width: 100%; padding: 11px; background: transparent; border: 1px solid var(--border-strong); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-muted); }
+
+/* 引导人入口按钮 */
+.fac-entry-btn { display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #1e3a5f, #2a5a8f); border-radius: 12px; padding: 14px 16px; margin: 0 16px 16px; cursor: pointer; }
+.fac-entry-icon { font-size: 22px; }
+.fac-entry-text { flex: 1; }
+.fac-entry-title { font-size: 13px; font-weight: 700; color: #ffffff; font-family: 'IBM Plex Mono', monospace; display: block; }
+.fac-entry-sub { font-size: 11px; color: rgba(255,255,255,0.6); margin-top: 2px; display: block; }
+.fac-entry-arrow { font-size: 16px; color: rgba(255,255,255,0.5); }
+
+/* NFC 入口按钮 */
+.nfc-entry-btn { display: flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0a1829, #1a3a6e); border-radius: 12px; padding: 14px 16px; margin: 12px 16px 0; cursor: pointer; border: 1px solid rgba(30,90,180,0.3); }
+.nfc-entry-icon { font-size: 22px; }
+.nfc-entry-text { flex: 1; }
+.nfc-entry-title { font-size: 13px; font-weight: 700; color: #c0d8ff; font-family: 'IBM Plex Mono', monospace; display: block; }
+.nfc-entry-sub { font-size: 11px; color: rgba(150,180,255,0.6); margin-top: 2px; display: block; }
+.nfc-entry-arrow { font-size: 16px; color: rgba(150,180,255,0.5); }
+
+/* 发起小聚按钮 */
+.initiate-btn-row { display: flex; gap: 8px; padding: 12px 16px 0; }
+.initiate-space-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.initiate-space-chip { display: inline-flex; align-items: center; gap: 4px; padding: 7px 12px; background: rgba(30,58,95,0.07); border: 1px solid rgba(30,58,95,0.18); border-radius: 20px; font-size: 11px; color: var(--navy); font-family: 'IBM Plex Mono', monospace; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+.initiate-space-chip:active { background: rgba(30,58,95,0.18); }
+.initiate-small-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 12px; background: rgba(30,58,95,0.08); border-radius: 10px; cursor: pointer; border: 1px solid rgba(30,58,95,0.15); }
+.initiate-small-btn-icon { font-size: 16px; }
+.initiate-small-btn-text { font-size: 11px; color: var(--navy); font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -2932,6 +3082,7 @@ body {
           <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
           <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:57%"></div></div><span class="progress-text">17/30 已售</span></div>
           <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div style="display:flex;gap:8px"><div class="buy-btn" style="background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 14px;font-size:11px" onclick="openGatewayDetail('local')">查看详情</div><div class="buy-btn" onclick="showBuyModal('打开真实发生的本地风光','399')">立即获取</div></div></div>
+          <div class="initiate-btn-row"><div class="initiate-small-btn" onclick="openPosterOverlay('天目山山顶咨啡','🌿','临安 · B类特权空间')"><span class="initiate-small-btn-icon">✨</span><span class="initiate-small-btn-text">发起小聚</span></div><div class="initiate-small-btn" onclick="openPosterOverlay('清河坐庄','🌿','西湖 · B类特权空间')"><span class="initiate-small-btn-icon">📍</span><span class="initiate-small-btn-text">选择空间</span></div></div>
         </div>
       </div>
 
@@ -2956,6 +3107,7 @@ body {
           <div style="margin:10px 0 6px;font-size:10px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace">订阅包含：全部活动免费 + 社群 + 数字身份 + 赠对话月票</div>
           <div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div><span class="progress-text">15/30 已售</span></div>
           <div class="gw-full-footer"><div><span class="gw-full-price">¥399</span><span class="gw-full-price-unit">/月</span></div><div style="display:flex;gap:8px"><div class="buy-btn" style="background:transparent;color:var(--navy);border:1px solid var(--navy);padding:8px 14px;font-size:11px" onclick="openGatewayDetail('youth')">查看详情</div><div class="buy-btn" onclick="showBuyModal('打开真实发生的当代青年','399')">立即获取</div></div></div>
+          <div class="initiate-btn-row"><div class="initiate-small-btn" onclick="openPosterOverlay('天目里共享空间','👥','滨江 · B类特权空间')"><span class="initiate-small-btn-icon">✨</span><span class="initiate-small-btn-text">发起小聚</span></div><div class="initiate-small-btn" onclick="openPosterOverlay('某私密空间','🏠','湖滨 · B类特权空间')"><span class="initiate-small-btn-icon">📍</span><span class="initiate-small-btn-text">选择空间</span></div></div>
         </div>
       </div>
 
@@ -3314,10 +3466,19 @@ body {
       </div>
 
       <div class="initiate-cta">
-        <span class="init-title">发起一场对话</span>
-        <span class="init-desc">你有什么想聊的？≤ 6 人，> 2 小时，就可以开始。</span>
-        <span class="init-ticket">"打开真实发生的对话"月票 · ¥99/月 · 订阅 399 月票赠送</span>
-        <div class="btn-primary" onclick="showInitiateModal()">发起对话 →</div>
+        <span class="init-title">发起小聚·对话</span>
+        <span class="init-desc">选一个 B 类特权空间，抹一个话题，最多 6 人，超过 2 小时。这就是一场小聚。</span>
+        <span class="init-ticket">“打开真实发生的对话”月票 · ¥99/月 · 订阅 399 月票赠送</span>
+        <!-- 空间快捷选择行 -->
+        <div class="initiate-space-row">
+          <div class="initiate-space-chip" onclick="openPosterOverlay('天目山山顶咨啡','🌿','临安 · B类特权空间')">🌿 天目山山顶咨啡</div>
+          <div class="initiate-space-chip" onclick="openPosterOverlay('文二路某和唱','🎵','西湖 · B类特权空间')">🎵 文二路和唱</div>
+          <div class="initiate-space-chip" onclick="openPosterOverlay('天目里共享空间','🏠','滨江 · B类特权空间')">🏠 天目里共享空间</div>
+          <div class="initiate-space-chip" onclick="openPosterOverlay('西湖边某处','🌊','西湖 · B类特权空间')">🌊 西湖边某处</div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <div class="btn-primary" style="flex:1" onclick="showInitiateModal()">自定义发起 →</div>
+        </div>
       </div>
     </div>
 
@@ -3616,6 +3777,15 @@ body {
           </div>
         </div>
 
+        <!-- 引导人工作台入口 -->
+        <div class="fac-entry-btn" onclick="openFacilitatorDashboard()">
+          <span class="fac-entry-icon">📊</span>
+          <div class="fac-entry-text">
+            <span class="fac-entry-title">FACILITATOR DASHBOARD</span>
+            <span class="fac-entry-sub">引导人工作台 · 分润与私域资产</span>
+          </div>
+          <span class="fac-entry-arrow">›</span>
+        </div>
         <div class="footer-area">
           <div class="footer-links">
             <span class="footer-link">关于 Simpex</span><span class="footer-sep">·</span>
@@ -3797,6 +3967,311 @@ body {
     <div class="tab-item" id="tab-profile" onclick="switchTab('profile')">
       <span class="tab-icon">👤</span>
       <span class="tab-label">我的</span>
+    </div>
+  </div>
+
+  <!-- ===== NFC/BLE 签到页 ===== -->
+  <div class="page" id="page-nfc-checkin">
+    <div class="nfc-page" id="nfcPageContent">
+      <!-- 扫描状态 -->
+      <div id="nfcScanState">
+        <div class="nfc-hero">
+          <span class="nfc-label">PROOF OF PRESENCE · 存在证明</span>
+          <span class="nfc-title">真实发生验证</span>
+          <span class="nfc-subtitle">Real Presence Verification</span>
+        </div>
+        <!-- 方式切换 -->
+        <div class="nfc-method-tabs">
+          <div class="nfc-method-tab active" id="nfcTab" onclick="switchNfcMethod('nfc')">
+            <span class="nfc-method-tab-icon">📲</span>
+            <span class="nfc-method-tab-label">NFC 碰一碰</span>
+          </div>
+          <div class="nfc-method-tab" id="bleTab" onclick="switchNfcMethod('ble')">
+            <span class="nfc-method-tab-icon">🔵</span>
+            <span class="nfc-method-tab-label">BLE 蓝牙</span>
+          </div>
+          <div class="nfc-method-tab" id="p2pTab" onclick="switchNfcMethod('p2p')">
+            <span class="nfc-method-tab-icon">🤝</span>
+            <span class="nfc-method-tab-label">P2P 碰杆</span>
+          </div>
+        </div>
+        <!-- 动态圆环动画 -->
+        <div class="nfc-ring-wrap">
+          <div class="nfc-ring nfc-ring-1"></div>
+          <div class="nfc-ring nfc-ring-2"></div>
+          <div class="nfc-ring nfc-ring-3"></div>
+          <div class="nfc-core" id="nfcCoreIcon">📲</div>
+        </div>
+        <div class="nfc-scanning" id="nfcScanText">
+          等待碰一碰<span class="nfc-dots"><span class="nfc-dot"></span><span class="nfc-dot"></span><span class="nfc-dot"></span></span>
+        </div>
+        <!-- 说明卡 -->
+        <div class="nfc-info-card">
+          <div class="nfc-info-row">
+            <span class="nfc-info-icon">🛡️</span>
+            <span class="nfc-info-text"><b>双向验证机制</b>：两个用户设备必须同时在线，且物理距离小于 10cm，系统才会确认交互生效</span>
+          </div>
+          <div class="nfc-info-row">
+            <span class="nfc-info-icon">⛓️</span>
+            <span class="nfc-info-text"><b>防伪锚点</b>：每次交互生成唯一哈希标识，写入数字身份链，无法伪造或重放</span>
+          </div>
+          <div class="nfc-info-row">
+            <span class="nfc-info-icon">⚡</span>
+            <span class="nfc-info-text"><b>即时入账</b>：验证成功后，参与记录将实时同步到两方的数字身份中</span>
+          </div>
+        </div>
+        <div class="nfc-btn-primary" onclick="simulateNfcScan()">📲 开始扫描验证</div>
+        <div class="nfc-btn-secondary" onclick="goBack()">返回活动详情</div>
+      </div>
+      <!-- 签到成功状态 -->
+      <div id="nfcSuccessState" style="display:none;width:100%;background:#0a0f1a;min-height:100%">
+        <div class="nfc-success-wrap">
+          <div class="nfc-success-icon">✅</div>
+          <div class="nfc-success-title">真实发生确认</div>
+          <div class="nfc-success-sub">PRESENCE VERIFIED · 交互已生效</div>
+          <div class="nfc-proof-card">
+            <span class="nfc-proof-label">PROOF OF PRESENCE · 存在证明</span>
+            <div class="nfc-proof-row">
+              <span class="nfc-proof-key">活动</span>
+              <span class="nfc-proof-val" id="proofActivity">自然爬山 · 一番</span>
+            </div>
+            <div class="nfc-proof-row">
+              <span class="nfc-proof-key">对方</span>
+              <span class="nfc-proof-val" id="proofPeer">一番 · 本地风光主理人</span>
+            </div>
+            <div class="nfc-proof-row">
+              <span class="nfc-proof-key">时间</span>
+              <span class="nfc-proof-val" id="proofTime">2025.03.15 06:23</span>
+            </div>
+            <div class="nfc-proof-row">
+              <span class="nfc-proof-key">地点</span>
+              <span class="nfc-proof-val">天目山 · 海拔 1506m</span>
+            </div>
+            <div class="nfc-proof-row">
+              <span class="nfc-proof-key">方式</span>
+              <span class="nfc-proof-val" id="proofMethod">NFC 碰一碰</span>
+            </div>
+            <div class="nfc-hash" id="proofHash">HASH: 0x7f3a9b2c1d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a</div>
+          </div>
+          <div class="nfc-badge-row">
+            <div class="nfc-badge">
+              <span class="nfc-badge-icon">🏕️</span>
+              <span class="nfc-badge-label">夜爬达人</span>
+            </div>
+            <div class="nfc-badge">
+              <span class="nfc-badge-icon">🤝</span>
+              <span class="nfc-badge-label">真实连接</span>
+            </div>
+            <div class="nfc-badge">
+              <span class="nfc-badge-icon">⛓️</span>
+              <span class="nfc-badge-label">防伪认证</span>
+            </div>
+          </div>
+          <div class="nfc-btn-primary" style="width:100%;margin:0 0 10px" onclick="goBack()">查看我的数字身份</div>
+          <div class="nfc-btn-secondary" style="width:100%;margin:0" onclick="switchTab('home')">返回首页</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 引导人看板页 ===== -->
+  <div class="page" id="page-facilitator">
+    <div class="fac-page">
+      <!-- 顶部 -->
+      <div class="fac-header">
+        <div class="fac-header-top">
+          <div class="fac-header-avatar">一</div>
+          <div class="fac-header-info">
+            <span class="fac-header-title">一番</span>
+            <span class="fac-header-sub">@YIFAN_HZ · 本地风光主理人</span>
+            <div class="fac-tier-badge">★ GOLD FACILITATOR · 38% 分润</div>
+          </div>
+        </div>
+        <span class="fac-header-label">FACILITATOR DASHBOARD · 引导人工作台</span>
+      </div>
+      <!-- 核心数据网格 -->
+      <div class="fac-stats-grid">
+        <div class="fac-stat-card">
+          <span class="fac-stat-label">THIS MONTH · 本月分润</span>
+          <span class="fac-stat-num">¥<span id="facRevNum">2,394</span></span>
+          <span class="fac-stat-unit">元人民币</span>
+          <span class="fac-stat-trend">▲ +18% vs 上月</span>
+        </div>
+        <div class="fac-stat-card">
+          <span class="fac-stat-label">SUBSCRIBERS · 订阅人数</span>
+          <span class="fac-stat-num" id="facSubNum">47</span>
+          <span class="fac-stat-unit">人 · 本月活跃</span>
+          <span class="fac-stat-trend">▲ +5 新增</span>
+        </div>
+        <div class="fac-stat-card">
+          <span class="fac-stat-label">EVENTS · 本月场次</span>
+          <span class="fac-stat-num">8</span>
+          <span class="fac-stat-unit">场活动</span>
+          <span class="fac-stat-trend">✔ 全部完成</span>
+        </div>
+        <div class="fac-stat-card">
+          <span class="fac-stat-label">RETENTION · 留存率</span>
+          <span class="fac-stat-num">91</span>
+          <span class="fac-stat-unit">%</span>
+          <span class="fac-stat-trend">▲ 高于平均 23%</span>
+        </div>
+      </div>
+      <!-- 分润明细 -->
+      <div class="fac-revenue-card">
+        <span class="fac-revenue-title">REVENUE BREAKDOWN · 分润明细</span>
+        <div class="fac-revenue-row">
+          <div>
+            <div class="fac-revenue-name">本地风光月票 × 13张</div>
+            <div class="fac-revenue-pct">38% 分润比例</div>
+          </div>
+          <span class="fac-revenue-amount">¥ 1,972</span>
+        </div>
+        <div class="fac-revenue-row">
+          <div>
+            <div class="fac-revenue-name">活动单场收入 × 8场</div>
+            <div class="fac-revenue-pct">10% 分润比例</div>
+          </div>
+          <span class="fac-revenue-amount">¥ 422</span>
+        </div>
+        <div class="fac-revenue-row">
+          <div>
+            <div class="fac-revenue-name">对话广场发起奖励</div>
+            <div class="fac-revenue-pct">平台奖励计划</div>
+          </div>
+          <span class="fac-revenue-amount">¥ 0</span>
+        </div>
+        <div class="fac-revenue-total">
+          <span class="fac-revenue-total-label">TOTAL PAYOUT</span>
+          <span class="fac-revenue-total-num">¥ 2,394</span>
+        </div>
+      </div>
+      <!-- 收入走势图 -->
+      <div class="fac-chart-wrap">
+        <span class="fac-revenue-title">MONTHLY TREND · 收入走势</span>
+        <div class="fac-chart-bars">
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:40px"></div><span class="fac-bar-label">10月</span></div>
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:52px"></div><span class="fac-bar-label">11月</span></div>
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:45px"></div><span class="fac-bar-label">12月</span></div>
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:58px"></div><span class="fac-bar-label">1月</span></div>
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:50px"></div><span class="fac-bar-label">2月</span></div>
+          <div class="fac-bar-wrap"><div class="fac-bar" style="height:72px;background:linear-gradient(180deg,#5a9aff,#2a5aad)"></div><span class="fac-bar-label" style="color:var(--navy);font-weight:700">3月</span></div>
+        </div>
+      </div>
+      <!-- 私域用户列表 -->
+      <span class="fac-section-title">HIGH-VALUE USERS · 高价値用户</span>
+      <div class="fac-user-list">
+        <div class="fac-user-card" onclick="openOtherProfile('阿强','阿','23','对话爱好者，已参加 23 场活动','gold')">
+          <div class="fac-user-av gold">阿</div>
+          <div class="fac-user-info">
+            <div class="fac-user-name">阿强</div>
+            <div class="fac-user-bio">对话爱好者 · 00后</div>
+            <span class="fac-user-tag gold">★ 打开杭州</span>
+          </div>
+          <div class="fac-user-meta">
+            <span class="fac-user-events">23</span>
+            <span class="fac-user-label">场活动</span>
+            <span class="fac-user-tag active">高活跃</span>
+          </div>
+        </div>
+        <div class="fac-user-card" onclick="openOtherProfile('七哥','七','18','AI创业者，活跃参与者','normal')">
+          <div class="fac-user-av">七</div>
+          <div class="fac-user-info">
+            <div class="fac-user-name">七哥</div>
+            <div class="fac-user-bio">AI创业者 · 常客</div>
+            <span class="fac-user-tag active">本地风光</span>
+          </div>
+          <div class="fac-user-meta">
+            <span class="fac-user-events">18</span>
+            <span class="fac-user-label">场活动</span>
+          </div>
+        </div>
+        <div class="fac-user-card" onclick="openOtherProfile('小小','小','15','老杭州本地人，常客','normal')">
+          <div class="fac-user-av">小</div>
+          <div class="fac-user-info">
+            <div class="fac-user-name">小小</div>
+            <div class="fac-user-bio">老杭州本地人 · Citywalk爱好者</div>
+            <span class="fac-user-tag active">本地风光</span>
+          </div>
+          <div class="fac-user-meta">
+            <span class="fac-user-events">15</span>
+            <span class="fac-user-label">场活动</span>
+          </div>
+        </div>
+        <div class="fac-user-card" onclick="openOtherProfile('子木','子','12','独立设计师','normal')">
+          <div class="fac-user-av">子</div>
+          <div class="fac-user-info">
+            <div class="fac-user-name">子木</div>
+            <div class="fac-user-bio">独立设计师 · 对话发起者</div>
+          </div>
+          <div class="fac-user-meta">
+            <span class="fac-user-events">12</span>
+            <span class="fac-user-label">场活动</span>
+          </div>
+        </div>
+        <div class="fac-user-card" onclick="openOtherProfile('林姐','林','9','自由撰稿人','normal')">
+          <div class="fac-user-av">林</div>
+          <div class="fac-user-info">
+            <div class="fac-user-name">林姐</div>
+            <div class="fac-user-bio">自由撰稿人 · 新加入</div>
+          </div>
+          <div class="fac-user-meta">
+            <span class="fac-user-events">9</span>
+            <span class="fac-user-label">场活动</span>
+          </div>
+        </div>
+      </div>
+      <div class="fac-payout-btn" onclick="showToast('提现申请已提交，预计 1-3 个工作日到账')">💰 申请本月提现 ¥ 2,394</div>
+      <div class="footer-area">
+        <span class="footer-copy">引导人系统 · Simpex Facilitator</span>
+        <span class="footer-motto">真实发生，才算活过。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 邀请海报浮层 ===== -->
+  <div class="poster-overlay" id="posterOverlay">
+    <div class="poster-sheet">
+      <div class="poster-sheet-handle"></div>
+      <span class="poster-sheet-title">INITIATE · 发起小聚</span>
+      <span class="poster-sheet-sub">选择话题，系统自动生成邀请海报</span>
+      <!-- 空间信息 -->
+      <div class="poster-space-info">
+        <span class="poster-space-icon" id="posterSpaceIcon">🌿</span>
+        <div>
+          <span class="poster-space-name" id="posterSpaceName">天目山山顶咨啡</span>
+          <span class="poster-space-addr" id="posterSpaceAddr">临安 · B类特权空间</span>
+        </div>
+      </div>
+      <!-- 话题快捷选择 -->
+      <span class="poster-topic-label">TOPIC · 选择话题</span>
+      <div class="poster-topic-chips" id="posterTopicChips">
+        <div class="poster-topic-chip" onclick="selectTopic(this)">🌏 异地生活与归属感</div>
+        <div class="poster-topic-chip" onclick="selectTopic(this)">💼 离职后的下一步</div>
+        <div class="poster-topic-chip" onclick="selectTopic(this)">🎨 创意与豋生能共存吗</div>
+        <div class="poster-topic-chip" onclick="selectTopic(this)">🌙 夹山夜的孤独与自由</div>
+        <div class="poster-topic-chip" onclick="selectTopic(this)">🤝 如何建立真实的连接</div>
+        <div class="poster-topic-chip" onclick="selectTopic(this)">🏙️ 杭州还值得留下吗</div>
+      </div>
+      <input class="poster-custom-input" id="posterCustomTopic" placeholder="或者输入你想聊的话题…" oninput="updatePosterPreview()" />
+      <!-- 海报预览 -->
+      <div class="poster-preview">
+        <span class="poster-preview-label">SIMPEX · 真实发生 · 杭州</span>
+        <span class="poster-preview-topic" id="posterPreviewTopic">选择或输入话题后预览将在这里显示…</span>
+        <div class="poster-preview-meta">
+          <div class="poster-preview-meta-row">📍 <span id="posterPreviewSpace">天目山山顶咨啡 · 临安</span></div>
+          <div class="poster-preview-meta-row">👥 限 6 人 · 小而美的对话</div>
+          <div class="poster-preview-meta-row">🎟️ 需持对应月票参加</div>
+        </div>
+        <div class="poster-qr-area">
+          <div class="poster-qr-box">📱</div>
+          <div class="poster-qr-text">
+            <b>扫码加入对话</b>
+            真实发生者专属邀请链接<br>有效期 48 小时 · 仅限月票用户
+          </div>
+        </div>
+      </div>
+      <div class="poster-generate-btn" onclick="generatePoster()">✨ 生成邀请海报</div>
+      <div class="poster-cancel-btn" onclick="closePosterOverlay()">取消</div>
     </div>
   </div>
 
@@ -4060,6 +4535,7 @@ body {
       + '<div class="act-detail-cap"><div class="adc-header"><span class="adc-title">参与进度</span><span class="adc-num">' + cur + '/' + total + '</span></div><div class="cap-bar" style="height:6px"><div class="cap-fill" style="width:' + pct + '%"></div></div></div>'
       + '<div class="participants-section"><span class="participants-title">已报名的人 <span style="color:var(--ink-faint);font-weight:400">(点击头像查看名片)</span></span><div class="participants-row">' + avatarsHTML + '</div></div>'
       + `<div style="padding:20px"><div class="btn-primary" onclick="showApplyModal('${name}')">申请参加 →</div></div>`
+      + `<div class="nfc-entry-btn" onclick="openNfcCheckin('${name}','${host}')"><span class="nfc-entry-icon">📲</span><div class="nfc-entry-text"><span class="nfc-entry-title">NFC / BLE 签到验证</span><span class="nfc-entry-sub">Proof of Presence · 防伪锚点 · 到场后碰一碰</span></div><span class="nfc-entry-arrow">›</span></div>`
       + '<div class="footer-area"><span class="footer-copy">真实发生，才算活过。</span></div>';
     switchTab('activity-detail');
   }
@@ -4135,6 +4611,142 @@ body {
       goldBadge.style.display = (type === 'gold') ? 'flex' : 'none';
     }
     switchTab('other-profile');
+  }
+
+  // ===== 引导人看板 =====
+  function openFacilitatorDashboard() {
+    const tabTitles2 = Object.assign({}, tabTitles, { 'facilitator': 'FACILITATOR · 引导人工作台' });
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById('page-facilitator');
+    if (page) { page.style.display = ''; page.classList.add('active'); }
+    const pc = document.getElementById('pageContent');
+    if (pc) pc.scrollTop = 0;
+    document.getElementById('navTitle').textContent = 'FACILITATOR · 引导人工作台';
+    document.getElementById('navBack').classList.add('visible');
+    lastTab = 'profile';
+    // 数字动画
+    animateNumber('facRevNum', 0, 2394, 1200);
+    animateNumber('facSubNum', 0, 47, 800);
+  }
+
+  function animateNumber(id, from, to, duration) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const start = Date.now();
+    const step = () => {
+      const progress = Math.min((Date.now() - start) / duration, 1);
+      const val = Math.round(from + (to - from) * easeOut(progress));
+      el.textContent = val >= 1000 ? val.toLocaleString() : val;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  // ===== NFC/BLE 签到 =====
+  let currentNfcMethod = 'nfc';
+  const nfcMethodConfig = {
+    nfc: { icon: '📲', text: '等待碰一碰', scanText: 'NFC 碰一碰', methodLabel: 'NFC 碰一碰' },
+    ble: { icon: '🔵', text: '扫描蓝牙设备', scanText: 'BLE 蓝牙扫描中', methodLabel: 'BLE 低功耗蓝牙' },
+    p2p: { icon: '🤝', text: '等待对方确认', scanText: 'P2P 双向验证', methodLabel: 'P2P 双向验证' }
+  };
+
+  function openNfcCheckin(activityName, hostName) {
+    document.getElementById('proofActivity').textContent = activityName || '真实发生活动';
+    document.getElementById('proofPeer').textContent = (hostName || '主理人') + ' · 活动主理人';
+    document.getElementById('nfcScanState').style.display = '';
+    document.getElementById('nfcSuccessState').style.display = 'none';
+    switchNfcMethod('nfc');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const page = document.getElementById('page-nfc-checkin');
+    if (page) { page.style.display = ''; page.classList.add('active'); }
+    const pc = document.getElementById('pageContent');
+    if (pc) pc.scrollTop = 0;
+    document.getElementById('navTitle').textContent = 'PROOF OF PRESENCE · 签到验证';
+    document.getElementById('navBack').classList.add('visible');
+  }
+
+  function switchNfcMethod(method) {
+    currentNfcMethod = method;
+    ['nfc','ble','p2p'].forEach(m => {
+      const tab = document.getElementById(m + 'Tab');
+      if (tab) tab.classList.toggle('active', m === method);
+    });
+    const cfg = nfcMethodConfig[method];
+    const core = document.getElementById('nfcCoreIcon');
+    const scanText = document.getElementById('nfcScanText');
+    if (core) core.textContent = cfg.icon;
+    if (scanText) scanText.innerHTML = cfg.text + '<span class="nfc-dots"><span class="nfc-dot"></span><span class="nfc-dot"></span><span class="nfc-dot"></span></span>';
+  }
+
+  function simulateNfcScan() {
+    const btn = document.querySelector('.nfc-btn-primary');
+    if (btn) { btn.textContent = '验证中……'; btn.style.opacity = '0.7'; }
+    setTimeout(() => {
+      const cfg = nfcMethodConfig[currentNfcMethod];
+      const now = new Date();
+      const timeStr = now.getFullYear() + '.' +
+        String(now.getMonth()+1).padStart(2,'0') + '.' +
+        String(now.getDate()).padStart(2,'0') + ' ' +
+        String(now.getHours()).padStart(2,'0') + ':' +
+        String(now.getMinutes()).padStart(2,'0');
+      document.getElementById('proofTime').textContent = timeStr;
+      document.getElementById('proofMethod').textContent = cfg.methodLabel;
+      const hashChars = '0123456789abcdef';
+      let hash = '0x';
+      for (let i = 0; i < 64; i++) hash += hashChars[Math.floor(Math.random() * 16)];
+      document.getElementById('proofHash').textContent = 'HASH: ' + hash;
+      document.getElementById('nfcScanState').style.display = 'none';
+      document.getElementById('nfcSuccessState').style.display = 'block';
+      const pc = document.getElementById('pageContent');
+      if (pc) pc.scrollTop = 0;
+    }, 2000);
+  }
+
+  // ===== 邀请海报 =====
+  let selectedTopic = '';
+
+  function openPosterOverlay(spaceName, spaceIcon, spaceAddr) {
+    document.getElementById('posterSpaceName').textContent = spaceName || '天目山山顶咨啡';
+    document.getElementById('posterSpaceIcon').textContent = spaceIcon || '🌿';
+    document.getElementById('posterSpaceAddr').textContent = spaceAddr || 'B类特权空间';
+    document.getElementById('posterPreviewSpace').textContent = (spaceName || '天目山山顶咨啡') + ' · ' + (spaceAddr || 'B类特权空间');
+    // 重置状态
+    selectedTopic = '';
+    document.querySelectorAll('.poster-topic-chip').forEach(c => c.classList.remove('selected'));
+    document.getElementById('posterCustomTopic').value = '';
+    document.getElementById('posterPreviewTopic').textContent = '选择或输入话题后预览将在这里显示…';
+    document.getElementById('posterOverlay').classList.add('show');
+  }
+
+  function closePosterOverlay() {
+    document.getElementById('posterOverlay').classList.remove('show');
+  }
+
+  function selectTopic(el) {
+    document.querySelectorAll('.poster-topic-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTopic = el.textContent.replace(/^[^\s]+\s/, ''); // 去掉 emoji
+    document.getElementById('posterCustomTopic').value = '';
+    updatePosterPreview();
+  }
+
+  function updatePosterPreview() {
+    const custom = document.getElementById('posterCustomTopic').value.trim();
+    if (custom) {
+      document.querySelectorAll('.poster-topic-chip').forEach(c => c.classList.remove('selected'));
+      selectedTopic = custom;
+    }
+    const topic = selectedTopic || custom;
+    const preview = document.getElementById('posterPreviewTopic');
+    if (preview) preview.textContent = topic ? '“' + topic + '”' : '选择或输入话题后预览将在这里显示…';
+  }
+
+  function generatePoster() {
+    const topic = selectedTopic || document.getElementById('posterCustomTopic').value.trim();
+    if (!topic) { showToast('请先选择或输入话题'); return; }
+    closePosterOverlay();
+    showToast('✨ 邀请海报已生成，可分享到朋友圈');
   }
 </script>
 </body>
