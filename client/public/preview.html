@@ -10,21 +10,24 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  /* 全局背景改为纯白/浅灰 */
-  --kraft-base: #ffffff;
-  --kraft-light: #f7f7f7;
-  --kraft-dark: #f0f0f0;
-  --ink-black: #1a1a1a;
-  --ink-medium: #333333;
-  --ink-muted: #666666;
-  --ink-faint: #999999;
-  --navy: #1e3a5f;
-  --navy-light: #2e5080;
-  --amber: #a0622a;
-  --amber-light: #c07840;
-  --stamp-red: #8b2e2e;
-  --border: rgba(0,0,0,0.08);
-  --border-strong: rgba(0,0,0,0.15);
+  /* 莫兰迪自然色系 · Natural & Relaxed */
+  --kraft-base: #faf9f7;
+  --kraft-light: #f5f3ef;
+  --kraft-dark: #ede9e3;
+  --ink-black: #2c2b29;
+  --ink-medium: #4a4845;
+  --ink-muted: #7a7875;
+  --ink-faint: #aeaba6;
+  --navy: #4a6580;        /* 莫兰迪蓝灰 */
+  --navy-light: #5e7a96;
+  --amber: #8a7060;       /* 莫兰迪棕 */
+  --amber-light: #a08070;
+  --sage: #7a8c78;        /* 莫兰迪绿 */
+  --rose: #b08880;        /* 莫兰迪玫瑰 */
+  --stamp-red: #8b5e5e;
+  --border: rgba(0,0,0,0.06);
+  --border-strong: rgba(0,0,0,0.1);
+  --meet-green: #6a8c78;  /* 相遇成功色 */
 }
 
 body {
@@ -147,7 +150,7 @@ body {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #f7f7f7;
+  background: var(--kraft-light);
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -447,7 +450,7 @@ body {
 
 /* 活动信息流卡片 */
 .feed-section {
-  background: #f7f7f7;
+  background: var(--kraft-light);
   padding: 16px 0;
 }
 .feed-header {
@@ -2676,54 +2679,55 @@ body {
 }
 .toast.show { display: block; }
 
-/* ===== NFC/BLE 签到页面 ===== */
-.nfc-page { background: #0a0f1a; min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 0; }
-.nfc-hero { width: 100%; background: linear-gradient(180deg, #0a0f1a 0%, #0d1829 100%); padding: 32px 24px 20px; text-align: center; }
-.nfc-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; color: #3a6aad; text-transform: uppercase; margin-bottom: 8px; display: block; }
-.nfc-title { font-size: 18px; font-weight: 700; color: #e8f0ff; letter-spacing: 1px; margin-bottom: 4px; display: block; }
-.nfc-subtitle { font-size: 12px; color: #5a7aad; font-family: 'IBM Plex Mono', monospace; display: block; }
+/* ===== NFC 相遇页面 · 自然留白风 ===== */
+.nfc-page { background: var(--kraft-base); min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 0; }
+.nfc-hero { width: 100%; background: var(--kraft-base); padding: 40px 24px 24px; text-align: center; border-bottom: 1px solid var(--border); }
+.nfc-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--ink-faint); text-transform: uppercase; margin-bottom: 12px; display: block; }
+.nfc-title { font-size: 22px; font-weight: 700; color: var(--ink-black); letter-spacing: 0; margin-bottom: 6px; display: block; font-family: 'Noto Serif SC', serif; }
+.nfc-subtitle { font-size: 13px; color: var(--ink-muted); line-height: 1.7; display: block; }
 .nfc-ring-wrap { position: relative; width: 180px; height: 180px; margin: 20px auto 12px; }
 .nfc-ring { position: absolute; border-radius: 50%; border: 2px solid; animation: nfcPulse 2s ease-in-out infinite; }
-.nfc-ring-1 { width: 180px; height: 180px; top: 0; left: 0; border-color: rgba(30,90,180,0.15); animation-delay: 0s; }
-.nfc-ring-2 { width: 140px; height: 140px; top: 20px; left: 20px; border-color: rgba(30,90,180,0.3); animation-delay: 0.3s; }
-.nfc-ring-3 { width: 100px; height: 100px; top: 40px; left: 40px; border-color: rgba(30,90,180,0.5); animation-delay: 0.6s; }
-.nfc-core { position: absolute; width: 68px; height: 68px; top: 56px; left: 56px; background: linear-gradient(135deg, #1e3a6e, #2a5aad); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 0 30px rgba(30,90,180,0.5); }
+.nfc-ring-1 { width: 180px; height: 180px; top: 0; left: 0; border-color: rgba(106,140,120,0.15); animation-delay: 0s; }
+.nfc-ring-2 { width: 140px; height: 140px; top: 20px; left: 20px; border-color: rgba(106,140,120,0.3); animation-delay: 0.3s; }
+.nfc-ring-3 { width: 100px; height: 100px; top: 40px; left: 40px; border-color: rgba(106,140,120,0.5); animation-delay: 0.6s; }
+.nfc-core { position: absolute; width: 68px; height: 68px; top: 56px; left: 56px; background: var(--meet-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 4px 20px rgba(106,140,120,0.3); }
 @keyframes nfcPulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } }
-.nfc-scanning { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #3a6aad; letter-spacing: 2px; text-align: center; margin-bottom: 6px; }
+.nfc-scanning { font-size: 13px; color: var(--ink-muted); letter-spacing: 0.5px; text-align: center; margin-bottom: 6px; line-height: 1.7; }
 .nfc-dots { display: inline-flex; gap: 4px; vertical-align: middle; margin-left: 4px; }
-.nfc-dot { width: 5px; height: 5px; border-radius: 50%; background: #3a6aad; display: inline-block; animation: dotBlink 1.2s ease-in-out infinite; }
+.nfc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--meet-green); display: inline-block; animation: dotBlink 1.2s ease-in-out infinite; }
 .nfc-dot:nth-child(2) { animation-delay: 0.2s; }
 .nfc-dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dotBlink { 0%,100% { opacity: 0.2; } 50% { opacity: 1; } }
 .nfc-method-tabs { display: flex; gap: 8px; margin: 0 20px 12px; }
-.nfc-method-tab { flex: 1; padding: 10px 6px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); text-align: center; cursor: pointer; transition: all 0.2s; }
-.nfc-method-tab.active { background: rgba(30,90,180,0.2); border-color: rgba(30,90,180,0.5); }
+.nfc-method-tab { flex: 1; padding: 10px 6px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--kraft-light); text-align: center; cursor: pointer; transition: all 0.2s; }
+.nfc-method-tab.active { background: #fff; border-color: var(--meet-green); box-shadow: 0 2px 8px rgba(106,140,120,0.15); }
 .nfc-method-tab-icon { font-size: 20px; display: block; margin-bottom: 4px; }
-.nfc-method-tab-label { font-size: 10px; color: #8aa0c8; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; }
-.nfc-method-tab.active .nfc-method-tab-label { color: #5a9aff; }
-.nfc-info-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin: 0 20px 12px; padding: 14px; }
-.nfc-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.nfc-method-tab-label { font-size: 10px; color: var(--ink-faint); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.5px; }
+.nfc-method-tab.active .nfc-method-tab-label { color: var(--meet-green); }
+.nfc-info-card { background: var(--kraft-light); border: none; border-radius: 12px; margin: 0 20px 12px; padding: 16px; }
+.nfc-info-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
 .nfc-info-row:last-child { margin-bottom: 0; }
-.nfc-info-icon { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; margin-top: 1px; }
-.nfc-info-text { font-size: 12px; color: #8aa0c8; line-height: 1.5; }
-.nfc-info-text b { color: #c0d0e8; }
-.nfc-btn-primary { margin: 0 20px 10px; padding: 15px; background: linear-gradient(135deg, #1e3a6e, #2a5aad); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: #ffffff; letter-spacing: 1px; box-shadow: 0 4px 20px rgba(30,90,180,0.3); }
-.nfc-btn-secondary { margin: 0 20px 20px; padding: 12px; background: transparent; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; text-align: center; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #5a7aad; letter-spacing: 1px; }
-.nfc-success-wrap { display: flex; flex-direction: column; align-items: center; padding: 32px 24px; width: 100%; }
-.nfc-success-icon { width: 72px; height: 72px; background: linear-gradient(135deg, #1a4a2a, #2a7a4a); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; box-shadow: 0 0 40px rgba(30,180,80,0.3); animation: successPop 0.4s ease-out; }
-@keyframes successPop { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
-.nfc-success-title { font-size: 20px; font-weight: 700; color: #e8f8ee; margin-bottom: 6px; }
-.nfc-success-sub { font-size: 12px; color: #5aad7a; font-family: 'IBM Plex Mono', monospace; letter-spacing: 1px; margin-bottom: 20px; }
-.nfc-proof-card { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(30,180,80,0.2); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
-.nfc-proof-label { font-size: 10px; color: #3aad5a; font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 10px; display: block; }
-.nfc-proof-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.nfc-proof-key { font-size: 11px; color: #5a8a6a; }
-.nfc-proof-val { font-size: 11px; color: #c0e8d0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
-.nfc-hash { font-size: 9px; color: #3a6a4a; font-family: 'IBM Plex Mono', monospace; word-break: break-all; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(30,180,80,0.1); }
-.nfc-badge-row { display: flex; gap: 8px; width: 100%; margin-bottom: 14px; }
-.nfc-badge { flex: 1; background: rgba(30,90,180,0.15); border: 1px solid rgba(30,90,180,0.3); border-radius: 8px; padding: 10px 8px; text-align: center; }
-.nfc-badge-icon { font-size: 20px; display: block; margin-bottom: 4px; }
-.nfc-badge-label { font-size: 10px; color: #8aaac8; font-family: 'IBM Plex Mono', monospace; }
+.nfc-info-icon { font-size: 15px; width: 22px; text-align: center; flex-shrink: 0; margin-top: 2px; }
+.nfc-info-text { font-size: 12px; color: var(--ink-muted); line-height: 1.6; }
+.nfc-info-text b { color: var(--ink-medium); font-weight: 600; }
+.nfc-btn-primary { margin: 0 20px 10px; padding: 16px; background: var(--meet-green); border-radius: 12px; text-align: center; cursor: pointer; font-size: 14px; font-weight: 600; color: #ffffff; letter-spacing: 0.5px; }
+.nfc-btn-secondary { margin: 0 20px 20px; padding: 13px; background: transparent; border: 1px solid var(--border-strong); border-radius: 12px; text-align: center; cursor: pointer; font-size: 13px; color: var(--ink-muted); }
+.nfc-success-wrap { display: flex; flex-direction: column; align-items: center; padding: 48px 24px 32px; width: 100%; background: var(--kraft-base); }
+.nfc-success-icon { width: 80px; height: 80px; background: var(--kraft-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 24px; animation: successPop 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes successPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.nfc-success-title { font-size: 26px; font-weight: 700; color: var(--ink-black); margin-bottom: 8px; font-family: 'Noto Serif SC', serif; }
+.nfc-success-sub { font-size: 14px; color: var(--ink-muted); margin-bottom: 32px; line-height: 1.7; text-align: center; }
+.nfc-proof-card { width: 100%; background: var(--kraft-light); border: none; border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+.nfc-proof-label { font-size: 10px; color: var(--ink-faint); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 14px; display: block; }
+.nfc-proof-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.nfc-proof-row:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.nfc-proof-key { font-size: 12px; color: var(--ink-faint); }
+.nfc-proof-val { font-size: 12px; color: var(--ink-black); font-weight: 600; }
+.nfc-hash { display: none; }
+.nfc-badge-row { display: flex; gap: 8px; width: 100%; margin-bottom: 20px; }
+.nfc-badge { flex: 1; background: var(--kraft-light); border: none; border-radius: 12px; padding: 12px 8px; text-align: center; }
+.nfc-badge-icon { font-size: 22px; display: block; margin-bottom: 5px; }
+.nfc-badge-label { font-size: 10px; color: var(--ink-muted); }
 
 /* ===== 引导人看板 ===== */
 .fac-page { background: #f7f7f7; min-height: 100%; }
@@ -2825,6 +2829,33 @@ body {
 .initiate-small-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 12px; background: rgba(30,58,95,0.08); border-radius: 10px; cursor: pointer; border: 1px solid rgba(30,58,95,0.15); }
 .initiate-small-btn-icon { font-size: 16px; }
 .initiate-small-btn-text { font-size: 11px; color: var(--navy); font-family: 'IBM Plex Mono', monospace; font-weight: 600; }
+
+/* ===== 限时大厅 Banner ===== */
+.lobby-banner { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--kraft-light); border-bottom: 1px solid var(--border); }
+.lobby-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--meet-green); flex-shrink: 0; animation: livePulse 2s ease-in-out infinite; }
+@keyframes livePulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.lobby-info { flex: 1; }
+.lobby-title { display: block; font-size: 13px; font-weight: 600; color: var(--ink-black); margin-bottom: 2px; }
+.lobby-sub { display: block; font-size: 11px; color: var(--ink-muted); }
+.lobby-join-btn { padding: 7px 16px; background: var(--ink-black); color: #fff; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+/* ===== 解锁提示条 ===== */
+.unlock-banner { display: flex; align-items: center; gap: 10px; padding: 12px 20px; background: #f0f7f2; border-bottom: 1px solid #d4e8da; }
+.unlock-banner-icon { font-size: 18px; }
+.unlock-banner-text { font-size: 13px; color: var(--meet-green); font-weight: 600; }
+
+/* ===== 相遇解锁名片 ===== */
+.unlocked-card { margin: 0 16px 16px; background: var(--kraft-light); border-radius: 16px; padding: 20px; }
+.unlocked-card-header { margin-bottom: 14px; }
+.unlocked-card-label { display: block; font-size: 10px; color: var(--ink-faint); font-family: 'IBM Plex Mono', monospace; letter-spacing: 2px; margin-bottom: 4px; }
+.unlocked-card-title { display: block; font-size: 16px; font-weight: 700; color: var(--ink-black); }
+.unlocked-bio { font-size: 14px; color: var(--ink-medium); line-height: 1.8; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.unlocked-links { display: flex; flex-direction: column; gap: 4px; }
+.unlocked-link { display: flex; align-items: center; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); text-decoration: none; }
+.unlocked-link:last-child { border-bottom: none; padding-bottom: 0; }
+.unlocked-link-icon { font-size: 18px; width: 28px; text-align: center; }
+.unlocked-link-label { flex: 1; font-size: 13px; color: var(--ink-black); font-weight: 500; }
+.unlocked-link-arrow { font-size: 14px; color: var(--ink-faint); }
 </style>
 </head>
 <body>
@@ -3399,6 +3430,15 @@ body {
 
     <!-- ===== 对话页 ===== -->
     <div class="page" id="page-dialogue">
+      <!-- 限时大厅 · WebSocket 模拟 -->
+      <div class="lobby-banner" id="lobbyBanner">
+        <div class="lobby-live-dot"></div>
+        <div class="lobby-info">
+          <span class="lobby-title">今晚的茶会尚未结束</span>
+          <span class="lobby-sub">现在有 <span id="lobbyOnline">3</span> 人在线 · 大厅将在 <span id="lobbyTtl">2h 14m</span> 后自然消散</span>
+        </div>
+        <div class="lobby-join-btn" onclick="openLobbyDetail()">进入</div>
+      </div>
       <div class="page-header">
         <span class="section-label">GATEWAY: DIALOGUE · 对话广场</span>
         <span class="section-title">正在发生的对话</span>
@@ -3800,7 +3840,11 @@ body {
 
     <!-- ===== 他人数字名片页 ===== -->
     <div class="page" id="page-other-profile">
-
+      <!-- 相遇解锁提示条 -->
+      <div class="unlock-banner" id="unlockBanner" style="display:none">
+        <span class="unlock-banner-icon">🔓</span>
+        <span class="unlock-banner-text">你们已相遇，对方的名片已解锁</span>
+      </div>
       <!-- 大头像 + 个人介绍 -->
       <div class="profile-identity-block">
         <div class="profile-identity-top">
@@ -3892,6 +3936,31 @@ body {
         </div>
       </div>
 
+      <!-- 相遇后解锁的名片 · customBio + externalLinks -->
+      <div class="unlocked-card" id="unlockedCardSection" style="display:none">
+        <div class="unlocked-card-header">
+          <span class="unlocked-card-label">🔓 相遇后解锁</span>
+          <span class="unlocked-card-title">对方的名片</span>
+        </div>
+        <div class="unlocked-bio" id="otherCustomBio">山爱者，平日在杂课中找寻山的味道。相信每一次相遇都有它存在的理由。</div>
+        <div class="unlocked-links" id="otherExternalLinks">
+          <a class="unlocked-link" href="#" onclick="showToast('已复制链接');return false;">
+            <span class="unlocked-link-icon">🍒</span>
+            <span class="unlocked-link-label">Bonjour 主页</span>
+            <span class="unlocked-link-arrow">→</span>
+          </a>
+          <a class="unlocked-link" href="#" onclick="showToast('跳转小红书');return false;">
+            <span class="unlocked-link-icon">📸</span>
+            <span class="unlocked-link-label">小红书 @laolao_hz</span>
+            <span class="unlocked-link-arrow">→</span>
+          </a>
+          <a class="unlocked-link" href="#" onclick="showToast('跳转即刻');return false;">
+            <span class="unlocked-link-icon">⚡</span>
+            <span class="unlocked-link-label">即刻 · 山与城市之间</span>
+            <span class="unlocked-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
       <!-- 对方的社交账号 -->
       <div class="social-section">
         <span class="social-section-title">社交账号</span>
@@ -4008,27 +4077,27 @@ body {
         <!-- 说明卡 -->
         <div class="nfc-info-card">
           <div class="nfc-info-row">
-            <span class="nfc-info-icon">🛡️</span>
-            <span class="nfc-info-text"><b>双向验证机制</b>：两个用户设备必须同时在线，且物理距离小于 10cm，系统才会确认交互生效</span>
+            <span class="nfc-info-icon">🌿</span>
+            <span class="nfc-info-text"><b>两个人靠近就能相遇</b>：把手机靠近对方的手机，不需要扫码，不需要加关注</span>
           </div>
           <div class="nfc-info-row">
-            <span class="nfc-info-icon">⛓️</span>
-            <span class="nfc-info-text"><b>防伪锚点</b>：每次交互生成唯一哈希标识，写入数字身份链，无法伪造或重放</span>
+            <span class="nfc-info-icon">📝</span>
+            <span class="nfc-info-text"><b>相遇会被记录</b>：这次相遇将沉淠到你们各自的数字身份中，就像一个不会消失的足迹</span>
           </div>
           <div class="nfc-info-row">
-            <span class="nfc-info-icon">⚡</span>
-            <span class="nfc-info-text"><b>即时入账</b>：验证成功后，参与记录将实时同步到两方的数字身份中</span>
+            <span class="nfc-info-icon">🔓</span>
+            <span class="nfc-info-text"><b>解锁对方的名片</b>：相遇后，你们可以看到对方的联系方式和个人介绍</span>
           </div>
         </div>
-        <div class="nfc-btn-primary" onclick="simulateNfcScan()">📲 开始扫描验证</div>
-        <div class="nfc-btn-secondary" onclick="goBack()">返回活动详情</div>
+        <div class="nfc-btn-primary" onclick="simulateNfcScan()">我已到达</div>
+        <div class="nfc-btn-secondary" onclick="goBack()">稍后再说</div>
       </div>
-      <!-- 签到成功状态 -->
-      <div id="nfcSuccessState" style="display:none;width:100%;background:#0a0f1a;min-height:100%">
+      <!-- 相遇成功状态 -->
+      <div id="nfcSuccessState" style="display:none;width:100%;min-height:100%">
         <div class="nfc-success-wrap">
-          <div class="nfc-success-icon">✅</div>
-          <div class="nfc-success-title">真实发生确认</div>
-          <div class="nfc-success-sub">PRESENCE VERIFIED · 交互已生效</div>
+          <div class="nfc-success-icon">🌿</div>
+          <div class="nfc-success-title">很高兴认识你</div>
+          <div class="nfc-success-sub">你们的相遇已被记录</div>
           <div class="nfc-proof-card">
             <span class="nfc-proof-label">PROOF OF PRESENCE · 存在证明</span>
             <div class="nfc-proof-row">
@@ -4067,7 +4136,7 @@ body {
               <span class="nfc-badge-label">防伪认证</span>
             </div>
           </div>
-          <div class="nfc-btn-primary" style="width:100%;margin:0 0 10px" onclick="goBack()">查看我的数字身份</div>
+          <div class="nfc-btn-primary" style="width:100%;margin:0 0 10px" onclick="openUnlockedCard()">查看对方的名片</div>
           <div class="nfc-btn-secondary" style="width:100%;margin:0" onclick="switchTab('home')">返回首页</div>
         </div>
       </div>
@@ -4366,13 +4435,17 @@ body {
     });
   }
   function showApplyModal(name) {
-    showModal('申请参加', `申请参加「${name}」\n\n需持有对应月票才可参加`, '确认申请', () => {
-      showToast('申请已发送！');
+    showModal('期待与你相见', `「${name}」
+
+需持有对应月票才可参加`, '我要去', () => {
+      showToast('期待与你相见 🌿');
     });
   }
   function showJoinModal(title) {
-    showModal('申请加入对话', `"${title}"\n\n需持有"打开对话"月票才可申请加入`, '申请加入', () => {
-      showToast('申请已发送！');
+    showModal('加入这场对话', `"${title}"
+
+需持有"打开对话"月票才可加入`, '我要去', () => {
+      showToast('期待与你相见 🌿');
     });
   }
   function showInitiateModal() {
@@ -4748,6 +4821,87 @@ body {
     closePosterOverlay();
     showToast('✨ 邀请海报已生成，可分享到朋友圈');
   }
+
+  /* ===== 限时大厅 · WebSocket 模拟 + Redis TTL 倒计时 ===== */
+  (function initLobby() {
+    // 模拟当前大厅剩余时间：2小时14分
+    let ttlSeconds = 2 * 3600 + 14 * 60;
+    let onlineCount = 3;
+    function formatTtl(s) {
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      if (h > 0) return h + 'h ' + m + 'm';
+      return m + 'm';
+    }
+    function updateLobby() {
+      const ttlEl = document.getElementById('lobbyTtl');
+      const onlineEl = document.getElementById('lobbyOnline');
+      if (ttlEl) ttlEl.textContent = formatTtl(ttlSeconds);
+      if (onlineEl) onlineEl.textContent = onlineCount;
+    }
+    // 每秒递减 TTL
+    setInterval(function() {
+      if (ttlSeconds > 0) ttlSeconds--;
+      updateLobby();
+    }, 1000);
+    // 模拟 WebSocket 在线人数随机波动（每 8-15 秒变化一次）
+    function fluctuateOnline() {
+      const delta = Math.random() < 0.5 ? 1 : -1;
+      onlineCount = Math.max(1, Math.min(12, onlineCount + delta));
+      updateLobby();
+      setTimeout(fluctuateOnline, 8000 + Math.random() * 7000);
+    }
+    setTimeout(fluctuateOnline, 5000);
+    updateLobby();
+  })();
+
+  function openLobbyDetail() {
+    showModal('今晚的茶会', '大厅正在进行中。这里的对话没有记录，没有历史。大厅关闭后，一切自然消散。', '进入茶会', function() {
+      showToast('欢迎来到茶会 🌿');
+    });
+  }
+
+  /* ===== 相遇解锁名片 ===== */
+  // 模拟用户数据库：customBio + externalLinks
+  const userCardDB = {
+    '老陈': { bio: '山爱者，平日在杂课中找寻山的味道。相信每一次相遇都有它存在的理由。', links: [{ icon: '🍒', label: 'Bonjour 主页', url: '#' }, { icon: '📸', label: '小红书 @laolao_hz', url: '#' }] },
+    '阳强': { bio: '对话爱好者，相信真实的连接从一个好问题开始。', links: [{ icon: '⚡', label: '即刻 · 对话与连接', url: '#' }] },
+    '七哥': { bio: 'AI 创业者，在杭州做了三个项目。对话是我的最爱。', links: [{ icon: '🔗', label: '个人网站', url: '#' }, { icon: '📸', label: '小红书 @qige_ai', url: '#' }] },
+    '子木': { bio: '独立设计师，喜欢即兴演出和自由绘画。', links: [{ icon: '🎨', label: '设计作品集', url: '#' }] },
+    '林姐': { bio: '自由撰稿人，关注女性成长和当代青年话题。', links: [{ icon: '📝', label: '小红书 @lingjie_writes', url: '#' }] }
+  };
+
+  function openUnlockedCard() {
+    // 从 NFC 成功页跳转到对方名片，并展示解锁状态
+    const name = '老陈'; // 模拟 NFC 相遇的对象
+    openOtherProfile(name, name[0], '47', userCardDB[name] ? userCardDB[name].bio : '', 'met');
+  }
+
+  // 重写 openOtherProfile，支持 met 状态解锁名片
+  const _origOpenOtherProfile = openOtherProfile;
+  openOtherProfile = function(name, av, events, bio, type) {
+    _origOpenOtherProfile(name, av, events, bio, type);
+    // 如果是相遇后解锁，展示解锁提示条和名片
+    const isMet = type === 'met';
+    const banner = document.getElementById('unlockBanner');
+    const cardSection = document.getElementById('unlockedCardSection');
+    if (banner) banner.style.display = isMet ? 'flex' : 'none';
+    if (cardSection) cardSection.style.display = isMet ? 'block' : 'none';
+    if (isMet && userCardDB[name]) {
+      const bioEl = document.getElementById('otherCustomBio');
+      const linksEl = document.getElementById('otherExternalLinks');
+      if (bioEl) bioEl.textContent = userCardDB[name].bio;
+      if (linksEl) {
+        linksEl.innerHTML = userCardDB[name].links.map(l =>
+          `<a class="unlocked-link" href="${l.url}" onclick="showToast('已复制链接');return false;">
+            <span class="unlocked-link-icon">${l.icon}</span>
+            <span class="unlocked-link-label">${l.label}</span>
+            <span class="unlocked-link-arrow">→</span>
+          </a>`
+        ).join('');
+      }
+    }
+  };
 </script>
 </body>
 </html>
